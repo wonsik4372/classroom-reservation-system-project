@@ -18,4 +18,5 @@ build/
 nbbuild/
 dist/
 nbdist/
-.nb-gradle/
+.nb-gradle/.DS_Store
+**/.DS_Store

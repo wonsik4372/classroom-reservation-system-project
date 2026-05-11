@@ -18,5 +18,8 @@ build/
 nbbuild/
 dist/
 nbdist/
-.nb-gradle/.DS_Store
+.nb-gradle/
+
+# macOS
+.DS_Store
 **/.DS_Store

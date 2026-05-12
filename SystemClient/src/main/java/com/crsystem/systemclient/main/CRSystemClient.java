@@ -47,7 +47,7 @@ public class CRSystemClient {
             // 연결 성공 시 LoginGUI 실행
             java.awt.EventQueue.invokeLater(() -> {
                 // LoginGUI 생성자에 writer와 reader를 넘김 
-                new LoginGUI(client.getWriter(), client.getReader()).setVisible(true);
+                new LoginGUI().setVisible(true);
             });            
         } 
         catch (Exception e) {

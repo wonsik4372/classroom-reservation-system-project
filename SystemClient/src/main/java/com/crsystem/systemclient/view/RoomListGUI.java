@@ -51,6 +51,7 @@ public class RoomListGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jRadioButtonReservationList = new javax.swing.JRadioButton();
         jRadioButtonSchedule = new javax.swing.JRadioButton();
+        jRadioButtonRoomInfo = new javax.swing.JRadioButton();
         jToggleButtonEmptyRoomList = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -162,12 +163,16 @@ public class RoomListGUI extends javax.swing.JFrame {
 
         jRadioButtonSchedule.setText("강의 시간표");
 
+        jRadioButtonRoomInfo.setText("강의실 정보");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jRadioButtonRoomInfo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButtonSchedule)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButtonReservationList)
@@ -179,7 +184,8 @@ public class RoomListGUI extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonReservationList)
-                    .addComponent(jRadioButtonSchedule)))
+                    .addComponent(jRadioButtonSchedule)
+                    .addComponent(jRadioButtonRoomInfo)))
         );
 
         jToggleButtonEmptyRoomList.setText("빈 강의실");
@@ -275,6 +281,7 @@ public class RoomListGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCondition;
     private javax.swing.JRadioButton jRadioButtonReservationList;
+    private javax.swing.JRadioButton jRadioButtonRoomInfo;
     private javax.swing.JRadioButton jRadioButtonSchedule;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButtonEmptyRoomList;

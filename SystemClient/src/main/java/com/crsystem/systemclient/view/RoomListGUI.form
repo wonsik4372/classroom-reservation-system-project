@@ -321,6 +321,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jRadioButtonRoomInfo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jRadioButtonSchedule" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jRadioButtonReservationList" min="-2" max="-2" attributes="0"/>
@@ -335,6 +337,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jRadioButtonReservationList" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButtonSchedule" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jRadioButtonRoomInfo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -349,6 +352,11 @@
         <Component class="javax.swing.JRadioButton" name="jRadioButtonSchedule">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xac15;&#xc758; &#xc2dc;&#xac04;&#xd45c;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonRoomInfo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xac15;&#xc758;&#xc2e4; &#xc815;&#xbcf4;"/>
           </Properties>
         </Component>
       </SubComponents>

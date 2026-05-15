@@ -30,7 +30,23 @@ public class ManagementGUI extends javax.swing.JPanel {
         jPanelRoomInfo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jButtonEdit = new javax.swing.JButton();
-        jPanelReservationManagement = new javax.swing.JPanel();
+        jLabelDeptNo = new javax.swing.JLabel();
+        jTextFieldDeptNo = new javax.swing.JTextField();
+        jLabelFloor = new javax.swing.JLabel();
+        jTextFieldFloor = new javax.swing.JTextField();
+        jLabelRoomNo = new javax.swing.JLabel();
+        jTextFieldRoomNo = new javax.swing.JTextField();
+        jLabelMaxCap = new javax.swing.JLabel();
+        jSpinnerMaxCap = new javax.swing.JSpinner();
+        jLabelComputerCnt = new javax.swing.JLabel();
+        jSpinnerComputerCnt = new javax.swing.JSpinner();
+        jLabelUseable = new javax.swing.JLabel();
+        jRadioButtonUseable = new javax.swing.JRadioButton();
+        jRadioButtonUnusable = new javax.swing.JRadioButton();
+        jLabelFeature = new javax.swing.JLabel();
+        jTextFieldFeature = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanelEtc = new javax.swing.JPanel();
         jLabelTime = new javax.swing.JLabel();
         jButtonLogout = new javax.swing.JButton();
@@ -39,13 +55,70 @@ public class ManagementGUI extends javax.swing.JPanel {
 
         jButtonEdit.setText("수정");
 
+        jLabelDeptNo.setText("건물 번호");
+
+        jTextFieldDeptNo.setText("jTextField1");
+
+        jLabelFloor.setText("층 수");
+
+        jTextFieldFloor.setText("jTextField1");
+
+        jLabelRoomNo.setText("강의실 번호");
+
+        jTextFieldRoomNo.setText("jTextField1");
+
+        jLabelMaxCap.setText("수용 인원");
+
+        jLabelComputerCnt.setText("컴퓨터 개수");
+
+        jLabelUseable.setText("사용 가능 여부");
+
+        jRadioButtonUseable.setText("사용 가능");
+
+        jRadioButtonUnusable.setText("사용 불가");
+
+        jLabelFeature.setText("특이사항");
+
+        jTextFieldFeature.setText("jTextField1");
+
         javax.swing.GroupLayout jPanelRoomInfoLayout = new javax.swing.GroupLayout(jPanelRoomInfo);
         jPanelRoomInfo.setLayout(jPanelRoomInfoLayout);
         jPanelRoomInfoLayout.setHorizontalGroup(
             jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                .addGap(219, 219, 219)
-                .addComponent(jButtonEdit)
+                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(jButtonEdit))
+                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelFeature)
+                            .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                                    .addComponent(jLabelDeptNo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldDeptNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                                    .addComponent(jLabelFloor)
+                                    .addGap(66, 66, 66)
+                                    .addComponent(jTextFieldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelRoomNo)
+                                    .addComponent(jLabelMaxCap)
+                                    .addComponent(jLabelComputerCnt)
+                                    .addComponent(jLabelUseable))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                                        .addComponent(jRadioButtonUseable)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButtonUnusable))
+                                    .addComponent(jSpinnerComputerCnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerMaxCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jTextFieldFeature, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
                 .addContainerGap())
@@ -53,29 +126,61 @@ public class ManagementGUI extends javax.swing.JPanel {
         jPanelRoomInfoLayout.setVerticalGroup(
             jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRoomInfoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                        .addGap(0, 376, Short.MAX_VALUE)
-                        .addComponent(jButtonEdit))
-                    .addComponent(jScrollPane1))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelDeptNo)
+                            .addComponent(jTextFieldDeptNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelFloor)
+                            .addComponent(jTextFieldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelRoomNo)
+                            .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelMaxCap)
+                            .addComponent(jSpinnerMaxCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelComputerCnt)
+                            .addComponent(jSpinnerComputerCnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelUseable)
+                            .addComponent(jRadioButtonUseable)
+                            .addComponent(jRadioButtonUnusable))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelFeature)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldFeature, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEdit)))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("강의실 정보", jPanelRoomInfo);
 
-        javax.swing.GroupLayout jPanelReservationManagementLayout = new javax.swing.GroupLayout(jPanelReservationManagement);
-        jPanelReservationManagement.setLayout(jPanelReservationManagementLayout);
-        jPanelReservationManagementLayout.setHorizontalGroup(
-            jPanelReservationManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 823, Short.MAX_VALUE)
-        );
-        jPanelReservationManagementLayout.setVerticalGroup(
-            jPanelReservationManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
-        jTabbedPane1.addTab("예약 관리", jPanelReservationManagement);
+        jTabbedPane1.addTab("예약 관리", jScrollPane2);
 
         jLabelTime.setText("Current Time");
 
@@ -127,11 +232,27 @@ public class ManagementGUI extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JButton jButtonLogout;
+    private javax.swing.JLabel jLabelComputerCnt;
+    private javax.swing.JLabel jLabelDeptNo;
+    private javax.swing.JLabel jLabelFeature;
+    private javax.swing.JLabel jLabelFloor;
+    private javax.swing.JLabel jLabelMaxCap;
+    private javax.swing.JLabel jLabelRoomNo;
     private javax.swing.JLabel jLabelTime;
+    private javax.swing.JLabel jLabelUseable;
     private javax.swing.JPanel jPanelEtc;
-    private javax.swing.JPanel jPanelReservationManagement;
     private javax.swing.JPanel jPanelRoomInfo;
+    private javax.swing.JRadioButton jRadioButtonUnusable;
+    private javax.swing.JRadioButton jRadioButtonUseable;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jSpinnerComputerCnt;
+    private javax.swing.JSpinner jSpinnerMaxCap;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldDeptNo;
+    private javax.swing.JTextField jTextFieldFeature;
+    private javax.swing.JTextField jTextFieldFloor;
+    private javax.swing.JTextField jTextFieldRoomNo;
     // End of variables declaration//GEN-END:variables
 }

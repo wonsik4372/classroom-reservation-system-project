@@ -1,5 +1,13 @@
-package cse.se.CRS.common;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.crsystem.common.model;
 
+/**
+ *
+ * @author sunho
+ */
 public class Reservation {
     private String time;       // 시간대 (예: "09:00-09:50")
     private String subject;    // 과목명 또는 예약 목적 (예: "데이터사이언스", "개인자습")

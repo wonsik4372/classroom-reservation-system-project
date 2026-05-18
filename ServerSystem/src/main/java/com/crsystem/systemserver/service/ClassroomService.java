@@ -1,11 +1,11 @@
-package cse.se.CRS.server;
+package com.crsystem.systemserver.service;
 
-import cse.se.CRS.common.Classroom;
-import cse.se.CRS.common.ClassroomInfo;
-import cse.se.CRS.common.Reservation;
-import cse.se.CRS.common.ScheduleData;
-import cse.se.CRS.common.DayReservation;
-import cse.se.CRS.common.DayReservation.SingleBooking;
+import com.crsystem.common.model.Classroom;
+import com.crsystem.common.model.ClassroomInfo;
+import com.crsystem.common.model.Reservation;
+import com.crsystem.common.model.ScheduleData;
+import com.crsystem.common.model.DayReservation;
+import com.crsystem.common.model.DayReservation.SingleBooking;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;

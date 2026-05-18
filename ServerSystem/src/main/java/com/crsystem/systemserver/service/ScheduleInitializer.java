@@ -1,8 +1,8 @@
-package cse.se.CRS.server;
+package com.crsystem.systemserver.service;
 
-import cse.se.CRS.common.ScheduleData;
-import cse.se.CRS.common.Classroom;
-import cse.se.CRS.common.Reservation;
+import com.crsystem.common.model.ScheduleData;
+import com.crsystem.common.model.Classroom;
+import com.crsystem.common.model.Reservation;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.ObjectExtractor;

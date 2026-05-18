@@ -2,10 +2,13 @@
   "classrooms" : {
     "911호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -242,10 +245,13 @@
     },
     "912호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -482,10 +488,13 @@
     },
     "913호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -722,10 +731,13 @@
     },
     "914호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -962,10 +974,13 @@
     },
     "915호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -1202,10 +1217,13 @@
     },
     "916호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -1442,10 +1460,13 @@
     },
     "918호" : {
       "info" : {
-        "status" : "사용 가능",
+        "deptNo" : 0,
+        "floor" : 0,
+        "roomNo" : 0,
         "capacity" : 0,
         "features" : "",
-        "computerCount" : 0
+        "computerCount" : 0,
+        "status" : "사용 가능"
       },
       "schedule" : {
         "월" : [ {
@@ -1680,5 +1701,9 @@
         } ]
       }
     }
-  }
+  },
+  "deptNo" : 0,
+  "roomNo" : 0,
+  "day" : "",
+  "time" : 0
 }

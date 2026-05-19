@@ -75,26 +75,24 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jRadioButtonEmp" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonAss" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioButtonPro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioButtonStu" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPasswordField1" max="32767" attributes="0"/>
-                              <Component id="jTextFieldID" min="-2" pref="145" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabelTime" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jPasswordField1" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldID" min="-2" pref="145" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonLogin" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jLabelTime" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -104,7 +102,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="69" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jRadioButtonEmp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jRadioButtonAss" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButtonPro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButtonStu" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -139,8 +137,11 @@
             <Property name="text" type="java.lang.String" value="Login"/>
             <Property name="actionCommand" type="java.lang.String" value="jButtonLogin"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLoginActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButtonEmp">
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonAss">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xc870;&#xad50;"/>
           </Properties>

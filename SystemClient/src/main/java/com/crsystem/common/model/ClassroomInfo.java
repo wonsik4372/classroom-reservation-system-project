@@ -16,7 +16,7 @@ public class ClassroomInfo {
     private int capacity = 0;           // 최대 수용 인원
     private String features = "";       // 특이사항 (예: 인터넷 불가, 빔 불가)
     private int computerCount = 0;      // 사용 가능 컴퓨터 개수
-    private boolean status = true;      // 사용 가능 여부 => 사용 가능 true
+    private boolean isUsable = true;      // 사용 가능 여부 => 사용 가능 true
 
     // 기본 생성자
     
@@ -24,14 +24,14 @@ public class ClassroomInfo {
     }
     
     // 강의실 추가 
-    public ClassroomInfo(int deptNO, int floor, int roomNO, int capacity, String features, int computerCount, boolean status) {
+    public ClassroomInfo(int deptNO, int floor, int roomNO, int capacity, String features, int computerCount, boolean isUsable) {
         this.deptNo = deptNo;
         this.floor = floor;
         this.roomNo = roomNo;
         this.capacity = capacity;
         this.features = features;
         this.computerCount = computerCount;
-        this.status = status;
+        this.isUsable = isUsable;
     }
     
     // 강의실 정보 파일 불러오기 - 건물, 강의실 추가 
@@ -68,8 +68,8 @@ public class ClassroomInfo {
         return computerCount;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isUsable() {
+        return isUsable;
     }
 
     // Setter 
@@ -97,8 +97,8 @@ public class ClassroomInfo {
         this.computerCount = computerCount;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setIsUsable(boolean isUsable) {
+        this.isUsable = isUsable;
     }
     
     

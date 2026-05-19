@@ -4,18 +4,10 @@
  */
 package com.crsystem.systemclient.view;
 
-import com.crsystem.systemclient.main.CRSystemClient;
-import com.crsystem.common.model.User;
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 // 시계 구현시 필요
 import javax.swing.Timer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -24,32 +16,17 @@ import javax.swing.JOptionPane;
 public class LoginGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginGUI.class.getName());
-    
-    private ObjectOutputStream writer;
-    private ObjectInputStream reader;
-    
-    // 테스트를 위해 주석 처리 
-    // private javax.swing.ButtonGroup roleGroup;
-    
+
     /**
      * 실행 시 LoginGUI 기본 설정
      */
     public LoginGUI() {
         initComponents();
-        jTextFieldID.requestFocusInWindow();    // 초기화 시 ID field에 포커싱
-        
-        // 테스트를 위해 주석 처리 
-        // Thread connectionThread = new Thread(new LoginGUI.ServerConnectionTask());
-        // connectionThread.start();
         
         // 권한 중 하나만 선택 가능하도록 ButtonGroup 지정
-        buttonGroupRole.add(jRadioButtonAss);
+        buttonGroupRole.add(jRadioButtonEmp);
         buttonGroupRole.add(jRadioButtonPro);
         buttonGroupRole.add(jRadioButtonStu);
-        
-        jRadioButtonAss.setActionCommand("조교");
-        jRadioButtonPro.setActionCommand("교수");
-        jRadioButtonStu.setActionCommand("학생");
         
         // 초기 사이즈 설정
         this.setSize(550, 350);
@@ -65,43 +42,11 @@ public class LoginGUI extends javax.swing.JFrame {
         }).start();
     }
     
-    // 서버 연결
-    private class ServerConnectionTask implements Runnable{
-        @Override
-        public void run(){
-            try{
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                java.awt.EventQueue.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(LoginGUI.this,
-                                "서버 연결 실패: " + e.getMessage() + "\n (서버가 켜져 있는지 확인하세요)", 
-                                "연결 오류", JOptionPane.ERROR_MESSAGE);
-                });
-            }
-        }
-    }
-    
-    // 로그인 실패 시 비밀번호 란 초기화
-    public void resetFieldsForFailure() {
-        jPasswordField1.setText("");
-        jTextFieldID.requestFocusInWindow();
-    }
-    // 현재 시간을 가져와서 ISO 8601 형태로 설정
     private String getTime() {
+        // 현재 시간을 가져와서 ISO 8601 형태로 설정
         return java.time.LocalDateTime.now()
                         .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'    'HH:mm:ss"));
     }
-    
-    // Getter
-    public String getEnteredId() {
-        return jTextFieldID.getText();
-    }
-    public String getEnteredPassword() {
-        return new String(jPasswordField1.getPassword());
-    }
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,7 +64,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jTextFieldID = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButtonLogin = new javax.swing.JButton();
-        jRadioButtonAss = new javax.swing.JRadioButton();
+        jRadioButtonEmp = new javax.swing.JRadioButton();
         jRadioButtonPro = new javax.swing.JRadioButton();
         jRadioButtonStu = new javax.swing.JRadioButton();
         jLabelTime = new javax.swing.JLabel();
@@ -138,13 +83,8 @@ public class LoginGUI extends javax.swing.JFrame {
 
         jButtonLogin.setText("Login");
         jButtonLogin.setActionCommand("jButtonLogin");
-        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoginActionPerformed(evt);
-            }
-        });
 
-        jRadioButtonAss.setText("조교");
+        jRadioButtonEmp.setText("조교");
 
         jRadioButtonPro.setText("교수");
 
@@ -160,19 +100,21 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDetailLayout.createSequentialGroup()
-                        .addComponent(jRadioButtonAss)
+                        .addComponent(jRadioButtonEmp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonPro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonStu))
                     .addGroup(jPanelDetailLayout.createSequentialGroup()
-                        .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelTime)
-                            .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPasswordField1)
-                                .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPasswordField1)
+                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonLogin)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelDetailLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelTime)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelDetailLayout.setVerticalGroup(
@@ -180,7 +122,7 @@ public class LoginGUI extends javax.swing.JFrame {
             .addGroup(jPanelDetailLayout.createSequentialGroup()
                 .addContainerGap(69, Short.MAX_VALUE)
                 .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButtonAss)
+                    .addComponent(jRadioButtonEmp)
                     .addComponent(jRadioButtonPro)
                     .addComponent(jRadioButtonStu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -216,90 +158,6 @@ public class LoginGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        // TODO add your handling code here:
-        
-        // 서버 연결 안됨
-        /* [테스트 용 주석]
-        if (writer == null) {
-            JOptionPane.showMessageDialog(this, "서버와 연결되지 않았습니다. \n 잠시 후 다시 시도해주세요.");
-            return;
-        }
-        */
-        
-        // NullPointerException
-        if ("".equals(getEnteredId().trim()) || "".equals(getEnteredPassword().trim())) {
-            JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 입력해주세요.");
-            return;
-        }
-        
-        // buttonGroupRole [테스트 용]
-        else if (buttonGroupRole.getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "사용자 권한을 선택해주세요.");
-        }
-        
-        // 입력 값 가져오기 
-        String id = getEnteredId();
-        String pw = getEnteredPassword();
-        String role = buttonGroupRole.getSelection().getActionCommand();
-        
-        
-        // 로그인 생성자 
-        User userToSend = new User(id, pw, role);
-        
-        // ----------- [테스트 용 코드] --------------- //
-        System.out.println("[테스트 데이터 호출] ID: " + id + ", PW: " + pw + ", Role: " + role);
-        
-        String response = "로그인 실패: 아이디나 비밀번호를 확인하세요.";
-        
-        // 테스트용 계정 정의 (ID: test / PW: 1234 일 때 무조건 로그인 성공 처리)
-        if ("test".equals(id) && "1234".equals(pw)) {
-            response = "로그인 성공! \n 권한: " + role;
-        }
-        // ------------ [종료] --------------- //
-        
-        /* [테스트 용 주석]
-        try {
-            writer.writeObject(userToSend);
-            writer.flush();
-            
-            // 동기식 처리 
-            Object responseObj = reader.readObject();
-            String response = (String) responseObj;
-            */
-            System.out.println("서버 응답: " + response);
-            
-            // 응답 처리
-            // 성공 시 
-            if (response.startsWith("로그인 성공!")) {
-                JOptionPane.showMessageDialog(this, response);
-                User currentUser = new User(id, "", role);
-                
-                if ("학생".equals(role) || "Stu".equals(role)) {
-                    // 학생 GUI 
-                }
-                else if ("교수".equals(role) || "Pro".equals(role)) {
-                    // 교수 GUI 
-                }
-                else if ("조교".equals(role) || "Ass".equals(role)) {
-                    // 조교 GUI
-                    new AssMainGUI(currentUser);
-                }
-                else if ("관리자".equals(role) || "Man".equals(role)) {
-                    // 관리자 GUI 
-                }
-                this.dispose();     // 창 닫기 
-            }
-        /*}
-         [테스트 용 주석]
-        catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "로그인 처리 중 오류: " + e.getMessage());
-        }
-        */
-        
-    }//GEN-LAST:event_jButtonLoginActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -329,12 +187,12 @@ public class LoginGUI extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, "시스템 테마를 설정할 수 없습니다.", ex);
         }
 
-        /* GUI 쓰레드(Event Dispatch Thread)에서 창 생성 및 표시 */
+        /* 2. GUI 쓰레드(Event Dispatch Thread)에서 창 생성 및 표시 */
         java.awt.EventQueue.invokeLater(() -> {
             LoginGUI loginFrame = new LoginGUI();
             
-            // 실시간 시계 작동 시작 (1초마다 업데이트)
-            // jLabelTime의 텍스트를 매초 갱신
+            // 3. 실시간 시계 작동 시작 (1초마다 업데이트)
+            // 익명 함수를 사용하여 jLabelTime의 텍스트를 매초 갱신합니다.
             new javax.swing.Timer(1000, e -> {
                 loginFrame.jLabelTime.setText(loginFrame.getTime());
             }).start();
@@ -354,7 +212,7 @@ public class LoginGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDetail;
     private javax.swing.JPanel jPanelTitle;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JRadioButton jRadioButtonAss;
+    private javax.swing.JRadioButton jRadioButtonEmp;
     private javax.swing.JRadioButton jRadioButtonPro;
     private javax.swing.JRadioButton jRadioButtonStu;
     private javax.swing.JTextField jTextFieldID;

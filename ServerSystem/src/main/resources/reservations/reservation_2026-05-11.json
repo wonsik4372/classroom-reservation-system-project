@@ -1,0 +1,10 @@
+{
+  "date" : "2026-05-11",
+  "bookings" : [ {
+    "classroomName" : "912호",
+    "time" : "11:00-11:50",
+    "subject" : "자습",
+    "professor" : "송선호",
+    "status" : 2
+  } ]
+}

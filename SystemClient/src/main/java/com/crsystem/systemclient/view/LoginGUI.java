@@ -4,20 +4,16 @@
  */
 package com.crsystem.systemclient.view;
 
+import com.crsystem.common.dto.RequestDTO;
+import com.crsystem.common.dto.ResponseDTO;
+import com.crsystem.systemclient.view.Assistant.AssMainGUI;
 import com.crsystem.systemclient.main.CRSystemClient;
-import com.crsystem.common.dto.UserRequest;
-import com.crsystem.common.dto.UserResponse;
+import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.*;
+import com.crsystem.systemclient.view.Admin.AdminGUI;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+// import javax.swing.ButtonModel;
 
-import javax.swing.ButtonModel;
-
-// 시계 구현시 필요
-import javax.swing.Timer;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 
@@ -30,8 +26,6 @@ public class LoginGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginGUI.class.getName());
     
-    private ObjectOutputStream writer;
-    private ObjectInputStream reader;
     
     // 테스트를 위해 주석 처리 
     // private javax.swing.ButtonGroup roleGroup;
@@ -64,29 +58,6 @@ public class LoginGUI extends javax.swing.JFrame {
         }).start();
     }
     
-    // 서버 연결
-    private class ServerConnectionTask implements Runnable{
-        @Override
-        public void run(){
-            try{
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                java.awt.EventQueue.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(LoginGUI.this,
-                                "서버 연결 실패: " + e.getMessage() + "\n (서버가 켜져 있는지 확인하세요)", 
-                                "연결 오류", JOptionPane.ERROR_MESSAGE);
-                });
-            }
-        }
-    }
-    
-    // 로그인 실패 시 비밀번호 란 초기화
-    public void resetFieldsForFailure() {
-        jPasswordField1.setText("");
-        jTextFieldID.requestFocusInWindow();
-    }
-    
     // button 값 지정 
     private void initRoleRadioButtons() {
 
@@ -96,14 +67,20 @@ public class LoginGUI extends javax.swing.JFrame {
         buttonGroupRole.add(jRadioButtonStu);
         
         // 식별자(ActionCommand) 심기
-        /*
-        jRadioButtonMng.setActionCommand(Role.MANAGER.name());
+        jRadioButtonAdm.setActionCommand(Role.ADMIN.name());
         jRadioButtonAss.setActionCommand(Role.ASSISTANT.name());
         jRadioButtonPro.setActionCommand(Role.PROFESSOR.name());
         jRadioButtonStu.setActionCommand(Role.STUDENT.name());
-        */
+        
        
     }
+       
+    // 로그인 실패 시 비밀번호 란 초기화
+    public void resetFieldsForFailure() {
+        jPasswordField1.setText("");
+        jTextFieldID.requestFocusInWindow();
+    }
+    
     // 현재 시간을 가져와서 ISO 8601 형태로 설정
     private String getTime() {
         return java.time.LocalDateTime.now()
@@ -242,15 +219,6 @@ public class LoginGUI extends javax.swing.JFrame {
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
         
-        // 서버 연결 안됨
-        /* [테스트 용 주석]
-        if (writer == null) {
-            JOptionPane.showMessageDialog(this, "서버와 연결되지 않았습니다. \n 잠시 후 다시 시도해주세요.");
-            return;
-        }
-        */
-        
-        // NullPointerException
         String id = getEnteredId().trim();
         String pw = getEnteredPassword().trim();
 
@@ -259,73 +227,62 @@ public class LoginGUI extends javax.swing.JFrame {
             return; 
         }
 
-        // 2. 권한 선택 검증 (return 필수 추가!)
         if (buttonGroupRole.getSelection() == null) {
             JOptionPane.showMessageDialog(this, "사용자 권한을 선택해주세요.");
-            return; // 여기서 흐름을 끊어줘야 아래에서 에러가 안 납니다.
+            return;
         }
         
-        // 입력 값 가져오기           
-        String roleString = buttonGroupRole.getSelection().getActionCommand(); // 예: "ASSISTANT"
-    
-        UserRequest userToSend = new UserRequest(id, pw);
+        // 입력받은 권한 및 데이터 준비
+        String roleString = buttonGroupRole.getSelection().getActionCommand();
+        Role selectedRole = Role.valueOf(roleString);
         
-        // ----------- [테스트 용 코드] --------------- //
-        System.out.println("[테스트 데이터 호출] ID: " + id + ", PW: " + pw + ", Role: " + roleString);
+        // Payload 생성
+        UserDTO.Request loginPayload = new UserDTO.Request();
+        loginPayload.setId(id);
+        loginPayload.setPw(pw);
         
-        String response = "로그인 실패: 아이디나 비밀번호를 확인하세요.";
-        
-        // 테스트용 계정 정의 (ID: test / PW: 1234 일 때 무조건 로그인 성공 처리)
-        if ("test".equals(id) && "1234".equals(pw)) {
-            response = "로그인 성공! \n 권한: " + roleString;
-        }
-        // ------------ [종료] --------------- //
-        
-        /* [테스트 용 주석]
-        try {
-            writer.writeObject(userToSend);
-            writer.flush();
-            
-            // 동기식 처리 
-            Object responseObj = reader.readObject();
-            String response = (String) responseObj;
-            */
-            System.out.println("서버 응답: " + response);
-            
-            // 응답 처리
-            // 성공 시 
-            if (response.startsWith("로그인 성공!")) {
-                JOptionPane.showMessageDialog(this, response);
+        // Envelope 생성
+        RequestDTO envelope = new RequestDTO("LOGIN", loginPayload);
 
-                // String을 Enum으로 변환
-                Role role = Role.valueOf(roleString); 
-                UserResponse currentUser = new UserResponse(role);
+        // 비동기 통신 요청
+        CRSystemClient.getInstance().sendRequest(envelope, 
+            (ResponseDTO response) -> {
+                // --- 통신 성공 시 (서버 응답 도착) ---
+                if ("SUCCESS".equals(response.getResult())) {
+                    // 성공 시 사용자 정보 추출
+                    UserDTO.Response userInfo = (UserDTO.Response) response.getPayload();
+                    
+                    // 권한 검사 필요시 작성 
+                    
+                    JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
 
-                
-                if (role == Role.STUDENT) {
-                    // 학생 GUI 
-                } 
-                else if (role == Role.PROFESSOR || role == Role.ASSISTANT) {
-                    // 교수 GUI 
-                } 
-                else if (role == Role.ASSISTANT) {
-                    // 조교 GUI
-                    new AssMainGUI();
-                } 
-                else if (role == Role.ADMIN) {
-                    // 관리자 GUI 
+                    // 권한별 GUI 분기 
+                    switch (userInfo.getRole()) {
+                        case STUDENT:
+                            // new StudentGUI().setVisible(true);
+                            break;
+                        case PROFESSOR:
+                            // new ProfessorGUI().setVisible(true);
+                            break;
+                        case ASSISTANT:
+                            new AssMainGUI().setVisible(true);
+                            break;
+                        case ADMIN:
+                            new AdminGUI().setVisible(true);
+                            break;
+                    }
+                    this.dispose(); // 로그인 창 닫기
+                } else {
+                    // --- 서버 비즈니스 로직 상 실패  ---
+                    JOptionPane.showMessageDialog(this, response.getMessage(), "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                    resetFieldsForFailure();
                 }
-
-                this.dispose(); // 로그인 창 닫기 
+            }, 
+            (String errorMessage) -> {
+                // --- 네트워크 통신 자체가 실패했을 때 ---
+                JOptionPane.showMessageDialog(this, errorMessage, "네트워크 오류", JOptionPane.ERROR_MESSAGE);
             }
-        /*}
-         [테스트 용 주석]
-        catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "로그인 처리 중 오류: " + e.getMessage());
-        }
-        */
-        
+        );
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**

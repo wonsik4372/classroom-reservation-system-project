@@ -1,15 +1,18 @@
 
 package com.crsystem.systemclient.main;
 
+import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.view.LoginGUI;
 import javax.swing.JOptionPane;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import javax.swing.SwingUtilities;
+import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.io.ObjectOutputStream; 
-import java.io.ObjectInputStream; 
-import java.util.List;
+import java.util.Properties;
+import java.util.function.Consumer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,106 +24,116 @@ import java.util.List;
  * @author wonsik
  */
 public class CRSystemClient {
-    
-    /**
-     * @param args the command line arguments
-     */
-    
+
+    // 싱글톤 인스턴스
+    private static CRSystemClient instance;
+
     private String serverIp;
     private int serverPort;
     private Socket socket;
     private ObjectOutputStream writer;
     private ObjectInputStream reader;
-    
-    public CRSystemClient() {
-        // 기본값 설정 
-        this.serverIp = "127.0.0.1";
-        this.serverPort = 9998;
+
+    // 외부에서 객체 생성 차단
+    private CRSystemClient() {}
+
+    // 인스턴스 접근 메서드
+    public static CRSystemClient getInstance() {
+        if (instance == null) {
+            instance = new CRSystemClient();
+        }
+        return instance;
     }
-    
+
     public static void main(String[] args) {
-        CRSystemClient client = new CRSystemClient();
-        
+        CRSystemClient client = CRSystemClient.getInstance();
+
         try {
             // 서버 연결 시도
             client.connectToServer();            
-            // 연결 성공 시 LoginGUI 실행
-            java.awt.EventQueue.invokeLater(() -> {
-                // LoginGUI 생성자에 writer와 reader를 넘김 
+
+            // 성공 시 LoginGUI 실행
+            SwingUtilities.invokeLater(() -> {
                 new LoginGUI().setVisible(true);
             });            
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, 
                 "서버에 연결할 수 없습니다.\n" + e.getMessage(), 
                 "연결 실패", JOptionPane.ERROR_MESSAGE);
-            // 연결 실패 시 프로그램 종료
             System.exit(1); 
         }
     }
 
-    // 설정 파일 로드
-    public void loadConfigFile(){
-        try(BufferedReader reader = new BufferedReader(new FileReader("config.txt"))){
-            String line;
-            while((line=reader.readLine()) != null){
-                if(line.startsWith("server_ip=")){
-                    this.serverIp = line.split("=")[1];                                      
-                }
-                else if(line.startsWith("server_port=")){
-                    this.serverPort = Integer.parseInt(line.split("=")[1]);
-                }
-            }
-        }
-        catch(Exception e){
-            System.err.println("config.txt 로드 실패, 기본값 사용: " + e.getMessage());
+    // ====================
+    // 설정 로드 및 네트워크 초기화
+    // ====================
+
+    private void loadProperties() throws IOException {
+        Properties props = new Properties();
+        // 루트 디렉토리의 application.properties 파일을 읽음
+        try (InputStream input = new FileInputStream("application.properties")) {
+            props.load(input);
+            this.serverIp = props.getProperty("server.ip", "127.0.0.1"); // 없으면 기본값
+            this.serverPort = Integer.parseInt(props.getProperty("server.port", "9998"));
         }
     }
 
-    // 서버 연결 및 스트림 초기화
-    public void connectToServer() throws IOException {
-        // 설정 로드
-        loadConfigFile(); 
-        
-        // 소켓 연결
+    public void connectToServer() throws Exception {
+        loadProperties(); 
+
         System.out.println("서버 연결 시도: " + serverIp + ":" + serverPort);
         this.socket = new Socket(serverIp, serverPort);
-        
-        //스트림 생성
+
+        // 데드락 방지를 위해 반드시 OutputStream 먼저 생성 및 flush
         this.writer = new ObjectOutputStream(socket.getOutputStream());
         this.writer.flush();
         this.reader = new ObjectInputStream(socket.getInputStream());
-        
+
         System.out.println("네트워크 연결 및 스트림 설정 완료.");
     }
-    
-    public void setupNetworking() {
-        loadConfigFile(); // IP와 Port를 먼저 로드
-        
-        try {
-            this.socket = new Socket(serverIp, serverPort);
-            
-            this.writer = new ObjectOutputStream(socket.getOutputStream());
-            this.writer.flush();
-            this.reader = new ObjectInputStream(socket.getInputStream());
-            
-            System.out.println("네트워크 연결 및 스트림 설정 완료.");
 
-        } catch (IOException e) {
-            System.err.println("네트워크 설정 오류: 서버 연결 실패 또는 스트림 초기화 오류.");
-            e.printStackTrace();
-            // 오류 발생 시 writer/reader는 null 상태.
+    // ====================
+    // 비동기 통신 로직 (프리징 방지)
+    // ====================
+
+    /**
+     * @param request 서버로 보낼 DTO 객체
+     * @param onSuccess 통신 성공 시 GUI를 갱신할 콜백 함수
+     * @param onFailure 통신 실패 시 에러 메시지를 띄울 콜백 함수
+     */
+    public void sendRequest(Object request, Consumer<ResponseDTO> onSuccess, Consumer<String> onFailure) {
+        if (socket == null || socket.isClosed() || writer == null || reader == null) {
+            onFailure.accept("네트워크가 연결되어 있지 않습니다.");
+            return;
         }
+
+        // 백그라운드 스레드에서 I/O 블로킹 처리
+        new Thread(() -> {
+            try {
+                // 요청 전송
+                writer.writeObject(request);
+                writer.flush();
+
+                // 응답 대기
+                Object responseObj = reader.readObject();
+
+                // 성공 콜백 실행
+                if (responseObj instanceof ResponseDTO) {
+                    ResponseDTO response = (ResponseDTO) responseObj;
+                    SwingUtilities.invokeLater(() -> onSuccess.accept(response));
+                } else {
+                    SwingUtilities.invokeLater(() -> onFailure.accept("알 수 없는 응답 객체입니다."));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                SwingUtilities.invokeLater(() -> onFailure.accept("통신 중 오류 발생: " + e.getMessage()));
+            }
+        }).start();
     }
 
-    // Getter
-    public ObjectOutputStream getWriter() { return this.writer; }
-    public ObjectInputStream getReader() { return this.reader; }
-    public String getServerIp() { return this.serverIp; }
-    public int getServerPort() { return this.serverPort; }
-    
-    // 자원 해제 (필요시 호출)
+    // 자원 해제
     public void close() {
         try {
             if (writer != null) writer.close();
@@ -128,29 +141,6 @@ public class CRSystemClient {
             if (socket != null) socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-    
-    public Object send(Object request) {
-
-        // 네트워크가 아직 안 열려 있으면 먼저 연결
-        if (socket == null || socket.isClosed() || writer == null || reader == null) {
-            setupNetworking();
-        }
-
-        try {
-            // 1) 서버로 객체 전송
-            writer.writeObject(request);
-            writer.flush();
-
-            // 2) 서버 응답 수신
-            Object response = reader.readObject();
-            return response;
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("서버 통신 중 오류: " + e.getMessage());
-            e.printStackTrace();
-            return null;   // GUI 쪽에서 null 체크해서 에러 메시지 보여주면 됨
         }
     }
 }

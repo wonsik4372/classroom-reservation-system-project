@@ -58,4 +58,9 @@ public class User {
         return this.pw.equals(pw);
     }
     
+    // 사용자가 관리자인지 검증 | 삭제 금지 
+    public boolean isAdmin() {
+        return "admin".equals(this.id) || this.role == Role.ADMIN; 
+    }
+    
 }

@@ -1,10 +1,16 @@
-// 예약 정보 제공용 데이터 모델
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.crsystem.common.dto;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * @author wonsik
+ */
 public class ReservationInfo {
-
     public LocalDate date;      // 예약 날짜
     public String day;          // 요일
     public String periodInfo;   // 예약된 시간(교시)

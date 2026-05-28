@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class ResponseDTO implements Serializable {
     private String message;    // 텍스트 메시지 ("가입 성공", "비밀번호 틀림" 등)
     private String result;
-    private Object payload;  // 클라이언트에게 줄 데이터 (ex. UserDto.Response 객체)
+    private Object payload;  // 클라이언트에게 줄 데이터 (예: UserDto.Response 객체)
     private boolean isSuccess;
     
     public ResponseDTO(){}

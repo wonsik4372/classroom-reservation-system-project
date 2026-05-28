@@ -7,6 +7,7 @@ package com.crsystem.systemserver.model;
 import com.crsystem.systemserver.model.User;
 import com.crsystem.systemserver.dao.UserFileManager;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * 사용자 목록 
@@ -20,7 +21,16 @@ public class UserCatalog {
         System.out.println("Catalog 초기화 완료. 현재 회원 수: " + userList.size());
     }
     
+    // ====================
+    // 목록 복사본 불러오기
+    // ====================
+    public List<User> getAllUsers() {
+        return new ArrayList<>(this.userList);
+    }
+    
+    // ====================
     // id에 해당하는 user 찾기
+    // ====================
     public User findUser(String id){
         for(User user : userList){
             if(user.getId().equals(id)) {

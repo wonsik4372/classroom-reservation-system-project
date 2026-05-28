@@ -4,6 +4,9 @@
  */
 package com.crsystem.systemserver.main;
 
+import com.crsystem.common.dto.RequestDTO;
+import com.crsystem.common.dto.ResponseDTO;
+import com.crsystem.systemserver.controller.MainController;
 import com.crsystem.systemserver.controller.RequestHandler;
 
 import java.io.ObjectInputStream;
@@ -20,62 +23,56 @@ import java.util.HashMap;
 // import Common.model.*;
 
 
-public class ClientHandler implements Runnable {    // Runnable: 멀티 스레드 
+public class ClientHandler implements Runnable {   
     private Socket clientSocket;
-    
-    ObjectOutputStream out;
-    ObjectInputStream in;
-  
-    
-    private HashMap<Class<?>, RequestHandler> commandMap;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
+    // socket만 받아서 처리 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
-        try{
+        try {
             this.out = new ObjectOutputStream(socket.getOutputStream());
             this.out.flush();
             this.in = new ObjectInputStream(socket.getInputStream());
-        }
-        catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
-        // 라우팅 테이블 
-        this.commandMap = new HashMap(); 
-        
     }
     
-    // 모든 통신 처리
     @Override
     public void run() {
         Object requestObject;
-        try{
-            while ((requestObject = in.readObject())!=null){
-                RequestHandler requestHandler = commandMap.get(requestObject.getClass());               
-                if(requestHandler != null){
-                    requestHandler.process(requestObject, out);
-                    try {
-                        out.reset(); // ObjectOutputStream 재사용의 핵심
-                    } catch (IOException resetException) {
-                        System.err.println("ObjectOutputStream reset 오류: " + resetException.getMessage());
-                    }
-                }
-                else{
-                    out.writeObject("오류: 처리할 수 없는 요청 객체입니다.");
+        try {
+            while ((requestObject = in.readObject()) != null) {
+                
+                // 받은 데이터 형 검증 
+                if (requestObject instanceof RequestDTO) {
+                    RequestDTO req = (RequestDTO) requestObject;
+                    
+                    // 책임 위임 
+                    ResponseDTO res = MainController.handleRequest(req);
+                    
+                    // 결과 전송 
+                    out.writeObject(res);
                     out.flush(); 
+                    out.reset(); // 캐시 지우기
+                } 
+                else {
+                    // 비정상적인 객체가 날아온 경우의 방어 로직
+                    ResponseDTO errorRes = new ResponseDTO();
+                    errorRes.setResult("FAIL");
+                    errorRes.setMessage("오류: 처리할 수 없는 요청 규격입니다.");
+                    out.writeObject(errorRes);
+                    out.flush();
                     out.reset();
                 }
             }
-        }
-        catch (IOException e) {
-            // 클라이언트가 정상 종료하면 이쪽으로 옵니다 (EOFException).
-            System.out.println("클라이언트 연결이 종료되었습니다: " + e.getMessage());
-        }
-        catch (ClassNotFoundException e) {
-            // 서버에 클래스(.class) 파일이 없을 때 발생합니다.
-            System.err.println("클래스 불일치 오류: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("클라이언트 연결 종료: " + clientSocket.getInetAddress());
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } 
-        finally {
+        } finally {
             try {
                 if (in != null) in.close();
                 if (out != null) out.close();
@@ -83,7 +80,7 @@ public class ClientHandler implements Runnable {    // Runnable: 멀티 스레�
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("핸들러 스레드 종료됨.");
+            System.out.println("핸들러 스레드 반환됨.");
         }
     }
 }

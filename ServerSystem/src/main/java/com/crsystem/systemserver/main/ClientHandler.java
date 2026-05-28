@@ -4,7 +4,7 @@
  */
 package com.crsystem.systemserver.main;
 
-import com.crsystem.systemserver.service.RequestHandler;
+import com.crsystem.systemserver.controller.RequestHandler;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

@@ -1,6 +1,8 @@
 package com.crsystem.systemclient.view;
 
-import com.crsystem.common.model.User;
+import com.crsystem.common.dto.UserRequest;
+
+import com.crsystem.common.enums.Role;
 
 // 시계 구현시 필요
 import javax.swing.Timer;
@@ -20,11 +22,11 @@ public class AssMainGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AssMainGUI.class.getName());
     
-    private User currentUser;
+    private UserRequest currentUser;
     /**
      * Creates new form AssMainGUI
      */
-    public AssMainGUI(User user) {
+    public AssMainGUI() {
         initComponents();
         
         // 시계 생성
@@ -155,8 +157,8 @@ public class AssMainGUI extends javax.swing.JFrame {
         /* GUI 쓰레드(Event Dispatch Thread)에서 창 생성 및 표시 */
         java.awt.EventQueue.invokeLater(() -> {
             
-            User dummyUser = new User("test", "1234", "조교");
-            new AssMainGUI(dummyUser).setVisible(true);  
+            UserRequest dummyUser = new UserRequest(Role.ASSISTANT, "test", "1234");
+            new AssMainGUI().setVisible(true);  
         });
     }
 

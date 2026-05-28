@@ -4,7 +4,7 @@
  */
 package com.crsystem.systemclient.view;
 
-import com.crsystem.common.model.ReservationInfo;
+import com.crsystem.common.dto.ReservationInfo;
 
 /**
  *

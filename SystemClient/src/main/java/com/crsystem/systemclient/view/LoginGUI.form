@@ -74,13 +74,6 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jRadioButtonAss" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jRadioButtonPro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jRadioButtonStu" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabelTime" min="-2" max="-2" attributes="0"/>
@@ -91,6 +84,15 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonLogin" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jRadioButtonAdm" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonAss" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonPro" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonStu" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -105,6 +107,7 @@
                       <Component id="jRadioButtonAss" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButtonPro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButtonStu" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jRadioButtonAdm" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -159,6 +162,11 @@
         <Component class="javax.swing.JLabel" name="jLabelTime">
           <Properties>
             <Property name="text" type="java.lang.String" value="Current Time"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonAdm">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xad00;&#xb9ac;&#xc790;"/>
           </Properties>
         </Component>
       </SubComponents>

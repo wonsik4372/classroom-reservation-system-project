@@ -1,5 +1,5 @@
 // 예약 정보 제공용 데이터 모델
-package com.crsystem.common.model;
+package com.crsystem.common.dto;
 
 import java.time.LocalDate;
 

@@ -5,16 +5,21 @@
 package com.crsystem.systemclient.view;
 
 import com.crsystem.systemclient.main.CRSystemClient;
-import com.crsystem.common.model.User;
+import com.crsystem.common.dto.UserRequest;
+import com.crsystem.common.dto.UserResponse;
+import com.crsystem.common.enums.*;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import javax.swing.ButtonModel;
 
 // 시계 구현시 필요
 import javax.swing.Timer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+
 
 
 /**
@@ -42,14 +47,8 @@ public class LoginGUI extends javax.swing.JFrame {
         // Thread connectionThread = new Thread(new LoginGUI.ServerConnectionTask());
         // connectionThread.start();
         
-        // 권한 중 하나만 선택 가능하도록 ButtonGroup 지정
-        buttonGroupRole.add(jRadioButtonAss);
-        buttonGroupRole.add(jRadioButtonPro);
-        buttonGroupRole.add(jRadioButtonStu);
-        
-        jRadioButtonAss.setActionCommand("조교");
-        jRadioButtonPro.setActionCommand("교수");
-        jRadioButtonStu.setActionCommand("학생");
+        // btn 설정 
+        initRoleRadioButtons();
         
         // 초기 사이즈 설정
         this.setSize(550, 350);
@@ -87,6 +86,24 @@ public class LoginGUI extends javax.swing.JFrame {
         jPasswordField1.setText("");
         jTextFieldID.requestFocusInWindow();
     }
+    
+    // button 값 지정 
+    private void initRoleRadioButtons() {
+
+        buttonGroupRole.add(jRadioButtonAdm);
+        buttonGroupRole.add(jRadioButtonAss);
+        buttonGroupRole.add(jRadioButtonPro);
+        buttonGroupRole.add(jRadioButtonStu);
+        
+        // 식별자(ActionCommand) 심기
+        /*
+        jRadioButtonMng.setActionCommand(Role.MANAGER.name());
+        jRadioButtonAss.setActionCommand(Role.ASSISTANT.name());
+        jRadioButtonPro.setActionCommand(Role.PROFESSOR.name());
+        jRadioButtonStu.setActionCommand(Role.STUDENT.name());
+        */
+       
+    }
     // 현재 시간을 가져와서 ISO 8601 형태로 설정
     private String getTime() {
         return java.time.LocalDateTime.now()
@@ -123,6 +140,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jRadioButtonPro = new javax.swing.JRadioButton();
         jRadioButtonStu = new javax.swing.JRadioButton();
         jLabelTime = new javax.swing.JLabel();
+        jRadioButtonAdm = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,6 +170,8 @@ public class LoginGUI extends javax.swing.JFrame {
 
         jLabelTime.setText("Current Time");
 
+        jRadioButtonAdm.setText("관리자");
+
         javax.swing.GroupLayout jPanelDetailLayout = new javax.swing.GroupLayout(jPanelDetail);
         jPanelDetail.setLayout(jPanelDetailLayout);
         jPanelDetailLayout.setHorizontalGroup(
@@ -160,19 +180,21 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDetailLayout.createSequentialGroup()
-                        .addComponent(jRadioButtonAss)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonPro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonStu))
-                    .addGroup(jPanelDetailLayout.createSequentialGroup()
                         .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelTime)
                             .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jPasswordField1)
                                 .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonLogin)))
+                        .addComponent(jButtonLogin))
+                    .addGroup(jPanelDetailLayout.createSequentialGroup()
+                        .addComponent(jRadioButtonAdm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonAss)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonPro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonStu)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelDetailLayout.setVerticalGroup(
@@ -182,7 +204,8 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonAss)
                     .addComponent(jRadioButtonPro)
-                    .addComponent(jRadioButtonStu))
+                    .addComponent(jRadioButtonStu)
+                    .addComponent(jRadioButtonAdm))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,33 +251,33 @@ public class LoginGUI extends javax.swing.JFrame {
         */
         
         // NullPointerException
-        if ("".equals(getEnteredId().trim()) || "".equals(getEnteredPassword().trim())) {
-            JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 입력해주세요.");
-            return;
+        String id = getEnteredId().trim();
+        String pw = getEnteredPassword().trim();
+
+        if (id.isEmpty() || pw.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호를 입력해주세요.");
+            return; 
+        }
+
+        // 2. 권한 선택 검증 (return 필수 추가!)
+        if (buttonGroupRole.getSelection() == null) {
+            JOptionPane.showMessageDialog(this, "사용자 권한을 선택해주세요.");
+            return; // 여기서 흐름을 끊어줘야 아래에서 에러가 안 납니다.
         }
         
-        // buttonGroupRole [테스트 용]
-        else if (buttonGroupRole.getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "사용자 권한을 선택해주세요.");
-        }
-        
-        // 입력 값 가져오기 
-        String id = getEnteredId();
-        String pw = getEnteredPassword();
-        String role = buttonGroupRole.getSelection().getActionCommand();
-        
-        
-        // 로그인 생성자 
-        User userToSend = new User(id, pw, role);
+        // 입력 값 가져오기           
+        String roleString = buttonGroupRole.getSelection().getActionCommand(); // 예: "ASSISTANT"
+    
+        UserRequest userToSend = new UserRequest(id, pw);
         
         // ----------- [테스트 용 코드] --------------- //
-        System.out.println("[테스트 데이터 호출] ID: " + id + ", PW: " + pw + ", Role: " + role);
+        System.out.println("[테스트 데이터 호출] ID: " + id + ", PW: " + pw + ", Role: " + roleString);
         
         String response = "로그인 실패: 아이디나 비밀번호를 확인하세요.";
         
         // 테스트용 계정 정의 (ID: test / PW: 1234 일 때 무조건 로그인 성공 처리)
         if ("test".equals(id) && "1234".equals(pw)) {
-            response = "로그인 성공! \n 권한: " + role;
+            response = "로그인 성공! \n 권한: " + roleString;
         }
         // ------------ [종료] --------------- //
         
@@ -273,22 +296,27 @@ public class LoginGUI extends javax.swing.JFrame {
             // 성공 시 
             if (response.startsWith("로그인 성공!")) {
                 JOptionPane.showMessageDialog(this, response);
-                User currentUser = new User(id, "", role);
+
+                // String을 Enum으로 변환
+                Role role = Role.valueOf(roleString); 
+                UserResponse currentUser = new UserResponse(role);
+
                 
-                if ("학생".equals(role) || "Stu".equals(role)) {
+                if (role == Role.STUDENT) {
                     // 학생 GUI 
-                }
-                else if ("교수".equals(role) || "Pro".equals(role)) {
+                } 
+                else if (role == Role.PROFESSOR || role == Role.ASSISTANT) {
                     // 교수 GUI 
-                }
-                else if ("조교".equals(role) || "Ass".equals(role)) {
+                } 
+                else if (role == Role.ASSISTANT) {
                     // 조교 GUI
-                    new AssMainGUI(currentUser);
-                }
-                else if ("관리자".equals(role) || "Man".equals(role)) {
+                    new AssMainGUI();
+                } 
+                else if (role == Role.ADMIN) {
                     // 관리자 GUI 
                 }
-                this.dispose();     // 창 닫기 
+
+                this.dispose(); // 로그인 창 닫기 
             }
         /*}
          [테스트 용 주석]
@@ -354,6 +382,7 @@ public class LoginGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDetail;
     private javax.swing.JPanel jPanelTitle;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JRadioButton jRadioButtonAdm;
     private javax.swing.JRadioButton jRadioButtonAss;
     private javax.swing.JRadioButton jRadioButtonPro;
     private javax.swing.JRadioButton jRadioButtonStu;

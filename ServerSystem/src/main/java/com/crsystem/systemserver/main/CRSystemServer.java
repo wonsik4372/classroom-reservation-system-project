@@ -51,7 +51,7 @@ public class CRSystemServer {
         
                 
         try(ServerSocket serverSocket = new ServerSocket(this.serverPort)){
-            System.out.println("호텔 관리 서버가 시작되었습니다. (포트: " + this.serverPort + ")");
+            System.out.println("강의실 예약 서버가 시작되었습니다. (포트: " + this.serverPort + ")");
             
             while(true) {
                 // 클라이언트 연결 대기 

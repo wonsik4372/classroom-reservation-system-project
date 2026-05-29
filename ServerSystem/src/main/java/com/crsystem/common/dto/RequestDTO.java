@@ -4,11 +4,15 @@
  */
 package com.crsystem.common.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author wonsik
  */
-public class RequestDTO {
+public class RequestDTO implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
     private String command;  // 작업이름 (예: "LOGIN")
     private Object payload;  // 데이터 (ex. UserDto.Request 객체)
 

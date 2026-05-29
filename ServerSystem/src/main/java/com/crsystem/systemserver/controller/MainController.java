@@ -34,9 +34,7 @@ public class MainController {
         // ==========================================
         // 1. [AuthService 위임]
         // ==========================================
-        commandMap.put("LOGIN", req -> 
-            AuthService.getInstance().processLogin((UserDTO.Request) req.getPayload())
-        );
+        commandMap.put("LOGIN", req -> AuthService.getInstance().processLogin((UserDTO.Request) req.getPayload()));
         // ServerController.java 의 static 블록 내부
         commandMap.put("GET_USER_LIST", req -> UserService.getInstance().getUserList());
         commandMap.put("ADD_USER", req -> UserService.getInstance().addUser((UserDTO.Request) req.getPayload()));

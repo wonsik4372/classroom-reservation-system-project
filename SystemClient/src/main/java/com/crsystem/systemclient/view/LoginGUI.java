@@ -6,15 +6,16 @@ package com.crsystem.systemclient.view;
 
 import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
-import com.crsystem.systemclient.view.Assistant.AssMainGUI;
 import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.*;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
+import com.crsystem.systemclient.view.Assistant.AssistantGUI;
 
 // import javax.swing.ButtonModel;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 
@@ -236,10 +237,23 @@ public class LoginGUI extends javax.swing.JFrame {
         String roleString = buttonGroupRole.getSelection().getActionCommand();
         Role selectedRole = Role.valueOf(roleString);
         
+        if (selectedRole == Role.PROFESSOR || selectedRole == Role.ASSISTANT) {
+            if (!id.matches("^\\d{5}$")) {
+                JOptionPane.showMessageDialog(this, "교수 및 조교의 ID는 5자리 숫자여야 합니다.", "형식 오류", JOptionPane.WARNING_MESSAGE);
+                return; // 형식에 맞지 않으면 서버로 보내지 않고 바로 종료
+            }
+        } else if (selectedRole == Role.STUDENT) {
+            if (!id.matches("^\\d{8}$")) {
+                JOptionPane.showMessageDialog(this, "학생의 ID는 8자리 숫자여야 합니다.", "형식 오류", JOptionPane.WARNING_MESSAGE);
+                return; 
+            }
+        }
+        
         // Payload 생성
         UserDTO.Request loginPayload = new UserDTO.Request();
         loginPayload.setId(id);
         loginPayload.setPw(pw);
+        loginPayload.setRole(selectedRole); // 내가 선택한 권한을 서버로 전송
         
         // Envelope 생성
         RequestDTO envelope = new RequestDTO("LOGIN", loginPayload);
@@ -248,39 +262,51 @@ public class LoginGUI extends javax.swing.JFrame {
         CRSystemClient.getInstance().sendRequest(envelope, 
             (ResponseDTO response) -> {
                 // --- 통신 성공 시 (서버 응답 도착) ---
-                if ("SUCCESS".equals(response.getResult())) {
+                if (response.isSuccess()) {
                     // 성공 시 사용자 정보 추출
                     UserDTO.Response userInfo = (UserDTO.Response) response.getPayload();
                     
                     // 권한 검사 필요시 작성 
-                    
-                    JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
-
-                    // 권한별 GUI 분기 
-                    switch (userInfo.getRole()) {
-                        case STUDENT:
-                            // new StudentGUI().setVisible(true);
-                            break;
-                        case PROFESSOR:
-                            // new ProfessorGUI().setVisible(true);
-                            break;
-                        case ASSISTANT:
-                            new AssMainGUI().setVisible(true);
-                            break;
-                        case ADMIN:
-                            new AdminGUI().setVisible(true);
-                            break;
-                    }
-                    this.dispose(); // 로그인 창 닫기
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
+                        
+                        Role displayRole = userInfo.getRole();
+                        
+                        // 실제 계정은 조교인데 교직원(교수)을 선택해 성공했다면 교수 화면으로 우회
+                        if (userInfo.getRole() == Role.ASSISTANT && selectedRole == Role.PROFESSOR) {
+                            displayRole = Role.PROFESSOR;
+                        }
+                        
+                        // 권한별 GUI 분기 
+                        switch (displayRole) {
+                            case STUDENT:
+                                // new StudentGUI().setVisible(true);
+                                break;
+                            case PROFESSOR:
+                                // new ProfessorGUI().setVisible(true);
+                                break;
+                            case ASSISTANT:
+                                new AssistantGUI(userInfo).setVisible(true);
+                                break;
+                            case ADMIN:
+                                new AdminGUI().setVisible(true);
+                                break;
+                        }
+                        this.dispose(); // 로그인 창 닫기
+                    });
                 } else {
                     // --- 서버 비즈니스 로직 상 실패  ---
-                    JOptionPane.showMessageDialog(this, response.getMessage(), "로그인 실패", JOptionPane.WARNING_MESSAGE);
-                    resetFieldsForFailure();
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, response.getMessage(), "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                        resetFieldsForFailure();
+                    });
                 }
             }, 
             (String errorMessage) -> {
                 // --- 네트워크 통신 자체가 실패했을 때 ---
-                JOptionPane.showMessageDialog(this, errorMessage, "네트워크 오류", JOptionPane.ERROR_MESSAGE);
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, errorMessage, "네트워크 오류", JOptionPane.ERROR_MESSAGE);
+                });
             }
         );
     }//GEN-LAST:event_jButtonLoginActionPerformed

@@ -25,9 +25,12 @@ public class User {
     
     // 관리자가 사용자 추가를 위한 생성자 
     public User(String id, Role role, String name){
+        validateIdFormat(role, id);
+        
         this.id = id;
         this.role = role;
         this.name = name;       
+        this.pw = id;
     }
     
     // Getter
@@ -53,6 +56,23 @@ public class User {
     }
     
     // Method
+    // ID 유효성 검사
+    private void validateIdFormat(Role role, String id) {
+        if (role == Role.PROFESSOR || role == Role.ASSISTANT) {
+            if (!id.matches("^\\d{5}$")) {
+                throw new IllegalArgumentException("가입 실패: 교직원 ID는 5자리 숫자여야 합니다.");
+            }
+        } else if (role == Role.STUDENT) {
+            if (!id.matches("^\\d{8}$")) {
+                throw new IllegalArgumentException("가입 실패: 학생 ID는 8자리 숫자여야 합니다.");
+            }
+        } else if (role == Role.ADMIN) {
+            if (!id.matches("^[a-zA-Z0-9]{4,10}$")) {
+                throw new IllegalArgumentException("가입 실패: 관리자 ID는 4~10자리 영문/숫자여야 합니다.");
+            }
+        }
+    }
+    
     // 비번 검증 
     public boolean verifyPassword(String pw) {
         return this.pw.equals(pw);

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 /**
- *
+ * 서버 메인
  * @author wonsik
  */
 public class CRSystemServer {

@@ -13,6 +13,8 @@ import java.io.Serializable;
  * @author wonsik
  */
 public class ResponseDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private String message;    // 텍스트 메시지 ("가입 성공", "비밀번호 틀림" 등)
     private String result;
     private Object payload;  // 클라이언트에게 줄 데이터 (ex. UserDto.Response 객체)
@@ -45,7 +47,7 @@ public class ResponseDTO implements Serializable {
         return payload;
     }
     
-    public boolean getIsSuccess() {
+    public boolean isSuccess() {
         return isSuccess;
     }
     

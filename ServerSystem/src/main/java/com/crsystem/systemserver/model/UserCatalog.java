@@ -39,6 +39,7 @@ public class UserCatalog {
         }
         return null;
     }
+    
     // ====================
     // 사용자 추가 
     // ====================
@@ -52,6 +53,7 @@ public class UserCatalog {
         System.out.println("추가 성공! : (" + user.getId() + " : " +user.getName() + ") 이 삭제되었습니다. ");
         return true;
     }
+    
     // ====================
     // 사용자 삭제 
     // ====================

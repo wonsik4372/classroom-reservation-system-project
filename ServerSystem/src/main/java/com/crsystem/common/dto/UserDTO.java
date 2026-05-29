@@ -14,6 +14,8 @@ import java.io.Serializable;
 public class UserDTO {
     
     public static class Request implements Serializable {
+        private static final long serialVersionUID = 1L;
+        
         private String actionType;
         private String id;
         private String pw;
@@ -53,6 +55,8 @@ public class UserDTO {
     }
     
     public static class Response implements Serializable {
+        private static final long serialVersionUID = 1L;
+        
         private Role role;
         private String id;
         private String name;

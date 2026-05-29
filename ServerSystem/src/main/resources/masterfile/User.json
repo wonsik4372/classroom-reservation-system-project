@@ -1,6 +1,26 @@
-{
-    "role" : "ADMIN",
-    "id" : "admin",
-    "password" : "admin",
-    "name" : "admin"
-}
+[
+  {
+    "id": "12345",
+    "pw": "12345",
+    "name": "관리자",
+    "role": "ADMIN"
+  },
+  {
+    "id": "23456",
+    "pw": "23456",
+    "name": "김조교",
+    "role": "ASSISTANT"
+  },
+  {
+    "id": "34567",
+    "pw": "34567",
+    "name": "김교수",
+    "role": "PROFESSOR"
+  },
+  {
+    "id": "00000001",
+    "pw": "00000001",
+    "name": "김학생",
+    "role": "STUDENT"
+  }
+]

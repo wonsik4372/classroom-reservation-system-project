@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
 package com.crsystem.systemclient.main;
 
 import com.crsystem.common.dto.ResponseDTO;
@@ -14,13 +17,9 @@ import java.net.Socket;
 import java.util.Properties;
 import java.util.function.Consumer;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 
 /**
- *
+ * 클라이언트 메인 
  * @author wonsik
  */
 public class CRSystemClient {

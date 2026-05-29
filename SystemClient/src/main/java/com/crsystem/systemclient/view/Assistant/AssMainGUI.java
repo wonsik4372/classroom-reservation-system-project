@@ -15,18 +15,33 @@ public class AssMainGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AssMainGUI.class.getName());
     
-    private UserDTO currentUser;
+    private UserDTO.Response currentUser;
     /**
      * Creates new form AssMainGUI
      */
     public AssMainGUI() {
         initComponents();
+    }
+    public AssMainGUI(UserDTO.Response loggedInUser) {
+        this.currentUser = loggedInUser;
+        initComponents();
+        initCustomSettings();
         
-        // 시계 생성
+        this.setTitle("조교 메인 시스템 - [" + currentUser.getName() + "]님 로그인 중");
+        
+    }
+    
+    private void initCustomSettings() {
+        this.setLocationRelativeTo(null); // 창을 화면 중앙에 배치
+        
         jLabelTime.setText(getTime());
         new javax.swing.Timer(1000, e -> {
             jLabelTime.setText(getTime()); 
         }).start();
+        
+        // 버튼에 이벤트 리스너 연결 (디자인 탭에서 더블클릭으로 만들어도 무방함)
+        jButton1.addActionListener(evt -> openUserManagement());
+        jButton2.addActionListener(evt -> openReservationManagement());
     }
     
     // 현재 시간을 가져와서 ISO 8601 형태로 설정
@@ -34,7 +49,23 @@ public class AssMainGUI extends javax.swing.JFrame {
         return java.time.LocalDateTime.now()
                         .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'    'HH:mm:ss"));
     }
-
+    
+    // ==========================================
+    // 버튼 클릭 시 작동할 화면 이동 로직
+    // ==========================================
+    private void openUserManagement() {
+        // [사용자 관리] 창 열기
+        // new AdminGUI().setVisible(true); // 어드민 GUI를 재활용하거나 조교용 유저 관리 창을 띄움
+        // this.dispose(); // 필요에 따라 현재 창 닫기
+        System.out.println("사용자 관리 창으로 이동합니다.");
+    }
+    
+    private void openReservationManagement() {
+        // [강의실 예약 관리] 창 열기
+        // new ReservationGUI(currentUser).setVisible(true);
+        System.out.println("강의실 및 예약 관리 창으로 이동합니다.");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

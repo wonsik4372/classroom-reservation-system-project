@@ -7,6 +7,7 @@ package com.crsystem.systemserver.service;
 
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
+import com.crsystem.common.enums.Role;
 import com.crsystem.systemserver.model.User;
 import com.crsystem.systemserver.model.UserCatalog;
 import com.crsystem.systemserver.dao.UserFileManager;
@@ -38,12 +39,27 @@ public class AuthService {
     public ResponseDTO processLogin(UserDTO.Request req) {
         String id = req.getId();
         String pw = req.getPw();
+        Role requestedRole = req.getRole();
         
         User user = catalog.findUser(id);
         
         // 계정이 없는 경우
         if (user == null) {
             return new ResponseDTO(false, "로그인 실패: 존재하지 않는 계정입니다.", null);
+        }
+        
+        // 권한 검증 
+        boolean isRoleValid = false;
+        
+        if (user.getRole() == requestedRole) {
+            isRoleValid = true; // 본인 권한 로그인 
+        } else if (user.getRole() == Role.ASSISTANT && requestedRole == Role.PROFESSOR) {
+            isRoleValid = true; // 조교가 교수 화면 접근 가능 
+        }
+
+        // 권한 접근 제한 
+        if (!isRoleValid) {
+            return new ResponseDTO(false, "로그인 실패: 해당 권한으로 로그인할 수 없습니다.", null);
         }
 
         // 비밀번호 불일치

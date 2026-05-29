@@ -80,7 +80,16 @@ public class UserService {
             }
         }
 
-        User targetUser = new User(id, req.getRole(), req.getName()); 
+        User targetUser;
+        try {
+            // User 생성 
+            targetUser = new User(id, req.getRole(), req.getName());
+        } catch (IllegalArgumentException e) {
+            // 에러 메시지 클라이언트로 반환
+            response.setResult("FAIL");
+            response.setMessage(e.getMessage());
+            return response;
+        }
 
         try {
             // 느리면 밖에서 처리 

@@ -38,10 +38,6 @@ public class LoginGUI extends javax.swing.JFrame {
         initComponents();
         jTextFieldID.requestFocusInWindow();    // 초기화 시 ID field에 포커싱
         
-        // 테스트를 위해 주석 처리 
-        // Thread connectionThread = new Thread(new LoginGUI.ServerConnectionTask());
-        // connectionThread.start();
-        
         // btn 설정 
         initRoleRadioButtons();
         
@@ -289,7 +285,7 @@ public class LoginGUI extends javax.swing.JFrame {
                                 new AssistantGUI(userInfo).setVisible(true);
                                 break;
                             case ADMIN:
-                                new AdminGUI().setVisible(true);
+                                new AdminGUI(userInfo).setVisible(true);
                                 break;
                         }
                         this.dispose(); // 로그인 창 닫기

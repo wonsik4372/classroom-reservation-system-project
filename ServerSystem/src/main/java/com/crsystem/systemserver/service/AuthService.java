@@ -19,12 +19,10 @@ import com.crsystem.systemserver.dao.UserFileManager;
 public class AuthService {
     
     private static AuthService instance;
-    private final UserCatalog catalog;
+    //  final UserCatalog catalog;
     
     // private 생성자
     private AuthService() {
-        UserFileManager fileManager = new UserFileManager();
-        this.catalog = new UserCatalog(fileManager.loadAll());
     }
     
     // 인스턴스 반환
@@ -41,7 +39,8 @@ public class AuthService {
         String pw = req.getPw();
         Role requestedRole = req.getRole();
         
-        User user = catalog.findUser(id);
+        // UserService를 통해 Catalog 접근 
+        User user = UserService.getInstance().getUserById(id);
         
         // 계정이 없는 경우
         if (user == null) {

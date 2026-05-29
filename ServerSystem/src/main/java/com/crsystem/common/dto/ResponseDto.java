@@ -60,7 +60,7 @@ public class ResponseDTO implements Serializable {
         this.result = result;
     }
     
-    public void setPayload(Object Payload) {
+    public void setPayload(Object payload) {
         this.payload = payload;
     }
     

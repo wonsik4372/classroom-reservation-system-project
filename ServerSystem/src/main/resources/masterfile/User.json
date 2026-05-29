@@ -1,26 +1,32 @@
 [
   {
+    "role": "ADMIN",
     "id": "12345",
     "pw": "12345",
-    "name": "관리자",
-    "role": "ADMIN"
+    "name": "관리자"
   },
   {
+    "role": "ASSISTANT",
     "id": "23456",
     "pw": "23456",
-    "name": "김조교",
-    "role": "ASSISTANT"
+    "name": "김조교"
   },
   {
+    "role": "PROFESSOR",
     "id": "34567",
     "pw": "34567",
-    "name": "김교수",
-    "role": "PROFESSOR"
+    "name": "김교수"
   },
   {
-    "id": "00000001",
-    "pw": "00000001",
-    "name": "김학생",
-    "role": "STUDENT"
+    "role": "STUDENT",
+    "id": "01010101",
+    "pw": "01010101",
+    "name": "엄준식"
+  },
+  {
+    "role": "STUDENT",
+    "id": "24002400",
+    "pw": "24002400",
+    "name": "김찬호"
   }
 ]

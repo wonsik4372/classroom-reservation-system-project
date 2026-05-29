@@ -4,19 +4,108 @@
  */
 package com.crsystem.systemclient.view.Admin;
 
+import com.crsystem.common.dto.RequestDTO;
+import com.crsystem.common.dto.ResponseDTO;
+import com.crsystem.common.dto.UserDTO;
+import com.crsystem.common.enums.Role;
+import com.crsystem.systemclient.main.CRSystemClient;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import java.awt.Window;
+
 /**
- *
+ * 사용자 추가 
  * @author wonsik
  */
 public class AddUserGUI extends javax.swing.JPanel {
-
+    
+    private ButtonGroup roleGroup; // 라디오 버튼을 하나로 묶어줄 그룹
+    
     /**
      * Creates new form AddUserGUI
      */
     public AddUserGUI() {
         initComponents();
+        initCustomSettings(); // 커스텀 세팅 추가
     }
+    
+    private void initCustomSettings() {
+        // 라디오 버튼 그룹화 (중복 선택 방지)
+        roleGroup = new ButtonGroup();
+        roleGroup.add(jRadioButtonAss); // 조교
+        roleGroup.add(jRadioButtonPro); // 교수
+        roleGroup.add(jRadioButtonStu); // 학생
 
+        // 서버로 보낼 때 쓸 식별자(ActionCommand) 심기
+        jRadioButtonAss.setActionCommand(Role.ASSISTANT.name());
+        jRadioButtonPro.setActionCommand(Role.PROFESSOR.name());
+        jRadioButtonStu.setActionCommand(Role.STUDENT.name());
+
+        // 텍스트 필드 안내 문구 지우기
+        jTextFieldName.setText(""); 
+        jTextFieldId.setText("");
+
+        // 버튼 클릭 이벤트 연결
+        jButtonAdd.addActionListener(evt -> performAddUser());
+        jButtonCancel.addActionListener(evt -> performCancel());
+    }
+    
+    private void performAddUser() {
+        String name = jTextFieldName.getText().trim();
+        String id = jTextFieldId.getText().trim();
+
+        // 입력값 검증
+        if (name.isEmpty() || id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "이름과 ID를 모두 입력해주세요.");
+            return;
+        }
+        if (roleGroup.getSelection() == null) {
+            JOptionPane.showMessageDialog(this, "권한을 선택해주세요.");
+            return;
+        }
+
+        // 데이터 포장
+        String selectedRoleStr = roleGroup.getSelection().getActionCommand();
+        Role selectedRole = Role.valueOf(selectedRoleStr);
+
+        UserDTO.Request addPayload = new UserDTO.Request();
+        addPayload.setName(name);
+        addPayload.setId(id);
+        addPayload.setRole(selectedRole);
+        addPayload.setPw(id); // 초기 비밀번호는 ID와 동일하게 설정
+
+        RequestDTO envelope = new RequestDTO("ADD_USER", addPayload);
+
+        // 비동기 서버 통신
+        CRSystemClient.getInstance().sendRequest(envelope, 
+            (ResponseDTO response) -> {
+                SwingUtilities.invokeLater(() -> {
+                    if (response.isSuccess()) {
+                        JOptionPane.showMessageDialog(this, "사용자 추가가 완료되었습니다!\n(초기 비밀번호는 ID와 동일합니다.)");
+                        performCancel(); // 성공하면 창 닫기
+                    } else {
+                        JOptionPane.showMessageDialog(this, response.getMessage(), "추가 실패", JOptionPane.WARNING_MESSAGE);
+                    }
+                });
+            }, 
+            (String errorMessage) -> {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, "통신 오류: " + errorMessage, "에러", JOptionPane.ERROR_MESSAGE);
+                });
+            }
+        );
+    }
+    
+    private void performCancel() {
+        // 원래 패널 지우기 
+        Window parentWindow = SwingUtilities.getWindowAncestor(this);
+        if (parentWindow != null) {
+            parentWindow.dispose();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,13 +119,13 @@ public class AddUserGUI extends javax.swing.JPanel {
         jButtonCancel = new javax.swing.JButton();
         jButtonAdd = new javax.swing.JButton();
         jLabelRole = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jLabelRole1 = new javax.swing.JLabel();
-        jLabelRole2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jRadioButtonAss = new javax.swing.JRadioButton();
+        jRadioButtonPro = new javax.swing.JRadioButton();
+        jRadioButtonStu = new javax.swing.JRadioButton();
+        jLabelName = new javax.swing.JLabel();
+        jLabelId = new javax.swing.JLabel();
+        jTextFieldName = new javax.swing.JTextField();
+        jTextFieldId = new javax.swing.JTextField();
 
         jLabelTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         jLabelTitle.setText("사용자 추가");
@@ -48,21 +137,21 @@ public class AddUserGUI extends javax.swing.JPanel {
         jLabelRole.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabelRole.setText("권한");
 
-        jRadioButton2.setText("조교");
+        jRadioButtonAss.setText("조교");
 
-        jRadioButton3.setText("교수");
+        jRadioButtonPro.setText("교수");
 
-        jRadioButton4.setText("학생");
+        jRadioButtonStu.setText("학생");
 
-        jLabelRole1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabelRole1.setText("이름");
+        jLabelName.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabelName.setText("이름");
 
-        jLabelRole2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabelRole2.setText("ID");
+        jLabelId.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabelId.setText("ID");
 
-        jTextField1.setText("이름");
+        jTextFieldName.setText("이름");
 
-        jTextField2.setText("교원번호, 학번");
+        jTextFieldId.setText("교원번호, 학번");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -76,26 +165,26 @@ public class AddUserGUI extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAdd))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabelRole1)
+                        .addComponent(jLabelName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
+                        .addComponent(jTextFieldName))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabelRole)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
+                                .addComponent(jRadioButtonAss)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton3)
+                                .addComponent(jRadioButtonPro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton4))
+                                .addComponent(jRadioButtonStu))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabelTitle)
                                 .addGap(26, 26, 26))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabelRole2)
+                        .addComponent(jLabelId)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2)))
+                        .addComponent(jTextFieldId)))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,17 +195,17 @@ public class AddUserGUI extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelRole)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(jRadioButtonAss)
+                    .addComponent(jRadioButtonPro)
+                    .addComponent(jRadioButtonStu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelRole1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelName)
+                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelRole2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelId)
+                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
@@ -129,14 +218,14 @@ public class AddUserGUI extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JLabel jLabelId;
+    private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelRole;
-    private javax.swing.JLabel jLabelRole1;
-    private javax.swing.JLabel jLabelRole2;
     private javax.swing.JLabel jLabelTitle;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JRadioButton jRadioButtonAss;
+    private javax.swing.JRadioButton jRadioButtonPro;
+    private javax.swing.JRadioButton jRadioButtonStu;
+    private javax.swing.JTextField jTextFieldId;
+    private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 }

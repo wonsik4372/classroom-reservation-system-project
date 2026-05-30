@@ -4,7 +4,7 @@
  */
 package com.crsystem.systemclient.view.Reservation;
 
-import com.crsystem.common.dto.ReservationInfo;
+import com.crsystem.common.dto.ReservationDTO;
 
 /**
  *
@@ -23,8 +23,10 @@ public class ReservationListUI extends javax.swing.JFrame {
         // 표(JTable)의 헤더(제목) 설정
         String[] columnNames = {"예약 강의실", "예약 날짜", "요일", "선택 교시", "구분", "사용 목적", "동반 인원", "승인 상태"};
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0);
-
-        for (ReservationInfo info : CRSystemReservation.reservationList) {
+        
+        // ####################### 수정 필요 
+        /*
+        for (ReservationDTO info : CRSystemReservation.reservationList) {
             Object[] rowData = {
                 info.roomName,
                 info.date.toString(),
@@ -37,6 +39,7 @@ public class ReservationListUI extends javax.swing.JFrame {
             };
             model.addRow(rowData);
         }
+        */
 
         listTable.setModel(model);
         listTable.setRowHeight(30);

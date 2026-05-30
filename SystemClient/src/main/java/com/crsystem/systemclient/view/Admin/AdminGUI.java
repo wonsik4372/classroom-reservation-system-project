@@ -7,6 +7,7 @@ package com.crsystem.systemclient.view.Admin;
 import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
+import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.systemclient.view.LoginGUI;
 import java.util.ArrayList;
@@ -29,85 +30,20 @@ public class AdminGUI extends javax.swing.JFrame {
      */
     public AdminGUI() {
         initComponents();
-        // 사용자 목록 테이블 채우기
         requestUserListFromServer();        
     }
     
     public AdminGUI(UserDTO.Response loggedInUser) {
         this.currentUser = loggedInUser;
         initComponents();
-        initCustomSettings();
+        this.setLocationRelativeTo(null);
         requestUserListFromServer();  
         
         this.setTitle("조교 메인 시스템 - [" + currentUser.getName() + "]님 로그인 중");
     }
-    
-    private void initCustomSettings() {
-        this.setLocationRelativeTo(null); // 화면 정중앙 배치
-        
-        // 버튼 설정 
-        jButtonLogout.addActionListener(evt -> performLogout());
-        jButtonDeleteUser.addActionListener(evt -> performDeleteSelectedUsers());
-        jButtonRefresh.addActionListener(evt -> requestUserListFromServer());
-    }
-    
-    private void performLogout() {
-        int reply = JOptionPane.showConfirmDialog(this, 
-                "로그아웃 하시겠습니까?", "로그아웃 확인", 
-                JOptionPane.YES_NO_OPTION);
-                
-        if (reply == JOptionPane.YES_OPTION) {
-            this.dispose(); // 현재 창 닫기 
-            
-            // 로그인 초기 프레임 
-            new LoginGUI().setVisible(true); 
-            System.out.println("로그아웃 완료. 로그인 화면으로 이동합니다.");
-        }
-    }
-    
-    private void performDeleteSelectedUsers() {
-        javax.swing.table.DefaultTableModel model = 
-                (javax.swing.table.DefaultTableModel) jTableUserList.getModel();
-        
-        // 체크된거 담을 곳 
-        List<String> idsToDelete = new ArrayList<>();
-
-        // 체크된거 수집 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            Boolean isChecked = (Boolean) model.getValueAt(i, 0); // 체크여부 추출
-            
-            if (isChecked != null && isChecked) {
-                String id = (String) model.getValueAt(i, 3); // ID 값 가져오기 
-                
-                // 관리자계정 삭제 방지 
-                if (id != null && !"ID 없음".equals(id) && !"admin".equals(id)) {
-                    idsToDelete.add(id);
-                }
-            }
-        }
-
-        // 체크가 없는 경우 
-        if (idsToDelete.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                    "삭제할 사용자를 체크박스로 선택해주세요.", 
-                    "선택된 사용자 없음", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // 최종 확인 팝업
-        int reply = JOptionPane.showConfirmDialog(this, 
-                idsToDelete.size() + "명의 사용자를 완전히 삭제하시겠습니까?", 
-                "일괄 삭제 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                
-        if (reply == JOptionPane.YES_OPTION) {
-            System.out.println("일괄 삭제 시도 총 개수: " + idsToDelete.size());
-            // 비동기 순차 삭제 헬퍼 함수 작동 호출 (0번 인덱스부터 출발)
-            deleteUsersSequentially(idsToDelete, 0);
-        }
-    }
 
     // ==========================================
-    // 
+    // 비동기 순차 삭제
     // ==========================================
     private void deleteUsersSequentially(List<String> ids, int index) {
         // 선택한거 한 바퀴 돌아야함 
@@ -121,15 +57,8 @@ public class AdminGUI extends javax.swing.JFrame {
 
         String currentTargetId = ids.get(index);
 
-        // 패키징
-        UserDTO.Request deletePayload = new UserDTO.Request();
-        deletePayload.setId(currentTargetId);
-
-        // 패키징
-        RequestDTO envelope = new RequestDTO("DELETE_USER", deletePayload);
-
-        // 네트워크 통신 시작
-        CRSystemClient.getInstance().sendRequest(envelope, 
+        UserController.getInstance().deleteUser(
+            currentTargetId,
             (ResponseDTO response) -> {
                 // 한 명 하고 나면 성공/실패 상관 없이 다음으로 넘어감 
                 if (response.isSuccess()) {
@@ -179,13 +108,12 @@ public class AdminGUI extends javax.swing.JFrame {
         });
     }
     
-    // 보내고 받기 
+    // ==========================================
+    // 리스트 새로고침 
+    // ==========================================
     private void requestUserListFromServer() {
-        // 요청
-        RequestDTO envelope = new RequestDTO("GET_USER_LIST", null);
-
         // 비동기 요청 
-        CRSystemClient.getInstance().sendRequest(envelope, 
+        UserController.getInstance().getUserList( 
             (ResponseDTO response) -> {
                 // 성공 콜백
                 if (response.isSuccess()) {
@@ -269,8 +197,18 @@ public class AdminGUI extends javax.swing.JFrame {
         );
 
         jButtonRefresh.setText("새로고침");
+        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshActionPerformed(evt);
+            }
+        });
 
         jButtonLogout.setText("Logout");
+        jButtonLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogoutActionPerformed(evt);
+            }
+        });
 
         jButtonAddUser.setText("사용자 추가");
         jButtonAddUser.addActionListener(new java.awt.event.ActionListener() {
@@ -280,6 +218,11 @@ public class AdminGUI extends javax.swing.JFrame {
         });
 
         jButtonDeleteUser.setText("사용자 삭제");
+        jButtonDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -347,6 +290,68 @@ public class AdminGUI extends javax.swing.JFrame {
         requestUserListFromServer();
         
     }//GEN-LAST:event_jButtonAddUserActionPerformed
+
+    private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoutActionPerformed
+        // TODO add your handling code here:
+        int reply = JOptionPane.showConfirmDialog(this, 
+                "로그아웃 하시겠습니까?", "로그아웃 확인", 
+                JOptionPane.YES_NO_OPTION);
+                
+        if (reply == JOptionPane.YES_OPTION) {
+            this.dispose(); // 현재 창 닫기 
+            
+            // 로그인 초기 프레임 
+            new LoginGUI().setVisible(true); 
+            System.out.println("로그아웃 완료. 로그인 화면으로 이동합니다.");
+        }
+    }//GEN-LAST:event_jButtonLogoutActionPerformed
+
+    private void jButtonDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteUserActionPerformed
+        // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel model = 
+                (javax.swing.table.DefaultTableModel) jTableUserList.getModel();
+        
+        // 체크된거 담을 곳 
+        List<String> idsToDelete = new ArrayList<>();
+
+        // 체크된거 수집 
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Boolean isChecked = (Boolean) model.getValueAt(i, 0); // 체크여부 추출
+            
+            if (isChecked != null && isChecked) {
+                String id = (String) model.getValueAt(i, 3); // ID 값 가져오기 
+                
+                // 관리자계정 삭제 방지 
+                if (id != null && !"ID 없음".equals(id) && !"admin".equals(id)) {
+                    idsToDelete.add(id);
+                }
+            }
+        }
+
+        // 체크가 없는 경우 
+        if (idsToDelete.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                    "삭제할 사용자를 체크박스로 선택해주세요.", 
+                    "선택된 사용자 없음", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 최종 확인 팝업
+        int reply = JOptionPane.showConfirmDialog(this, 
+                idsToDelete.size() + "명의 사용자를 완전히 삭제하시겠습니까?", 
+                "일괄 삭제 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                
+        if (reply == JOptionPane.YES_OPTION) {
+            System.out.println("일괄 삭제 시도 총 개수: " + idsToDelete.size());
+            // 비동기 순차 삭제 헬퍼 함수 작동 호출 (0번 인덱스부터 출발)
+            deleteUsersSequentially(idsToDelete, 0);
+        }
+    }//GEN-LAST:event_jButtonDeleteUserActionPerformed
+
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+        // TODO add your handling code here:
+        requestUserListFromServer(); 
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
 
     /**
      * @param args the command line arguments

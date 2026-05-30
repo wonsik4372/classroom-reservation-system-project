@@ -9,6 +9,7 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.*;
+import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
 import com.crsystem.systemclient.view.Assistant.AssistantGUI;
 
@@ -245,17 +246,10 @@ public class LoginGUI extends javax.swing.JFrame {
             }
         }
         
-        // Payload 생성
-        UserDTO.Request loginPayload = new UserDTO.Request();
-        loginPayload.setId(id);
-        loginPayload.setPw(pw);
-        loginPayload.setRole(selectedRole); // 내가 선택한 권한을 서버로 전송
-        
-        // Envelope 생성
-        RequestDTO envelope = new RequestDTO("LOGIN", loginPayload);
-
-        // 비동기 통신 요청
-        CRSystemClient.getInstance().sendRequest(envelope, 
+        UserController.getInstance().login(
+            id, 
+            pw, 
+            selectedRole, 
             (ResponseDTO response) -> {
                 // --- 통신 성공 시 (서버 응답 도착) ---
                 if (response.isSuccess()) {

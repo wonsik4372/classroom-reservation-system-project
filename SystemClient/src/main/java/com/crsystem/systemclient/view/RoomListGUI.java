@@ -5,7 +5,7 @@
 package com.crsystem.systemclient.view;
 
 import com.crsystem.systemclient.view.Reservation.CRSystemTimetableUI;
-
+import com.crsystem.common.dto.ReservationDTO;
 /**
  *
  * @author wonsik
@@ -301,9 +301,12 @@ public class RoomListGUI extends javax.swing.JPanel {
         //    '현재 선택된 강의실 정보와 일치하는 예약 데이터' 표에 추가
         // 주의: CRSystemReservation 클래스 내에 reservationList 변수가 선언되어 있어야 합니다.
         if (com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList != null) {
-            for (com.crsystem.common.dto.ReservationInfo info : com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList) {
+            for (ReservationDTO info : com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList) {
                 // 저장된 예약의 강의실 이름과 현재 콤보박스로 선택된 강의실 이름이 똑같을 때만 표에 노출
-                if (targetRoomName.equals(info.roomName)) {
+                
+                // ####################### 수정 필요 
+                /*
+                if (targetRoomName.equals(info.getRoomName())) {
                     Object[] rowData = {
                         info.date.toString(),
                         info.day + "요일",
@@ -314,7 +317,8 @@ public class RoomListGUI extends javax.swing.JPanel {
                         info.status
                     };
                     model.addRow(rowData);
-                }
+                }*/
+
             }
         }
 

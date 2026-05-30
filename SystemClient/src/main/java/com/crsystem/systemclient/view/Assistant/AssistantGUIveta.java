@@ -51,12 +51,14 @@ public class AssistantGUIveta extends javax.swing.JPanel {
         jRadioButtonUnusable = new javax.swing.JRadioButton();
         jLabelFeature = new javax.swing.JLabel();
         jTextFieldFeature = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanelEtc = new javax.swing.JPanel();
         jLabelTime = new javax.swing.JLabel();
         jButtonLogout = new javax.swing.JButton();
-        jLabelTitle = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(850, 500));
 
@@ -174,34 +176,51 @@ public class AssistantGUIveta extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("강의실 정보", jPanelRoomInfo);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "선택", "교수/학생", "이름", "ID", "강의실", "목적", "예약일", "예약 시간", "인원 수"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
+        ));
+        jScrollPane3.setViewportView(jTable2);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable1);
+        jButton1.setText("jButton1");
 
-        jTabbedPane1.addTab("예약 관리", jScrollPane2);
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("tab2", jPanel1);
 
         jLabelTime.setText("Current Time");
 
         jButtonLogout.setText("Logout");
-
-        jLabelTitle.setText("jLabel1");
 
         javax.swing.GroupLayout jPanelEtcLayout = new javax.swing.GroupLayout(jPanelEtc);
         jPanelEtc.setLayout(jPanelEtcLayout);
@@ -209,10 +228,8 @@ public class AssistantGUIveta extends javax.swing.JPanel {
             jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEtcLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 680, Short.MAX_VALUE)
                 .addComponent(jButtonLogout)
                 .addContainerGap())
         );
@@ -222,8 +239,7 @@ public class AssistantGUIveta extends javax.swing.JPanel {
                 .addGap(0, 1, Short.MAX_VALUE)
                 .addGroup(jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTime)
-                    .addComponent(jButtonLogout)
-                    .addComponent(jLabelTitle)))
+                    .addComponent(jButtonLogout)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -250,6 +266,8 @@ public class AssistantGUIveta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JButton jButtonLogout;
     private javax.swing.JLabel jLabelComputerCnt;
@@ -259,18 +277,18 @@ public class AssistantGUIveta extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelMaxCap;
     private javax.swing.JLabel jLabelRoomNo;
     private javax.swing.JLabel jLabelTime;
-    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUseable;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEtc;
     private javax.swing.JPanel jPanelRoomInfo;
     private javax.swing.JRadioButton jRadioButtonUnusable;
     private javax.swing.JRadioButton jRadioButtonUseable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinnerComputerCnt;
     private javax.swing.JSpinner jSpinnerMaxCap;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextFieldDeptNo;
     private javax.swing.JTextField jTextFieldFeature;
     private javax.swing.JTextField jTextFieldFloor;

@@ -4,7 +4,7 @@
  */
 package com.crsystem.systemclient.view.Reservation;
 
-import com.crsystem.common.dto.ReservationInfo;
+import com.crsystem.common.dto.ReservationDTO;
 
 /**
  *
@@ -12,7 +12,7 @@ import com.crsystem.common.dto.ReservationInfo;
  */
 public class CRSystemReservation extends javax.swing.JFrame {
 
-    public static java.util.List<ReservationInfo> reservationList = new java.util.ArrayList<>();
+    public static java.util.List<ReservationDTO> reservationList = new java.util.ArrayList<>();
     private java.util.List<java.time.LocalDate> dateValues = new java.util.ArrayList<>();
 
     private String day;
@@ -186,7 +186,8 @@ public class CRSystemReservation extends javax.swing.JFrame {
         }
 
         // 예약 정보 저장
-        ReservationInfo info = new ReservationInfo();
+        ReservationDTO info = new ReservationDTO();
+        /*
         info.roomName = this.roomName;
         info.date = selectedDate;
         info.day = this.day;
@@ -195,9 +196,11 @@ public class CRSystemReservation extends javax.swing.JFrame {
         info.purpose = purposeField.getText();
         info.partnerCount = (int) partnerSpinner.getValue();
         info.status = "교수".equals(type) ? "예약 확정" : "대기 중";
-
+        
+        
         reservationList.add(info);
         javax.swing.JOptionPane.showMessageDialog(this, "예약 성공! 상태: " + info.status);
+        */
         this.dispose();
     }//GEN-LAST:event_btnSubmitActionPerformed
 

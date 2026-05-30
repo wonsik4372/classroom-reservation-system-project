@@ -153,11 +153,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xc0c8;&#xb85c;&#xace0;&#xce68;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRefreshActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonLogout">
       <Properties>
         <Property name="text" type="java.lang.String" value="Logout"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLogoutActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAddUser">
       <Properties>
@@ -171,6 +177,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xc0ac;&#xc6a9;&#xc790; &#xc0ad;&#xc81c;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeleteUserActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -12,50 +12,47 @@ import com.crsystem.common.enums.*;
 import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
 import com.crsystem.systemclient.view.Assistant.AssistantGUI;
+import com.crsystem.systemclient.view.RoomListGUI;
+import com.crsystem.systemclient.session.SessionManager;
 
 // import javax.swing.ButtonModel;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
-
 
 /**
  *
  * @author wonsik
  */
 public class LoginGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginGUI.class.getName());
-    
-    
+
     // 테스트를 위해 주석 처리 
     // private javax.swing.ButtonGroup roleGroup;
-    
     /**
      * 실행 시 LoginGUI 기본 설정
      */
     public LoginGUI() {
         initComponents();
         jTextFieldID.requestFocusInWindow();    // 초기화 시 ID field에 포커싱
-        
+
         // btn 설정 
         initRoleRadioButtons();
-        
+
         // 초기 사이즈 설정
         this.setSize(550, 350);
         // 창 크기 변경 불가 
         this.setResizable(false);
         // 화면 모니터 중앙 배치
         this.setLocationRelativeTo(null);
-        
+
         // 시계 생성
         jLabelTime.setText(getTime());
         new javax.swing.Timer(1000, e -> {
-            jLabelTime.setText(getTime()); 
+            jLabelTime.setText(getTime());
         }).start();
     }
-    
+
     // button 값 지정 
     private void initRoleRadioButtons() {
 
@@ -63,38 +60,36 @@ public class LoginGUI extends javax.swing.JFrame {
         buttonGroupRole.add(jRadioButtonAss);
         buttonGroupRole.add(jRadioButtonPro);
         buttonGroupRole.add(jRadioButtonStu);
-        
+
         // 식별자(ActionCommand) 심기
         jRadioButtonAdm.setActionCommand(Role.ADMIN.name());
         jRadioButtonAss.setActionCommand(Role.ASSISTANT.name());
         jRadioButtonPro.setActionCommand(Role.PROFESSOR.name());
         jRadioButtonStu.setActionCommand(Role.STUDENT.name());
-        
-       
+
     }
-       
+
     // 로그인 실패 시 비밀번호 란 초기화
     public void resetFieldsForFailure() {
         jPasswordField1.setText("");
         jTextFieldID.requestFocusInWindow();
     }
-    
+
     // 현재 시간을 가져와서 ISO 8601 형태로 설정
     private String getTime() {
         return java.time.LocalDateTime.now()
-                        .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'    'HH:mm:ss"));
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'    'HH:mm:ss"));
     }
-    
+
     // Getter
     public String getEnteredId() {
         return jTextFieldID.getText();
     }
+
     public String getEnteredPassword() {
         return new String(jPasswordField1.getPassword());
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -216,24 +211,24 @@ public class LoginGUI extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
-        
+
         String id = getEnteredId().trim();
         String pw = getEnteredPassword().trim();
 
         if (id.isEmpty() || pw.isEmpty()) {
             JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호를 입력해주세요.");
-            return; 
+            return;
         }
 
         if (buttonGroupRole.getSelection() == null) {
             JOptionPane.showMessageDialog(this, "사용자 권한을 선택해주세요.");
             return;
         }
-        
+
         // 입력받은 권한 및 데이터 준비
         String roleString = buttonGroupRole.getSelection().getActionCommand();
         Role selectedRole = Role.valueOf(roleString);
-        
+
         if (selectedRole == Role.PROFESSOR || selectedRole == Role.ASSISTANT) {
             if (!id.matches("^\\d{5}$")) {
                 JOptionPane.showMessageDialog(this, "교수 및 조교의 ID는 5자리 숫자여야 합니다.", "형식 오류", JOptionPane.WARNING_MESSAGE);
@@ -242,62 +237,79 @@ public class LoginGUI extends javax.swing.JFrame {
         } else if (selectedRole == Role.STUDENT) {
             if (!id.matches("^\\d{8}$")) {
                 JOptionPane.showMessageDialog(this, "학생의 ID는 8자리 숫자여야 합니다.", "형식 오류", JOptionPane.WARNING_MESSAGE);
-                return; 
+                return;
             }
         }
-        
+
         UserController.getInstance().login(
-            id, 
-            pw, 
-            selectedRole, 
-            (ResponseDTO response) -> {
-                // --- 통신 성공 시 (서버 응답 도착) ---
-                if (response.isSuccess()) {
-                    // 성공 시 사용자 정보 추출
-                    UserDTO.Response userInfo = (UserDTO.Response) response.getPayload();
-                    
-                    // 권한 검사 필요시 작성 
+                id,
+                pw,
+                selectedRole,
+                (ResponseDTO response) -> {
+                    // --- 통신 성공 시 (서버 응답 도착) ---
+                    if (response.isSuccess()) {
+                        // 성공 시 사용자 정보 추출
+                        UserDTO.Response userInfo = (UserDTO.Response) response.getPayload();
+                        SessionManager.setCurrentUser(userInfo);
+
+                        // 권한 검사 필요시 작성 
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
+
+                            Role displayRole = userInfo.getRole();
+
+                            // 실제 계정은 조교인데 교직원(교수)을 선택해 성공했다면 교수 화면으로 우회
+                            if (userInfo.getRole() == Role.ASSISTANT && selectedRole == Role.PROFESSOR) {
+                                displayRole = Role.PROFESSOR;
+                            }
+
+                            // 권한별 GUI 분기 
+                            switch (displayRole) {
+
+                                case STUDENT:
+                                    javax.swing.JFrame studentFrame
+                                            = new javax.swing.JFrame("Class-Room Reservation");
+
+                                    studentFrame.setContentPane(new RoomListGUI());
+                                    studentFrame.pack();
+                                    studentFrame.setLocationRelativeTo(null);
+                                    studentFrame.setVisible(true);
+                                    break;
+
+                                case PROFESSOR:
+                                    javax.swing.JFrame professorFrame
+                                            = new javax.swing.JFrame("Class-Room Reservation");
+
+                                    professorFrame.setContentPane(new RoomListGUI());
+                                    professorFrame.pack();
+                                    professorFrame.setLocationRelativeTo(null);
+                                    professorFrame.setVisible(true);
+                                    break;
+
+                                case ASSISTANT:
+                                    new AssistantGUI(userInfo).setVisible(true);
+                                    break;
+
+                                case ADMIN:
+                                    new AdminGUI(userInfo).setVisible(true);
+                                    break;
+                            }
+                            this.dispose(); // 로그인 창 닫기
+                        });
+                    } else {
+                        // --- 서버 비즈니스 로직 상 실패  ---
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(this, response.getMessage(), "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                            resetFieldsForFailure();
+                        });
+                    }
+                },
+                (String errorMessage) -> {
+                    // --- 네트워크 통신 자체가 실패했을 때 ---
                     SwingUtilities.invokeLater(() -> {
-                        JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
-                        
-                        Role displayRole = userInfo.getRole();
-                        
-                        // 실제 계정은 조교인데 교직원(교수)을 선택해 성공했다면 교수 화면으로 우회
-                        if (userInfo.getRole() == Role.ASSISTANT && selectedRole == Role.PROFESSOR) {
-                            displayRole = Role.PROFESSOR;
-                        }
-                        
-                        // 권한별 GUI 분기 
-                        switch (displayRole) {
-                            case STUDENT:
-                                // new StudentGUI().setVisible(true);
-                                break;
-                            case PROFESSOR:
-                                // new ProfessorGUI().setVisible(true);
-                                break;
-                            case ASSISTANT:
-                                new AssistantGUI(userInfo).setVisible(true);
-                                break;
-                            case ADMIN:
-                                new AdminGUI(userInfo).setVisible(true);
-                                break;
-                        }
-                        this.dispose(); // 로그인 창 닫기
-                    });
-                } else {
-                    // --- 서버 비즈니스 로직 상 실패  ---
-                    SwingUtilities.invokeLater(() -> {
-                        JOptionPane.showMessageDialog(this, response.getMessage(), "로그인 실패", JOptionPane.WARNING_MESSAGE);
-                        resetFieldsForFailure();
+                        JOptionPane.showMessageDialog(this, errorMessage, "네트워크 오류", JOptionPane.ERROR_MESSAGE);
                     });
                 }
-            }, 
-            (String errorMessage) -> {
-                // --- 네트워크 통신 자체가 실패했을 때 ---
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(this, errorMessage, "네트워크 오류", JOptionPane.ERROR_MESSAGE);
-                });
-            }
         );
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
@@ -333,18 +345,17 @@ public class LoginGUI extends javax.swing.JFrame {
         /* GUI 쓰레드(Event Dispatch Thread)에서 창 생성 및 표시 */
         java.awt.EventQueue.invokeLater(() -> {
             LoginGUI loginFrame = new LoginGUI();
-            
+
             // 실시간 시계 작동 시작 (1초마다 업데이트)
             // jLabelTime의 텍스트를 매초 갱신
             new javax.swing.Timer(1000, e -> {
                 loginFrame.jLabelTime.setText(loginFrame.getTime());
             }).start();
-            
+
             // 창을 화면에 표시
             loginFrame.setVisible(true);
         });
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

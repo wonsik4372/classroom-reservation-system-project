@@ -10,4 +10,11 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.crsystem.systemclient.SystemClient</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+    </dependencies>
 </project>

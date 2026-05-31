@@ -23,23 +23,24 @@ public class ReservationListUI extends javax.swing.JFrame {
         // 표(JTable)의 헤더(제목) 설정
         String[] columnNames = {"예약 강의실", "예약 날짜", "요일", "선택 교시", "구분", "사용 목적", "동반 인원", "승인 상태"};
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0);
-        
-        // ####################### 수정 필요 
-        /*
-        for (ReservationDTO info : CRSystemReservation.reservationList) {
+
+        for (ReservationDTO.Response info
+                : CRSystemReservation.reservationList) {
             Object[] rowData = {
-                info.roomName,
-                info.date.toString(),
-                info.day + "요일",
-                info.periodInfo,
-                info.userType,
-                info.purpose,
-                info.partnerCount + "명",
-                info.status
+                info.getRoomName(),
+                info.getDate(),
+                info.getDay(),
+                info.getPeriodInfo(),
+                info.getUserId(),
+                info.getUserName(),
+                info.getRoleType(),
+                info.getPurpose(),
+                info.getPartnerCount(),
+                info.getStatus()
             };
+
             model.addRow(rowData);
         }
-        */
 
         listTable.setModel(model);
         listTable.setRowHeight(30);
@@ -87,17 +88,17 @@ public class ReservationListUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(320, 320, 320)
-                .addComponent(jLabel1)
-                .addContainerGap(352, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnClose)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(409, 409, 409)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

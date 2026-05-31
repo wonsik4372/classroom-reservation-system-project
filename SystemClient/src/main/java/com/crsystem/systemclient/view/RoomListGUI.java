@@ -6,6 +6,7 @@ package com.crsystem.systemclient.view;
 
 import com.crsystem.systemclient.view.Reservation.CRSystemTimetableUI;
 import com.crsystem.common.dto.ReservationDTO;
+
 /**
  *
  * @author wonsik
@@ -246,13 +247,6 @@ public class RoomListGUI extends javax.swing.JPanel {
             return;
         }
 
-        if (!"23 정보공학관".equals(building) || !"9".equals(floor)
-                || !("911".equals(room) || "912".equals(room) || "913".equals(room))) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "선택하신 강의실은 현재 준비 중입니다.\n(현재는 '23 정보공학관' - '9층' - '911, 912, 913호'만 예약 가능합니다.)");
-            return;
-        }
-
         // 어떤 강의실인지 명칭 결합 ("23 정보공학관 9층 912호")
         String roomName = building + " " + floor + "층 " + room + "호";
 
@@ -285,7 +279,17 @@ public class RoomListGUI extends javax.swing.JPanel {
         String room = (String) jComboBox4.getSelectedItem();
 
         // 1. 테이블의 헤더(열 이름) 세팅
-        String[] columnNames = {"예약 날짜", "요일", "선택 교시", "구분", "사용 목적", "동반 인원", "승인 상태"};
+        String[] columnNames = {
+            "예약 날짜",
+            "요일",
+            "선택 교시",
+            "학번/교번",
+            "예약자",
+            "권한",
+            "사용 목적",
+            "동반 인원",
+            "승인 상태"
+        };
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0);
 
         // 2. 만약 아직 선택되지 않은 조건이 있다면 빈 테이블로 보여주고 리턴
@@ -301,24 +305,26 @@ public class RoomListGUI extends javax.swing.JPanel {
         //    '현재 선택된 강의실 정보와 일치하는 예약 데이터' 표에 추가
         // 주의: CRSystemReservation 클래스 내에 reservationList 변수가 선언되어 있어야 합니다.
         if (com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList != null) {
-            for (ReservationDTO info : com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList) {
+            for (ReservationDTO.Response info
+                    : com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList) {
                 // 저장된 예약의 강의실 이름과 현재 콤보박스로 선택된 강의실 이름이 똑같을 때만 표에 노출
-                
-                // ####################### 수정 필요 
-                /*
-                if (targetRoomName.equals(info.getRoomName())) {
-                    Object[] rowData = {
-                        info.date.toString(),
-                        info.day + "요일",
-                        info.periodInfo,
-                        info.userType,
-                        info.purpose,
-                        info.partnerCount + "명",
-                        info.status
-                    };
-                    model.addRow(rowData);
-                }*/
 
+                if (targetRoomName.equals(info.getRoomName())) {
+
+                    Object[] rowData = {
+                        info.getDate(),
+                        info.getDay(),
+                        info.getPeriodInfo(),
+                        info.getUserId(),
+                        info.getUserName(),
+                        info.getRoleType(),
+                        info.getPurpose(),
+                        info.getPartnerCount(),
+                        info.getStatus()
+                    };
+
+                    model.addRow(rowData);
+                }
             }
         }
 

@@ -16,6 +16,10 @@ public class AssistantGUI extends javax.swing.JFrame {
     
     private UserDTO.Response currentUser;
     
+    // 대기 목록과 전체 목록을 각각 저장해둘 리스트
+    private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentPendingList = new java.util.ArrayList<>();
+    private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentAllList = new java.util.ArrayList<>();
+    
     public AssistantGUI() { 
         initComponents();
     }
@@ -28,10 +32,15 @@ public class AssistantGUI extends javax.swing.JFrame {
         initComponents();
         initCustomSettings();
         
+        loadPendingReservations(); 
+        loadAllReservations();
+        
         this.setTitle("조교 메인 시스템 - [" + currentUser.getName() + "]님 로그인 중");
     }
     
     private void initCustomSettings() {
+        this.setPreferredSize(new java.awt.Dimension(950, 700));
+        this.pack();
         this.setLocationRelativeTo(null); // 창을 화면 중앙에 배치
         
         // 더블 클릭 감지 -> 상세 정보 띄우기 
@@ -57,23 +66,44 @@ public class AssistantGUI extends javax.swing.JFrame {
         int selectedRow = jTableReservationList.getSelectedRow();
         if (selectedRow == -1) return;
 
-        // 선택된 행의 데이터 추출 (실제로는 예약 ID를 추출해 서버에서 상세 DTO를 받아오는 것이 정석입니다)
-        // 여기서는 빠른 구현을 위해 테이블에 뿌려진 데이터를 활용해 팝업을 구성합니다.
-        String type = (String) jTableReservationList.getValueAt(selectedRow, 0);
-        String id = (String) jTableReservationList.getValueAt(selectedRow, 1);
-        String room = (String) jTableReservationList.getValueAt(selectedRow, 2);
-        String purpose = (String) jTableReservationList.getValueAt(selectedRow, 3);
-        String date = (String) jTableReservationList.getValueAt(selectedRow, 4);
-        String time = (String) jTableReservationList.getValueAt(selectedRow, 5);
-        String status = (String) jTableReservationList.getValueAt(selectedRow, 6);
+        // 리스트에서 클릭한 줄과 똑같은 인덱스의 데이터를 꺼냄
+        com.crsystem.common.dto.ReservationDTO.Response selectedObj = currentAllList.get(selectedRow);
 
         String detailMessage = String.format(
-            "예약 구분: %s\n신청자 ID: %s\n강의실: %s\n목적: %s\n예약일: %s\n예약시간: %s\n상태: %s",
-            type, id, room, purpose, date, time, status
+            "============================\n" +
+            "        예약 상세 정보\n" +
+            "============================\n" +
+            "▶ 예약 번호: %s\n" +
+            "▶ 신청자 ID: %s (%s)\n" +
+            "▶ 이름: %s\n" +
+            "▶ 강의실: %s\n" +
+            "▶ 목적: %s\n" +
+            "▶ 동반 인원: %d명\n" +
+            "▶ 예약일: %s\n" +
+            "▶ 예약시간: %s\n" +
+            "▶ 현재 상태: %s\n",
+            selectedObj.getReservationId(),
+            selectedObj.getUserId(), selectedObj.getRoleType().name(),
+            selectedObj.getUserName(),
+            selectedObj.getRoomName(),
+            selectedObj.getPurpose(),
+            selectedObj.getPartnerCount(),
+            selectedObj.getDate(),
+            selectedObj.getPeriodInfo(),
+            selectedObj.getStatus().name()
         );
 
-        // 거부된 예약이라면 사유도 서버에서 받아와서 추가 출력하도록 설계하면 좋습니다.
-        javax.swing.JOptionPane.showMessageDialog(this, detailMessage, "예약 상세 정보", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        // 만약 거절당한 예약이면 거절 사유도 추가로 보여줌
+        if (selectedObj.getStatus() == com.crsystem.common.dto.ReservationDTO.Status.REJECTED) {
+            detailMessage += "▶ 거절 사유: " + (selectedObj.getRejectReason() != null ? selectedObj.getRejectReason() : "없음") + "\n";
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this, 
+            detailMessage, 
+            "예약 상세 조회", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+        );
     }
     
     // ==========================================
@@ -86,8 +116,7 @@ public class AssistantGUI extends javax.swing.JFrame {
             (com.crsystem.common.dto.ResponseDTO response) -> {
                 if (response.isSuccess()) {
                     // 서버가 보내준 예약 리스트 추출
-                    java.util.List<com.crsystem.common.dto.ReservationDTO.Response> pendingList = 
-                        (java.util.List<com.crsystem.common.dto.ReservationDTO.Response>) response.getPayload();
+                    currentPendingList= (java.util.List<com.crsystem.common.dto.ReservationDTO.Response>) response.getPayload();
                     
                     javax.swing.SwingUtilities.invokeLater(() -> {
                         javax.swing.table.DefaultTableModel model = 
@@ -95,12 +124,12 @@ public class AssistantGUI extends javax.swing.JFrame {
                         
                         model.setRowCount(0); // 기존 데이터 싹 지우기 (초기화)
                         
-                        if (pendingList != null) {
-                            for (com.crsystem.common.dto.ReservationDTO.Response res : pendingList) {
+                        if (currentPendingList != null) {
+                            for (com.crsystem.common.dto.ReservationDTO.Response res : currentPendingList) {
                                 // 넷빈즈 디자이너에서 설정한 컬럼 9개 순서에 맞춰 배열 생성
                                 Object[] rowData = {
                                     false,               // 0: 선택 (체크박스)
-                                    res.getRoleType(),   // 1: 구분 (교수/학생 등)
+                                    res.getRoleType() != null ? res.getRoleType().name() : "",   // 1: 구분 (교수/학생 등)
                                     res.getUserName(),   // 2: 이름
                                     res.getUserId(),     // 3: 학번/교번 (유저 ID)
                                     res.getRoomName(),     // 4: 강의실
@@ -131,8 +160,7 @@ public class AssistantGUI extends javax.swing.JFrame {
             "ALL", 
             (com.crsystem.common.dto.ResponseDTO response) -> {
                 if (response.isSuccess()) {
-                    java.util.List<com.crsystem.common.dto.ReservationDTO.Response> allList = 
-                        (java.util.List<com.crsystem.common.dto.ReservationDTO.Response>) response.getPayload();
+                    currentAllList = (java.util.List<com.crsystem.common.dto.ReservationDTO.Response>) response.getPayload();
                     
                     javax.swing.SwingUtilities.invokeLater(() -> {
                         javax.swing.table.DefaultTableModel model = 
@@ -140,8 +168,8 @@ public class AssistantGUI extends javax.swing.JFrame {
                         
                         model.setRowCount(0); // 테이블 초기화
                         
-                        if (allList != null) {
-                            for (com.crsystem.common.dto.ReservationDTO.Response res : allList) {
+                        if (currentAllList != null) {
+                            for (com.crsystem.common.dto.ReservationDTO.Response res : currentAllList) {
                                 // 넷빈즈 디자이너에서 설정한 컬럼 7개 순서에 맞춰 배열 생성
                                 Object[] rowData = {
                                     res.getRoleType(), // 0: 구분
@@ -182,6 +210,7 @@ public class AssistantGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanelEtc = new javax.swing.JPanel();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
         jPanelRoomInfo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -206,15 +235,44 @@ public class AssistantGUI extends javax.swing.JFrame {
         jTablePendingReservations = new javax.swing.JTable();
         jButtonApprove = new javax.swing.JButton();
         jButtonReject = new javax.swing.JButton();
+        jPanelReservationList = new javax.swing.JPanel();
         jScrollPaneReservationSearch = new javax.swing.JScrollPane();
         jTableReservationList = new javax.swing.JTable();
-        jPanelEtc = new javax.swing.JPanel();
         jLabelTime = new javax.swing.JLabel();
         jButtonLogout = new javax.swing.JButton();
+        jButtonRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
+
+        javax.swing.GroupLayout jPanelEtcLayout = new javax.swing.GroupLayout(jPanelEtc);
+        jPanelEtc.setLayout(jPanelEtcLayout);
+        jPanelEtcLayout.setHorizontalGroup(
+            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 838, Short.MAX_VALUE)
+        );
+        jPanelEtcLayout.setVerticalGroup(
+            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 24, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelEtc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(470, Short.MAX_VALUE)
+                .addComponent(jPanelEtc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         jButtonEdit.setText("수정");
 
@@ -283,7 +341,7 @@ public class AssistantGUI extends javax.swing.JFrame {
                                     .addComponent(jSpinnerMaxCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jTextFieldFeature, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelRoomInfoLayout.setVerticalGroup(
@@ -322,7 +380,7 @@ public class AssistantGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelFeature)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFeature, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                        .addComponent(jTextFieldFeature, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEdit)))
                 .addContainerGap())
@@ -342,14 +400,26 @@ public class AssistantGUI extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPaneReservationMng.setViewportView(jTablePendingReservations);
+        if (jTablePendingReservations.getColumnModel().getColumnCount() > 0) {
+            jTablePendingReservations.getColumnModel().getColumn(0).setMinWidth(50);
+            jTablePendingReservations.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTablePendingReservations.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         jButtonApprove.setText("승인");
         jButtonApprove.addActionListener(new java.awt.event.ActionListener() {
@@ -369,9 +439,9 @@ public class AssistantGUI extends javax.swing.JFrame {
         jPanelReservationMng.setLayout(jPanelReservationMngLayout);
         jPanelReservationMngLayout.setHorizontalGroup(
             jPanelReservationMngLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPaneReservationMng, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReservationMngLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPaneReservationMng, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+            .addGroup(jPanelReservationMngLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonReject)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonApprove)
@@ -380,12 +450,12 @@ public class AssistantGUI extends javax.swing.JFrame {
         jPanelReservationMngLayout.setVerticalGroup(
             jPanelReservationMngLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelReservationMngLayout.createSequentialGroup()
-                .addComponent(jScrollPaneReservationMng, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneReservationMng, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelReservationMngLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonApprove)
                     .addComponent(jButtonReject))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPaneMain.addTab("예약 관리", jPanelReservationMng);
@@ -404,65 +474,65 @@ public class AssistantGUI extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPaneReservationSearch.setViewportView(jTableReservationList);
 
-        jTabbedPaneMain.addTab("예약 현황", jScrollPaneReservationSearch);
+        javax.swing.GroupLayout jPanelReservationListLayout = new javax.swing.GroupLayout(jPanelReservationList);
+        jPanelReservationList.setLayout(jPanelReservationListLayout);
+        jPanelReservationListLayout.setHorizontalGroup(
+            jPanelReservationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReservationListLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPaneReservationSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelReservationListLayout.setVerticalGroup(
+            jPanelReservationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReservationListLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPaneReservationSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPaneMain.addTab("예약 현황", jPanelReservationList);
 
         jLabelTime.setText("Current Time");
 
         jButtonLogout.setText("Logout");
 
-        javax.swing.GroupLayout jPanelEtcLayout = new javax.swing.GroupLayout(jPanelEtc);
-        jPanelEtc.setLayout(jPanelEtcLayout);
-        jPanelEtcLayout.setHorizontalGroup(
-            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEtcLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonLogout)
-                .addContainerGap())
-        );
-        jPanelEtcLayout.setVerticalGroup(
-            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEtcLayout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addGroup(jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelTime)
-                    .addComponent(jButtonLogout)))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPaneMain)
-                    .addComponent(jPanelEtc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelEtc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jButtonRefresh.setText("새로고침");
+        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPaneMain)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelTime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRefresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonLogout)))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -471,7 +541,15 @@ public class AssistantGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPaneMain)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTime)
+                    .addComponent(jButtonLogout)
+                    .addComponent(jButtonRefresh))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -564,6 +642,15 @@ public class AssistantGUI extends javax.swing.JFrame {
         );
     }//GEN-LAST:event_jButtonApproveActionPerformed
 
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+        // TODO add your handling code here:
+        // 모든 탭의 데이터를 서버(또는 컨트롤러)에 다시 요청해서 표를 싹 갈아엎음
+        loadPendingReservations();
+        loadAllReservations();
+        
+        System.out.println("새로고침 완료!"); // 확인용 로그
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -593,6 +680,7 @@ public class AssistantGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonApprove;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JButton jButtonLogout;
+    private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonReject;
     private javax.swing.JLabel jLabelComputerCnt;
     private javax.swing.JLabel jLabelDeptNo;
@@ -604,6 +692,7 @@ public class AssistantGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUseable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEtc;
+    private javax.swing.JPanel jPanelReservationList;
     private javax.swing.JPanel jPanelReservationMng;
     private javax.swing.JPanel jPanelRoomInfo;
     private javax.swing.JRadioButton jRadioButtonUnusable;

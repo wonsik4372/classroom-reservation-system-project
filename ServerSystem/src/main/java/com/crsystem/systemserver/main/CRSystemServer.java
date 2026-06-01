@@ -4,14 +4,11 @@
  */
 package com.crsystem.systemserver.main;
 
-import com.crsystem.systemserver.main.ClientHandler;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Properties;
 
 /**

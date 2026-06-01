@@ -80,26 +80,56 @@ public class ReservationController {
         onSuccess.accept(new ResponseDTO(true, "가짜 데이터 조회 성공", result));
     }
 
-    // 승인 
+    // 승인 (로컬 mockDB 업데이트 + 서버에 알림 트리거 요청)
     public void approveReservations(List<String> reservationIds, Consumer<ResponseDTO> onSuccess, Consumer<String> onFailure) {
         for (ReservationDTO.Response r : mockDB) {
-            // 내가 선택한 ID가 mockDB에 있으면 상태를 변경!
             if (reservationIds.contains(r.getReservationId())) {
                 r.setStatus(ReservationDTO.Status.APPROVED);
+                // 서버에 승인 통보 → 서버가 해당 학생 알림 생성
+                sendApproveToServer(r.getReservationId(), r.getUserId());
             }
         }
-        onSuccess.accept(new ResponseDTO(true, "가짜 데이터 승인 성공", null));
+        onSuccess.accept(new ResponseDTO(true, "승인 처리 완료", null));
     }
 
-    // 거부 
+    // 거부 (로컬 mockDB 업데이트 + 서버에 알림 트리거 요청)
     public void rejectReservation(String reservationId, String rejectReason, Consumer<ResponseDTO> onSuccess, Consumer<String> onFailure) {
         for (ReservationDTO.Response r : mockDB) {
             if (r.getReservationId().equals(reservationId)) {
                 r.setStatus(ReservationDTO.Status.REJECTED);
-                r.setRejectReason(rejectReason); // 사유도 저장
+                r.setRejectReason(rejectReason);
+                // 서버에 거부 통보 → 서버가 해당 학생에게 거부 사유 포함 알림 생성
+                sendRejectToServer(r.getReservationId(), r.getUserId(), rejectReason);
             }
         }
-        onSuccess.accept(new ResponseDTO(true, "가짜 데이터 거절 성공", null));
+        onSuccess.accept(new ResponseDTO(true, "거부 처리 완료", null));
+    }
+
+    // ==========================================
+    // 서버 알림 트리거: 승인
+    // ==========================================
+    private void sendApproveToServer(String reservationId, String userId) {
+        ReservationDTO.Request payload = new ReservationDTO.Request();
+        payload.setUserId(reservationId); // userId 필드 재사용: reservationId 전달
+        CRSystemClient.getInstance().sendRequest(
+            new RequestDTO("APPROVE_RESERVATION", payload),
+            res -> System.out.println("[ReservationController] 서버 승인 알림 전송 완료: " + reservationId),
+            err -> System.err.println("[ReservationController] 서버 승인 알림 전송 실패: " + err)
+        );
+    }
+
+    // ==========================================
+    // 서버 알림 트리거: 거부
+    // ==========================================
+    private void sendRejectToServer(String reservationId, String userId, String rejectReason) {
+        ReservationDTO.Request payload = new ReservationDTO.Request();
+        payload.setUserId(reservationId);   // reservationId 전달
+        payload.setPurpose(rejectReason);   // purpose 필드 재사용: 거부 사유 전달
+        CRSystemClient.getInstance().sendRequest(
+            new RequestDTO("REJECT_RESERVATION", payload),
+            res -> System.out.println("[ReservationController] 서버 거부 알림 전송 완료: " + reservationId),
+            err -> System.err.println("[ReservationController] 서버 거부 알림 전송 실패: " + err)
+        );
     }
 }
 

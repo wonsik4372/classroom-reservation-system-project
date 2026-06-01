@@ -5,10 +5,12 @@
 package com.crsystem.systemserver.controller;
 
 import com.crsystem.common.dto.RequestDTO;
+import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
-import com.crsystem.systemserver.service.AuthService;
+import com.crsystem.systemserver.service.LoginService;
 import com.crsystem.systemserver.service.ClassroomService;
+import com.crsystem.systemserver.service.NotificationService;
 import com.crsystem.systemserver.service.ReservationService;
 import com.crsystem.systemserver.service.UserService;
 
@@ -32,16 +34,46 @@ public class MainController {
     // 3. 정적 초기화 블록 (서버 구동 시 최초 1회만 메모리에 적재됨)
     static {
         // ==========================================
-        // 1. [AuthService 위임]
+        // 1. [LoginService 위임]
         // ==========================================
-        commandMap.put("LOGIN", req -> AuthService.getInstance().processLogin((UserDTO.Request) req.getPayload()));
+        commandMap.put("LOGIN", req -> LoginService.getInstance().processLogin((UserDTO.Request) req.getPayload()));
         // ServerController.java 의 static 블록 내부
         commandMap.put("GET_USER_LIST", req -> UserService.getInstance().getUserList());
         commandMap.put("ADD_USER", req -> UserService.getInstance().addUser((UserDTO.Request) req.getPayload()));
         commandMap.put("DELETE_USER", req -> UserService.getInstance().deleteUser((UserDTO.Request) req.getPayload()));
-        
+
         // ==========================================
-        // 2. [ClassroomService 위임] (주석 해제 시 사용 가능하도록 패턴 적용)
+        // 2. [NotificationService 위임]
+        // ==========================================
+        // 학생이 폴링으로 미읽음 알림 조회 (로그인 후 주기적 호출)
+        commandMap.put("GET_NOTIFICATIONS", req -> {
+            String userId = (String) req.getPayload();
+            return NotificationService.getInstance().getAndMarkNotifications(userId);
+        });
+
+        // ==========================================
+        // 3. [ReservationService 위임]
+        // ==========================================
+        commandMap.put("STUDENT_RESERVATION_REQUEST", req ->
+            ReservationService.getInstance().studentReservationRequest((ReservationDTO.Request) req.getPayload())
+        );
+        commandMap.put("GET_PENDING_RESERVATIONS", req ->
+            ReservationService.getInstance().getPendingReservations()
+        );
+        commandMap.put("GET_ALL_RESERVATIONS", req ->
+            ReservationService.getInstance().getAllReservations()
+        );
+        // 승인: 상태 변경 + 학생 알림 생성
+        commandMap.put("APPROVE_RESERVATION", req ->
+            ReservationService.getInstance().approveReservation((ReservationDTO.Request) req.getPayload())
+        );
+        // 거부: 상태 변경 + 거부 사유 포함 학생 알림 생성
+        commandMap.put("REJECT_RESERVATION", req ->
+            ReservationService.getInstance().rejectReservation((ReservationDTO.Request) req.getPayload())
+        );
+
+        // ==========================================
+        // 4. [ClassroomService 위임] (주석 해제 시 사용 가능하도록 패턴 적용)
         // ==========================================
         // commandMap.put("GET_ROOM_LIST", req -> 
         //     ClassroomService.getInstance().getRoomList((ClassroomDto.Request) req.getPayload())

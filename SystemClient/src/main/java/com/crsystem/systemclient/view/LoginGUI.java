@@ -9,6 +9,7 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.*;
+import com.crsystem.systemclient.controller.NotificationController;
 import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
 import com.crsystem.systemclient.view.Assistant.AssistantGUI;
@@ -255,22 +256,27 @@ public class LoginGUI extends javax.swing.JFrame {
                 if (response.isSuccess()) {
                     // 성공 시 사용자 정보 추출
                     UserDTO.Response userInfo = (UserDTO.Response) response.getPayload();
-                    
-                    // 권한 검사 필요시 작성 
+
                     SwingUtilities.invokeLater(() -> {
                         JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
-                        
+
                         Role displayRole = userInfo.getRole();
-                        
+
                         // 실제 계정은 조교인데 교직원(교수)을 선택해 성공했다면 교수 화면으로 우회
                         if (userInfo.getRole() == Role.ASSISTANT && selectedRole == Role.PROFESSOR) {
                             displayRole = Role.PROFESSOR;
                         }
-                        
-                        // 권한별 GUI 분기 
+
+                        // 권한별 GUI 분기
                         switch (displayRole) {
                             case STUDENT:
-                                // new StudentGUI().setVisible(true);
+                                // 로그인 직후 미읽음 알림 즉시 표시 (로그인 안 된 동안 쌓인 알림)
+                                NotificationController.getInstance()
+                                    .showImmediateNotifications(userInfo.getPendingNotifications(), this);
+                                // 이후 Push 형태 폴링 시작 (5초 주기)
+                                NotificationController.getInstance()
+                                    .startPolling(userInfo.getId(), null);
+                                // new StudentGUI(userInfo).setVisible(true);
                                 break;
                             case PROFESSOR:
                                 // new ProfessorGUI().setVisible(true);

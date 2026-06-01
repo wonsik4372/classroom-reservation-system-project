@@ -6,6 +6,7 @@ package com.crsystem.common.dto;
 
 import com.crsystem.common.enums.Role;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -22,7 +23,7 @@ public class UserDTO {
         private Role role;
         private String name;
 
-        // 직렬화 기본 생성자
+        // 직렬화(네트워크 전송)를 위한 기본 생성자
         public Request() {}
 
         // 로그인 등 특정 목적을 위한 오버로딩 생성자
@@ -56,10 +57,12 @@ public class UserDTO {
     
     public static class Response implements Serializable {
         private static final long serialVersionUID = 1L;
-        
+
         private Role role;
         private String id;
         private String name;
+        // 로그인 시 미읽음 알림 전달용 (학생 전용, 평소에는 null)
+        private List<NotificationDTO> pendingNotifications;
 
         // 직렬화 기본 생성자
         public Response() {}
@@ -75,11 +78,15 @@ public class UserDTO {
         public Role getRole() { return role; }
         public String getId() { return id; }
         public String getName() { return name; }
+        public List<NotificationDTO> getPendingNotifications() { return pendingNotifications; }
 
         // --- Setters ---
         public void setRole(Role role) { this.role = role; }
         public void setId(String id) { this.id = id; }
         public void setName(String name) { this.name = name; }
+        public void setPendingNotifications(List<NotificationDTO> pendingNotifications) {
+            this.pendingNotifications = pendingNotifications;
+        }
     }
     
 }

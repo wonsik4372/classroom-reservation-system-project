@@ -9,31 +9,29 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.Role;
 import com.crsystem.systemserver.model.User;
-import com.crsystem.systemserver.model.UserCatalog;
-import com.crsystem.systemserver.dao.UserFileManager;
 
 /**
- *
+ * 로그인 전문가 
  * @author wonsik
  */
-public class AuthService {
+public class LoginService {
     
-    private static AuthService instance;
-    //  final UserCatalog catalog;
-    
-    // private 생성자
-    private AuthService() {
-    }
-    
-    // 인스턴스 반환
-    public static AuthService getInstance() {
-        if (instance == null) {
-            instance = new AuthService();
-        }
-        return instance;
+    // Initialization-on-demand holder: JVM 클래스 로딩 메커니즘으로 동기화 없이 스레드 안전
+    private static class Holder {
+        private static final LoginService INSTANCE = new LoginService();
     }
 
-    // 비즈니스 로직
+    private LoginService() {}
+
+    public static LoginService getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    // ====================
+    // [SFR-001] 올바른 ID/PW로 로그인
+    // [SFR-002] 역할(학생/교수/조교/관리자)에 맞는 화면으로 분기
+    // [SFR-006] 조교 계정으로 교수 화면 접근 허용
+    // ====================
     public ResponseDTO processLogin(UserDTO.Request req) {
         String id = req.getId();
         String pw = req.getPw();
@@ -66,10 +64,29 @@ public class AuthService {
             return new ResponseDTO(false, "로그인 실패: 비밀번호가 일치하지 않습니다.", null);
         }
         
-        // 응답 생성 
+        // 응답 생성
         UserDTO.Response userInfo = new UserDTO.Response(user.getRole(), user.getId(), user.getName());
-        
-        // 응답 반환 
+
+        // ====================
+        // [SFR-408] 로그인 시 미읽음 승인 알림 즉시 전달
+        // [SFR-409] 로그인 시 미읽음 거부 알림(거부 사유 포함) 즉시 전달
+        // ====================
+        // 학생인 경우 미읽음 알림 첨부 (로그인 즉시 알림 전달)
+        if (user.getRole() == Role.STUDENT) {
+            java.util.List<com.crsystem.common.dto.NotificationDTO> pending =
+                com.crsystem.systemserver.model.NotificationStore.getInstance()
+                    .getUnreadNotifications(user.getId());
+            if (!pending.isEmpty()) {
+                java.util.List<String> ids = pending.stream()
+                    .map(com.crsystem.common.dto.NotificationDTO::getNotificationId)
+                    .collect(java.util.stream.Collectors.toList());
+                com.crsystem.systemserver.model.NotificationStore.getInstance()
+                    .markAsRead(user.getId(), ids);
+                userInfo.setPendingNotifications(pending);
+            }
+        }
+
+        // 응답 반환
         return new ResponseDTO(true, "로그인 성공!", userInfo);
     }
 }

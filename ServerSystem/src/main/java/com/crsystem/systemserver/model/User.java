@@ -56,7 +56,11 @@ public class User {
     }
     
     // Method
-    // ID 유효성 검사
+    // ====================
+    // [SFR-003] 학생 ID는 8자리 숫자, 초기 비밀번호는 학번과 동일
+    // [SFR-004] 교수/조교 ID는 5자리 숫자
+    // [SFR-005] 관리자 ID는 4~10자리 영문/숫자
+    // ====================
     private void validateIdFormat(Role role, String id) {
         if (role == Role.PROFESSOR || role == Role.ASSISTANT) {
             if (!id.matches("^\\d{5}$")) {

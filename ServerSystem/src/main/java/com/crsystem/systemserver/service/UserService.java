@@ -14,32 +14,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 사용자 전문가 
  * @author wonsik
  */
 public class UserService {
     
-    // 싱글톤 패턴 적용
-    private static UserService instance;
+    private static class Holder {
+        private static final UserService INSTANCE = new UserService();
+    }
+
     private final UserCatalog catalog;
     private final UserFileManager fileManager;
 
     private UserService() {
         this.fileManager = new UserFileManager();
-        // 초기화 시 파일에서 목록 적재 
+        // 초기화 시 파일에서 목록 적재
         this.catalog = new UserCatalog(fileManager.loadAll());
     }
 
     public static UserService getInstance() {
-        if (instance == null) {
-            instance = new UserService();
-        }
-        return instance;
+        return Holder.INSTANCE;
     }
 
-    // ==========================================
-    // 사용자 목록 조회 (GET_USER_LIST)
-    // ==========================================
+    // ====================
+    // [SFR-103] 관리자는 전체 사용자 목록을 조회할 수 있어야 한다
+    // ====================
     public ResponseDTO getUserList() {
         ResponseDTO response = new ResponseDTO();
         try {
@@ -60,9 +59,10 @@ public class UserService {
         }
     }
 
-    // ==========================================
-    // 사용자 추가 (ADD_USER)
-    // ==========================================
+    // ====================
+    // [SFR-101] 관리자는 사용자를 추가할 수 있어야 한다
+    // [SFR-105] 중복 ID로는 추가할 수 없어야 한다
+    // ====================
     public ResponseDTO addUser(UserDTO.Request req) {
         String id = req.getId();
 
@@ -94,9 +94,10 @@ public class UserService {
         }
     }
 
-    // ==========================================
-    // 사용자 삭제 (DELETE_USER)
-    // ==========================================
+    // ====================
+    // [SFR-102] 관리자는 사용자를 삭제할 수 있어야 한다
+    // [SFR-104] 관리자 계정은 삭제할 수 없어야 한다
+    // ====================
     public ResponseDTO deleteUser(UserDTO.Request req) {
         String id = req.getId();
         User targetUser;

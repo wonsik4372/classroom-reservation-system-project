@@ -55,7 +55,10 @@ public class MainController {
         // 3. [ReservationService 위임]
         // ==========================================
         commandMap.put("STUDENT_RESERVATION_REQUEST", req ->
-            ReservationService.getInstance().studentReservationRequest((ReservationDTO.Request) req.getPayload())
+            ReservationService.getInstance().createReservation((ReservationDTO.Request) req.getPayload())
+        );
+        commandMap.put("CREATE_RESERVATION", req ->
+            ReservationService.getInstance().createReservation((ReservationDTO.Request) req.getPayload())
         );
         commandMap.put("GET_PENDING_RESERVATIONS", req ->
             ReservationService.getInstance().getPendingReservations()
@@ -72,48 +75,6 @@ public class MainController {
             ReservationService.getInstance().rejectReservation((ReservationDTO.Request) req.getPayload())
         );
 
-        // ==========================================
-        // 4. [ClassroomService 위임] (주석 해제 시 사용 가능하도록 패턴 적용)
-        // ==========================================
-        // commandMap.put("GET_ROOM_LIST", req -> 
-        //     ClassroomService.getInstance().getRoomList((ClassroomDto.Request) req.getPayload())
-        // );
-        // commandMap.put("REQUEST_ROOM_ACTION", req -> 
-        //     ClassroomService.getInstance().processRoomAction((ClassroomDto.Request) req.getPayload())
-        // );
-        
-        // ==========================================
-        // 3. [ReservationService 위임]
-        // ==========================================
-        // commandMap.put("STUDENT_RESERVATION_REQUEST", req -> 
-        //     ReservationService.getInstance().processStudentReservation((ReservationDto.Request) req.getPayload())
-        // );
-        // commandMap.put("PROFESSOR_RESERVATION_REGISTER", req -> 
-        //     ReservationService.getInstance().processProfessorReservation((ReservationDto.Request) req.getPayload())
-        // );
-        // commandMap.put("GET_MY_RESERVATIONS", req -> 
-        //     ReservationService.getInstance().getMyReservations((ReservationDto.Request) req.getPayload())
-        // );
-
-        // 전체 조회 등 파라미터가 필요 없는 메서드는 
-        // payload를 꺼낼 필요 없이 단순히 메서드만 호출
-//        commandMap.put("GET_PENDING_RESERVATIONS", req -> 
-//            ReservationService.getInstance().getPendingReservations()
-//        );
-//        commandMap.put("GET_ALL_RESERVATIONS", req -> 
-//            ReservationService.getInstance().getAllReservations()
-//        );
-//
-//        // 상태 변경(승인, 거부, 취소) 액션은 알맹이(예약번호 등)가 필요하므로 payload 캐스팅 후 전달
-//        commandMap.put("APPROVE_RESERVATION", req -> 
-//            ReservationService.getInstance().approveReservation((ReservationDto.Request) req.getPayload())
-//        );
-//        commandMap.put("REJECT_RESERVATION", req -> 
-//            ReservationService.getInstance().rejectReservation((ReservationDto.Request) req.getPayload())
-//        );
-//        commandMap.put("CANCEL_RESERVATION", req -> 
-//            ReservationService.getInstance().cancelReservation((ReservationDto.Request) req.getPayload())
-//        );
     }
 
     /**

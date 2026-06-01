@@ -4,7 +4,6 @@
  */
 package com.crsystem.systemserver.main;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -26,13 +25,14 @@ public class CRSystemServer {
         server.startServer();      
     }
     
-    // application.properties 로드
+    // application.properties 로드 (src/main/resources → classpath에서 읽음)
     public void loadProperties() {
         Properties props = new Properties();
-        try (InputStream input = new FileInputStream("application.properties")) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties")) {
+            if (input == null) throw new IllegalStateException("application.properties를 찾을 수 없습니다.");
             props.load(input);
             this.serverPort = Integer.parseInt(props.getProperty("server.port", "9998"));
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.err.println("설정 파일 로드 실패. 기본 포트 9998을 사용합니다.");
             this.serverPort = 9998;
         }

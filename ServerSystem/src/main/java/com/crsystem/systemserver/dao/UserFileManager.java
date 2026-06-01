@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author wonsik
  */
 public class UserFileManager implements FileManager <User>{
-    private final String FILE_PATH = "src/main/resources/masterfile/User.json";
+    private final String FILE_PATH = ServerPaths.USER_JSON;
     private final Gson gson;
     
     public UserFileManager() {

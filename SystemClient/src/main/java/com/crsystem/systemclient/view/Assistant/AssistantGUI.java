@@ -31,11 +31,15 @@ public class AssistantGUI extends javax.swing.JFrame {
     }
     
     private void initCustomSettings() {
-        this.setPreferredSize(new java.awt.Dimension(950, 700));
+        this.setPreferredSize(new java.awt.Dimension(1150, 750));
         this.pack();
         this.setLocationRelativeTo(null); // 창을 화면 중앙에 배치
-        
-        // 더블 클릭 감지 -> 상세 정보 띄우기 
+
+        // 컬럼 클릭으로 정렬
+        jTablePendingReservations.setAutoCreateRowSorter(true);
+        jTableReservationList.setAutoCreateRowSorter(true);
+
+        // 더블 클릭 감지 -> 상세 정보 띄우기
         jTableReservationList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -55,10 +59,10 @@ public class AssistantGUI extends javax.swing.JFrame {
     // 더블 클릭 시 상세 조회 팝업 
     // ==========================================
     private void showReservationDetailPopup() {
-        int selectedRow = jTableReservationList.getSelectedRow();
-        if (selectedRow == -1) return;
+        int selectedViewRow = jTableReservationList.getSelectedRow();
+        if (selectedViewRow == -1) return;
 
-        // 리스트에서 클릭한 줄과 똑같은 인덱스의 데이터를 꺼냄
+        int selectedRow = jTableReservationList.convertRowIndexToModel(selectedViewRow);
         com.crsystem.common.dto.ReservationDTO.Response selectedObj = currentAllList.get(selectedRow);
 
         String detailMessage = String.format(
@@ -126,7 +130,7 @@ public class AssistantGUI extends javax.swing.JFrame {
                                     res.getUserId(),     // 3: 학번/교번 (유저 ID)
                                     res.getRoomName(),     // 4: 강의실
                                     res.getPurpose(),    // 5: 목적
-                                    res.getDate(),       // 6: 예약일
+                                    res.getDate() != null ? res.getDate().toString() : "",       // 6: 예약일
                                     res.getPeriodInfo(),       // 7: 예약시간
                                     res.getPartnerCount()   // 8: 인원 수
                                 };
@@ -168,7 +172,7 @@ public class AssistantGUI extends javax.swing.JFrame {
                                     res.getUserId(),   // 1: ID
                                     res.getRoomName(),   // 2: 강의실
                                     res.getPurpose(),  // 3: 목적
-                                    res.getDate(),     // 4: 예약일
+                                    res.getDate() != null ? res.getDate().toString() : "",     // 4: 예약일
                                     res.getPeriodInfo(),     // 5: 예약 시간
                                     res.getStatus()    // 6: 상태 (APPROVED, PENDING 등)
                                 };
@@ -556,15 +560,15 @@ public class AssistantGUI extends javax.swing.JFrame {
     // 거부 + 거부 사유 
     // ==========================================
     private void jButtonRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRejectActionPerformed
-        // TODO add your handling code here:
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTablePendingReservations.getModel();
         String selectedId = null;
         int checkedCount = 0;
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            Boolean isChecked = (Boolean) model.getValueAt(i, 0);
+        for (int viewRow = 0; viewRow < jTablePendingReservations.getRowCount(); viewRow++) {
+            int modelRow = jTablePendingReservations.convertRowIndexToModel(viewRow);
+            Boolean isChecked = (Boolean) model.getValueAt(modelRow, 0);
             if (isChecked != null && isChecked) {
-                selectedId = (String) model.getValueAt(i, 1); // 예약 ID 컬럼 인덱스 매칭 필요
+                selectedId = currentPendingList.get(modelRow).getReservationId();
                 checkedCount++;
             }
         }
@@ -603,14 +607,13 @@ public class AssistantGUI extends javax.swing.JFrame {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTablePendingReservations.getModel();
         java.util.List<String> idsToApprove = new java.util.ArrayList<>();
 
-        // 0번째 열(선택 체크박스) 확인하여 예약 ID(가정: 1번째 열이 예약ID라고 설계해야 함) 수집
-        for (int i = 0; i < model.getRowCount(); i++) {
-            Boolean isChecked = (Boolean) model.getValueAt(i, 0);
+        // 테이블에 ID 컬럼이 없으므로 currentPendingList에서 행 인덱스로 직접 꺼냄
+        // 정렬이 적용된 경우 뷰 인덱스 → 모델 인덱스 변환 필요
+        for (int viewRow = 0; viewRow < jTablePendingReservations.getRowCount(); viewRow++) {
+            int modelRow = jTablePendingReservations.convertRowIndexToModel(viewRow);
+            Boolean isChecked = (Boolean) model.getValueAt(modelRow, 0);
             if (isChecked != null && isChecked) {
-                // 주의: 현재 테이블 컬럼 설계상 예약 고유 ID가 보이지 않습니다.
-                // 임시로 1번째 열(구분)을 ID로 간주합니다. 실제 DTO 구조에 맞게 열 인덱스를 조정하세요.
-                String reservationId = (String) model.getValueAt(i, 1); 
-                idsToApprove.add(reservationId);
+                idsToApprove.add(currentPendingList.get(modelRow).getReservationId());
             }
         }
 

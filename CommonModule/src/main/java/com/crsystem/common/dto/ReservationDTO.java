@@ -23,17 +23,22 @@ public class ReservationDTO implements Serializable {
     // 1. 클라이언트(학생) -> 서버 : 예약 생성 요청 시 사용하는 껍데기
     public static class Request implements Serializable {
         private static final long serialVersionUID = 1L;
-        
-        private String userId;       // 예약자 ID 
-        private String roomName;     // 강의실 번호
-        private LocalDate date;      // 예약 날짜
-        private String periodInfo;   // 교시
-        private String purpose;      // 사유
-        private int partnerCount;    // 동반 인원
+
+        private String reservationId; // 예약 고유 ID (승인/거부 요청 시 사용)
+        private String userId;        // 예약자 ID
+        private String roomName;      // 강의실 번호
+        private LocalDate date;       // 예약 날짜
+        private String periodInfo;    // 교시
+        private String purpose;       // 사유
+        private int partnerCount;     // 동반 인원
 
         public Request() {}
 
         // Getter
+        public String getReservationId() {
+            return reservationId;
+        }
+
         public String getUserId() {
             return userId;
         }
@@ -59,6 +64,10 @@ public class ReservationDTO implements Serializable {
         }
         
         // Setter
+        public void setReservationId(String reservationId) {
+            this.reservationId = reservationId;
+        }
+
         public void setUserId(String userId) {
             this.userId = userId;
         }

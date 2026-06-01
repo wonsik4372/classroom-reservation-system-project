@@ -2,10 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.crsystem.systemclient.view;
+package com.crsystem.systemclient.view.Reservation;
 
 import com.crsystem.systemclient.view.Reservation.CRSystemTimetableUI;
 import com.crsystem.common.dto.ReservationDTO;
+import com.crsystem.common.dto.ResponseDTO;
+import com.crsystem.systemclient.controller.ReservationController;
+import com.crsystem.systemclient.controller.SessionManager;
+import java.util.List;
 /**
  *
  * @author wonsik
@@ -17,7 +21,39 @@ public class RoomListGUI extends javax.swing.JPanel {
      */
     public RoomListGUI() {
         initComponents();
-        updateReservationTable();
+        initCustomSettings();
+        loadReservationsFromServer();
+    }
+
+    private void initCustomSettings() {
+        // 시계
+        jLabelTime.setText(getCurrentTime());
+        new javax.swing.Timer(1000, e -> jLabelTime.setText(getCurrentTime())).start();
+
+        // 로그아웃 버튼
+        jButtonLogout.addActionListener(e -> handleLogout());
+
+        // 컬럼 클릭으로 정렬
+        jTable1.setAutoCreateRowSorter(true);
+        jTable2.setAutoCreateRowSorter(true);
+    }
+
+    private String getCurrentTime() {
+        return java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss"));
+    }
+
+    private void handleLogout() {
+        SessionManager.getInstance().logout();
+
+        // 현재 부모 JFrame 닫기
+        javax.swing.JFrame parentFrame =
+                (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (parentFrame != null) parentFrame.dispose();
+
+        // 로그인 화면으로 이동
+        javax.swing.SwingUtilities.invokeLater(() ->
+                new com.crsystem.systemclient.view.LoginGUI().setVisible(true));
     }
 
     /**
@@ -275,50 +311,66 @@ public class RoomListGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-        updateReservationTable();
+        loadReservationsFromServer();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
+    // ==========================================
+    // 서버에서 전체 예약 목록 조회 후 테이블 갱신
+    // ==========================================
+    private void loadReservationsFromServer() {
+        ReservationController.getInstance().getReservationList(
+            "ALL",
+            (ResponseDTO response) -> {
+                if (response.isSuccess()) {
+                    List<ReservationDTO.Response> list =
+                            (List<ReservationDTO.Response>) response.getPayload();
+                    // 서버 응답을 로컬 static 리스트에도 반영 (CRSystemTimetableUI 등과 공유)
+                    CRSystemReservation.reservationList.clear();
+                    if (list != null) CRSystemReservation.reservationList.addAll(list);
+                    updateReservationTable();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "예약 현황 조회 실패: " + response.getMessage());
+                }
+            },
+            error -> javax.swing.JOptionPane.showMessageDialog(this, "통신 오류: " + error)
+        );
+    }
+
+    // ==========================================
+    // 조회된 데이터로 예약 현황 테이블 렌더링
+    // ==========================================
     public void updateReservationTable() {
         String building = (String) jComboBoxBuildingNo.getSelectedItem();
-        String floor = (String) jComboBoxFloor.getSelectedItem();
-        String room = (String) jComboBox4.getSelectedItem();
+        String floor    = (String) jComboBoxFloor.getSelectedItem();
+        String room     = (String) jComboBox4.getSelectedItem();
 
-        // 1. 테이블의 헤더(열 이름) 세팅
-        String[] columnNames = {"예약 날짜", "요일", "선택 교시", "구분", "사용 목적", "동반 인원", "승인 상태"};
-        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0);
+        String[] columnNames = {"예약 날짜", "요일", "선택 교시", "예약자", "구분", "사용 목적", "동반 인원", "승인 상태"};
+        javax.swing.table.DefaultTableModel model =
+                new javax.swing.table.DefaultTableModel(columnNames, 0);
 
-        // 2. 만약 아직 선택되지 않은 조건이 있다면 빈 테이블로 보여주고 리턴
+        // 강의실이 선택되지 않으면 빈 테이블
         if ("건물선택".equals(building) || "층 선택".equals(floor) || "강의실 선택".equals(room)) {
             jTable2.setModel(model);
             return;
         }
 
-        // 현재 선택한 강의실의 풀네임 조합 (예: "23 정보공학관 9층 912호")
         String targetRoomName = building + " " + floor + "층 " + room + "호";
 
-        // 전체 static 예약 리스트(CRSystemReservation.reservationList)에서 
-        //    '현재 선택된 강의실 정보와 일치하는 예약 데이터' 표에 추가
-        // 주의: CRSystemReservation 클래스 내에 reservationList 변수가 선언되어 있어야 합니다.
-        if (com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList != null) {
-            for (ReservationDTO info : com.crsystem.systemclient.view.Reservation.CRSystemReservation.reservationList) {
-                // 저장된 예약의 강의실 이름과 현재 콤보박스로 선택된 강의실 이름이 똑같을 때만 표에 노출
-                
-                // ####################### 수정 필요 
-                /*
+        if (CRSystemReservation.reservationList != null) {
+            for (ReservationDTO.Response info : CRSystemReservation.reservationList) {
                 if (targetRoomName.equals(info.getRoomName())) {
-                    Object[] rowData = {
-                        info.date.toString(),
-                        info.day + "요일",
-                        info.periodInfo,
-                        info.userType,
-                        info.purpose,
-                        info.partnerCount + "명",
-                        info.status
-                    };
-                    model.addRow(rowData);
-                }*/
-
+                    model.addRow(new Object[]{
+                        info.getDate() != null ? info.getDate().toString() : "",
+                        info.getDay() != null ? info.getDay() + "요일" : "",
+                        info.getPeriodInfo(),
+                        info.getUserName(),
+                        info.getRoleType(),
+                        info.getPurpose(),
+                        info.getPartnerCount() + "명",
+                        info.getStatus()
+                    });
+                }
             }
         }
 

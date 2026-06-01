@@ -108,26 +108,31 @@ public class CRSystemClient {
         }
 
         // 백그라운드 스레드에서 I/O 블로킹 처리
+        // synchronized: 여러 요청이 동시에 같은 스트림에 write하면 StreamCorruptedException 발생
+        // → 요청 1건이 완전히 끝난 후 다음 요청이 시작되도록 직렬화
         new Thread(() -> {
-            try {
-                // 요청 전송
-                writer.writeObject(request);
-                writer.flush();
+            synchronized (this) {
+                try {
+                    // 요청 전송
+                    writer.writeObject(request);
+                    writer.flush();
+                    writer.reset(); // 객체 캐시 초기화
 
-                // 응답 대기
-                Object responseObj = reader.readObject();
+                    // 응답 대기
+                    Object responseObj = reader.readObject();
 
-                // 성공 콜백 실행
-                if (responseObj instanceof ResponseDTO) {
-                    ResponseDTO response = (ResponseDTO) responseObj;
-                    SwingUtilities.invokeLater(() -> onSuccess.accept(response));
-                } else {
-                    SwingUtilities.invokeLater(() -> onFailure.accept("알 수 없는 응답 객체입니다."));
+                    // 성공 콜백 실행
+                    if (responseObj instanceof ResponseDTO) {
+                        ResponseDTO response = (ResponseDTO) responseObj;
+                        SwingUtilities.invokeLater(() -> onSuccess.accept(response));
+                    } else {
+                        SwingUtilities.invokeLater(() -> onFailure.accept("알 수 없는 응답 객체입니다."));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    SwingUtilities.invokeLater(() -> onFailure.accept("통신 중 오류 발생: " + e.getMessage()));
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                SwingUtilities.invokeLater(() -> onFailure.accept("통신 중 오류 발생: " + e.getMessage()));
             }
         }).start();
     }

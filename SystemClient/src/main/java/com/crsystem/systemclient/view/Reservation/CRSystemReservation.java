@@ -5,6 +5,11 @@
 package com.crsystem.systemclient.view.Reservation;
 
 import com.crsystem.common.dto.ReservationDTO;
+import com.crsystem.common.dto.ResponseDTO;
+import com.crsystem.systemclient.controller.ReservationController;
+import com.crsystem.systemclient.controller.SessionManager;
+import com.crsystem.common.dto.UserDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,7 +17,6 @@ import com.crsystem.common.dto.ReservationDTO;
  */
 public class CRSystemReservation extends javax.swing.JFrame {
 
-    public static java.util.List<ReservationDTO> reservationList = new java.util.ArrayList<>();
     private java.util.List<java.time.LocalDate> dateValues = new java.util.ArrayList<>();
 
     private String day;
@@ -53,9 +57,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
         dateCombo.setModel(model);
         dateCombo.setSelectedIndex(14); // 오늘 날짜 선택
 
-        // 사용자 구분 세팅
-        typeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"학생", "교수"}));
-
         // 창을 닫아도 프로그램 전체가 꺼지지 않게 설정
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
@@ -72,12 +73,10 @@ public class CRSystemReservation extends javax.swing.JFrame {
         lblInfo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         dateCombo = new javax.swing.JComboBox<>();
-        typeCombo = new javax.swing.JComboBox<>();
         purposeField = new javax.swing.JTextField();
         partnerSpinner = new javax.swing.JSpinner();
         btnList = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -89,8 +88,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
 
         dateCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        typeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         purposeField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         purposeField.addActionListener(this::purposeFieldActionPerformed);
 
@@ -99,8 +96,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
 
         btnSubmit.setText("예약 등록");
         btnSubmit.addActionListener(this::btnSubmitActionPerformed);
-
-        jLabel3.setText("사용자 선택(테스트용) :");
 
         jLabel4.setText("사용 목적 : ");
 
@@ -115,7 +110,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -125,8 +119,7 @@ public class CRSystemReservation extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(partnerSpinner)
                         .addComponent(purposeField)
-                        .addComponent(typeCombo, 0, 201, Short.MAX_VALUE)
-                        .addComponent(dateCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(dateCombo, 0, 201, Short.MAX_VALUE))
                     .addComponent(btnList, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
@@ -141,21 +134,19 @@ public class CRSystemReservation extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel4)
+                    .addComponent(purposeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(purposeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(partnerSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnList, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnList, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(partnerSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -174,34 +165,30 @@ public class CRSystemReservation extends javax.swing.JFrame {
             return;
         }
 
-        String type = (String) typeCombo.getSelectedItem();
-        // 신분별 예약 가능 시간 체크
-        if ("학생".equals(type) && duration > 2) {
-            javax.swing.JOptionPane.showMessageDialog(this, "학생은 최대 2교시까지만 예약 가능합니다.");
-            return;
-        }
-        if ("교수".equals(type) && duration > 3) {
-            javax.swing.JOptionPane.showMessageDialog(this, "교수는 최대 3교시까지만 예약 가능합니다.");
+        UserDTO.Response user = SessionManager.getInstance().getCurrentUser();
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
             return;
         }
 
-        // 예약 정보 저장
-        ReservationDTO info = new ReservationDTO();
-        /*
-        info.roomName = this.roomName;
-        info.date = selectedDate;
-        info.day = this.day;
-        info.periodInfo = this.periodInfo;
-        info.userType = type;
-        info.purpose = purposeField.getText();
-        info.partnerCount = (int) partnerSpinner.getValue();
-        info.status = "교수".equals(type) ? "예약 확정" : "대기 중";
-        
-        
-        reservationList.add(info);
-        javax.swing.JOptionPane.showMessageDialog(this, "예약 성공! 상태: " + info.status);
-        */
-        this.dispose();
+        ReservationDTO.Request request = new ReservationDTO.Request();
+        request.setUserId(user.getId());
+        request.setRoomName(this.roomName);
+        request.setDate(selectedDate);
+        request.setPeriodInfo(this.periodInfo);
+        request.setPurpose(purposeField.getText());
+        request.setPartnerCount((int) partnerSpinner.getValue());
+
+        btnSubmit.setEnabled(false);
+        ReservationController.getInstance().createReservation(
+                request,
+                response -> handleCreateReservationResponse(response),
+                error -> {
+                    btnSubmit.setEnabled(true);
+                    JOptionPane.showMessageDialog(this, error);
+                }
+        );
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListActionPerformed
@@ -212,6 +199,28 @@ public class CRSystemReservation extends javax.swing.JFrame {
     private void purposeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purposeFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_purposeFieldActionPerformed
+
+    private void handleCreateReservationResponse(ResponseDTO response) {
+        btnSubmit.setEnabled(true);
+
+        if (!response.isSuccess()) {
+            JOptionPane.showMessageDialog(this, response.getMessage());
+            return;
+        }
+
+        ReservationController.getInstance().getReservationList(
+                "ALL",
+                listResponse -> {
+                    ReservationController.getInstance().updateCache(listResponse.getPayload());
+                    JOptionPane.showMessageDialog(this, response.getMessage());
+                    this.dispose();
+                },
+                error -> {
+                    JOptionPane.showMessageDialog(this, response.getMessage());
+                    this.dispose();
+                }
+        );
+    }
 
     /**
      * @param args the command line arguments
@@ -245,12 +254,10 @@ public class CRSystemReservation extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JComboBox<String> dateCombo;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblInfo;
     private javax.swing.JSpinner partnerSpinner;
     private javax.swing.JTextField purposeField;
-    private javax.swing.JComboBox<String> typeCombo;
     // End of variables declaration//GEN-END:variables
 }

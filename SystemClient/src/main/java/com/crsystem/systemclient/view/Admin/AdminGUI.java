@@ -27,6 +27,10 @@ public class AdminGUI extends javax.swing.JFrame {
     public AdminGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        // 컬럼 클릭으로 정렬
+        jTableUserList.setAutoCreateRowSorter(true);
+
         requestUserListFromServer();
 
         UserDTO.Response currentUser = SessionManager.getInstance().getCurrentUser();

@@ -14,46 +14,91 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.crsystem.common.dto.ReservationDTO;
+import com.crsystem.common.enums.Role;
+import com.crsystem.common.dto.UserDTO;
+import com.crsystem.systemclient.controller.ReservationController;
+import com.crsystem.systemclient.controller.SessionManager;
+
 /**
  *
  * @author abalo
  */
 public class CRSystemTimetableUI extends javax.swing.JFrame {
-    
+
     private List<Point> selectedCells = new ArrayList<>();
     private String[] days = {"월", "화", "수", "목", "금"};
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CRSystemTimetableUI.class.getName());
-    
+
     private String roomName;
+
     /**
      * Creates new form CRSystemTimetableUI
      */
     public CRSystemTimetableUI(String roomName) {
         this.roomName = roomName;
         initComponents();
-        
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) table.getModel();
-        model.setRowCount(9); 
-        
+        model.setRowCount(9);
+
         setTitle(roomName + " - 시간표 예약");
-        
-        String[] times = {"1교시(09:00)", "2교시(10:00)", "3교시(11:00)", "4교시(12:00)", 
-                          "5교시(13:00)", "6교시(14:00)", "7교시(15:00)", "8교시(16:00)", "9교시(17:00)"};
+
+        String[] times = {"1교시(09:00)", "2교시(10:00)", "3교시(11:00)", "4교시(12:00)",
+            "5교시(13:00)", "6교시(14:00)", "7교시(15:00)", "8교시(16:00)", "9교시(17:00)"};
         for (int i = 0; i < 9; i++) {
             model.setValueAt(times[i], i, 0);
         }
-        
-        table.setRowHeight(45); 
+
+        table.setRowHeight(45);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // 컬럼 클릭으로 정렬
+        table.setAutoCreateRowSorter(true);
 
         // 선택된 칸 파란색
         table.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(Color.WHITE); 
+                c.setBackground(Color.WHITE);
+
+                String day = null;
+
+                if (column > 0) {
+                    day = days[column - 1];
+                }
+
+                String period = (row + 1) + "교시";
+
+                for (ReservationDTO.Response reservation
+                        : CRSystemReservation.reservationList) {
+                    boolean sameRoom
+                            = reservation.getRoomName()
+                                    .equals(roomName);
+
+                    boolean sameDay
+                            = reservation.getDay()
+                                    .equals(day);
+
+                    boolean samePeriod
+                            = reservation.getPeriodInfo()
+                                    .contains(period);
+
+                    if (sameRoom && sameDay && samePeriod) {
+                        if (reservation.getRoleType() == Role.STUDENT) {
+                            // 학생 예약 
+                            c.setBackground(new Color(180, 255, 180));
+                        } else if (reservation.getRoleType() == Role.PROFESSOR) {
+                            // 교수 예약
+                            c.setBackground(new Color(255, 200, 220));
+                        }
+                    }
+                }
+
                 for (Point p : selectedCells) {
                     if (p.x == row && p.y == column) {
                         c.setBackground(new Color(180, 200, 255));
@@ -62,6 +107,8 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
                 return c;
             }
         });
+
+        refreshReservationCache();
     }
 
     /**
@@ -128,10 +175,75 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = table.getSelectedRow();
         int col = table.getSelectedColumn();
-        if (col == 0) return;
+
+        if (row < 0 || col <= 0) {
+            return;
+        }
+
+        String selectedDay = days[col - 1];
+        String selectedPeriod = (row + 1) + "교시";
+
+        UserDTO.Response currentUser
+                = SessionManager.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
+            return;
+        }
+
+        for (ReservationDTO.Response reservation
+                : CRSystemReservation.reservationList) {
+
+            boolean sameRoom
+                    = reservation.getRoomName()
+                            .equals(this.roomName);
+
+            boolean sameDay
+                    = reservation.getDay()
+                            .equals(selectedDay);
+
+            boolean samePeriod
+                    = reservation.getPeriodInfo()
+                            .contains(selectedPeriod);
+
+            if (sameRoom && sameDay && samePeriod) {
+                // 학생 차단
+
+                if (currentUser.getRole() == Role.STUDENT) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "이미 예약된 교시입니다."
+                    );
+
+                    return;
+                }
+
+                // 교수 -> 교수 예약 시도
+                if (currentUser.getRole() == Role.PROFESSOR
+                        && reservation.getRoleType() == Role.PROFESSOR) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "이미 교수 예약이 존재합니다."
+                    );
+                    return;
+                }
+
+                // 교수 -> 학생 예약 시도
+                if (currentUser.getRole() == Role.PROFESSOR
+                        && reservation.getRoleType() == Role.STUDENT) {
+                    break;
+                }
+            }
+        }
+
         Point p = new Point(row, col);
-        if (selectedCells.contains(p)) selectedCells.remove(p);
-        else selectedCells.add(p);
+
+        if (selectedCells.contains(p)) {
+            selectedCells.remove(p);
+        } else {
+            selectedCells.add(p);
+        }
+
         table.repaint();
     }//GEN-LAST:event_tableMouseClicked
 
@@ -152,18 +264,65 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         }
         Collections.sort(rows);
         for (int i = 0; i < rows.size() - 1; i++) {
-            if (rows.get(i+1) != rows.get(i) + 1) {
+            if (rows.get(i + 1) != rows.get(i) + 1) {
                 JOptionPane.showMessageDialog(this, "연속된 교시만 예약 가능합니다.");
                 return;
             }
         }
-        String periodString = rows.stream().map(r -> (r + 1) + "교시").collect(java.util.stream.Collectors.joining(", "));
+
+        UserDTO.Response currentUser
+                = SessionManager.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
+            return;
+        }
+
+        if (currentUser.getRole() == Role.STUDENT
+                && rows.size() > 2) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "학생은 최대 2교시까지만 예약 가능합니다."
+            );
+            return;
+        }
+
+        if (currentUser.getRole() == Role.PROFESSOR
+                && rows.size() > 3) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "교수는 최대 3교시까지만 예약 가능합니다."
+            );
+            return;
+        }
         
+        String periodString = rows.stream().map(r -> (r + 1) + "교시").collect(java.util.stream.Collectors.joining(", "));
+
         // 상세 예약창 호출
-        new CRSystemReservation(this.roomName, days[col - 1], periodString, rows.size()).setVisible(true);
+        CRSystemReservation reservationFrame = new CRSystemReservation(this.roomName, days[col - 1], periodString, rows.size());
+        reservationFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                refreshReservationCache();
+            }
+        });
+        reservationFrame.setVisible(true);
         selectedCells.clear();
         table.repaint();
     }//GEN-LAST:event_btnReserveActionPerformed
+
+    private void refreshReservationCache() {
+        ReservationController.getInstance().getReservationList(
+                "ALL",
+                response -> {
+                    if (response.isSuccess()) {
+                        CRSystemReservation.updateReservationCache(response.getPayload());
+                        table.repaint();
+                    }
+                },
+                error -> System.err.println("[CRSystemTimetableUI] 예약 목록 조회 실패: " + error)
+        );
+    }
 
     /**
      * @param args the command line arguments

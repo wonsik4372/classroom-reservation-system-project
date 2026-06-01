@@ -1,2644 +1,2646 @@
 {
   "buildingName" : "14 상경관",
-  "classrooms" : {
-    "401호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+  "floors" : {
+    "4층" : {
+      "401호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "403호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "403호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "지도교수멘토링VII",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "404호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "404호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)국제경영전략특수김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "(대)국제경영전략특수김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)국제경영전략특수김영근",
+            "professor" : "없음",
+            "status" : 1
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "지도교수멘토링VII",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)국제경영전략특수",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "(대)국제경영전략특수",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)국제경영전략특수",
-          "professor" : "김영근",
-          "status" : 1
-        } ]
-      }
-    },
-    "408호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "408호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "409호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "409호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "410호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "410호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)국제통상론연구한기조",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "(대)보험경제론연구정중영",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)국제통상론연구",
-          "professor" : "한기조",
-          "status" : 1
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "(대)보험경제론연구",
-          "professor" : "정중영",
-          "status" : 1
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "411호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "411호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "창업재무회계강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "창업재무회계강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "창업재무회계강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "창업비즈니스영어서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "창업비즈니스영어서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "창업정책과법서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "창업학의이해서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "창업학의이해서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링III서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "창업비즈니스영어서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "창업학의이해서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "스마트한생활과경김태완",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "스마트한생활과경김태완",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "창업정책과법서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "창업정책과법서현식",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "창업마케팅원론강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "창업마케팅원론강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "창업마케팅원론강영진",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "영어회화아데",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "영어회화아데",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "창업재무회계",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "창업재무회계",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "창업재무회계",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "창업비즈니스영어",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "창업비즈니스영어",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "창업정책과법",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "창업학의이해",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "창업학의이해",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "지도교수멘토링III",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "창업비즈니스영어",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "창업학의이해",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "스마트한생활과경",
-          "professor" : "김태완",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "스마트한생활과경",
-          "professor" : "김태완",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "창업정책과법",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "창업정책과법",
-          "professor" : "서현식",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "창업마케팅원론",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "창업마케팅원론",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "창업마케팅원론",
-          "professor" : "강영진",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "영어회화",
-          "professor" : "아데",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "영어회화",
-          "professor" : "아데",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "412호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "412호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "미시경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "미시경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "마케팅원론김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "관세론유재선",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "관세론유재선",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "국제개발소프트웨이재승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "국제개발소프트웨이재승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "※무역결제론신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "미시경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "※무역결제론신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "※무역결제론신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "경영학입문신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "경영학입문신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "경영학입문신학승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "마케팅원론김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "마케팅원론김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "물류학개론손효준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "물류학개론손효준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "물류학개론손효준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "미시경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "미시경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "마케팅원론",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "관세론",
-          "professor" : "유재선",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "관세론",
-          "professor" : "유재선",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "국제개발소프트웨",
-          "professor" : "이재승",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "국제개발소프트웨",
-          "professor" : "이재승",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "※무역결제론",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "미시경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "※무역결제론",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "※무역결제론",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "경영학입문",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "경영학입문",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "경영학입문",
-          "professor" : "신학승",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "마케팅원론",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "마케팅원론",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "물류학개론",
-          "professor" : "손효준",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "물류학개론",
-          "professor" : "손효준",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "물류학개론",
-          "professor" : "손효준",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "413호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "413호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "국제경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "21세기글로벌경제이석기",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "21세기글로벌경제이석기",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "무역실무(키스톤디박영태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "무역실무(키스톤디박영태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "부동산공시법김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "부동산공시법김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "캡스톤디자인(4.0시이재승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "캡스톤디자인II김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "스포츠사회학(키스김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "스포츠사회학(키스김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "스포츠사회학(키스김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "캡스톤디자인(4.0시이재승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "캡스톤디자인(4.0시이재승",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "부동산경제론이범웅",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "무역실무(키스톤디박영태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "경제학입문한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "경제학입문한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "통계적사고한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "통계적사고한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "통계적사고한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "경제학입문한기조",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "레저스포츠학개론김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "레저스포츠학개론김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "레저스포츠학개론김찬용",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "부동산공시법김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "캡스톤디자인II김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "캡스톤디자인II김태희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "국제경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "21세기글로벌경제",
-          "professor" : "이석기",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "21세기글로벌경제",
-          "professor" : "이석기",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "무역실무(키스톤디",
-          "professor" : "박영태",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "무역실무(키스톤디",
-          "professor" : "박영태",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "부동산공시법",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "부동산공시법",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "캡스톤디자인(4.0시",
-          "professor" : "이재승",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "캡스톤디자인II",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "스포츠사회학(키스",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "스포츠사회학(키스",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "스포츠사회학(키스",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "캡스톤디자인(4.0시",
-          "professor" : "이재승",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "캡스톤디자인(4.0시",
-          "professor" : "이재승",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "부동산경제론",
-          "professor" : "이범웅",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "무역실무(키스톤디",
-          "professor" : "박영태",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "경제학입문",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "경제학입문",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "통계적사고",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "통계적사고",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "통계적사고",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "경제학입문",
-          "professor" : "한기조",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "레저스포츠학개론",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "레저스포츠학개론",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "레저스포츠학개론",
-          "professor" : "김찬용",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "부동산공시법",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "캡스톤디자인II",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "캡스톤디자인II",
-          "professor" : "김태희",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "414호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
+      "414호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "국제통상정책론최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "국제금융최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "국제경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "국제경제학이홍배",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "무역학원론최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "무역학원론최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "국제통상정책론최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "국제통상정책론최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "영어회화다니엘쉐리든",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "영어회화다니엘쉐리든",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "국제금융최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "국제금융최봉호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "글로벌마케팅의이김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "글로벌마케팅의이김영근",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "전자무역론(키스톤손효준",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "전자무역론(키스톤손효준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "전자무역론(키스톤손효준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "관세론유재선",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "국제통상정책론",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "국제금융",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "국제경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "국제경제학",
-          "professor" : "이홍배",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "무역학원론",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "무역학원론",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "국제통상정책론",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "국제통상정책론",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "영어회화 다니엘쉐리든",
-          "professor" : "없음",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "영어회화 다니엘쉐리든",
-          "professor" : "없음",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "국제금융",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "국제금융",
-          "professor" : "최봉호",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "글로벌마케팅의이",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "글로벌마케팅의이",
-          "professor" : "김영근",
-          "status" : 1
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "전자무역론(키스톤",
-          "professor" : "손효준",
-          "status" : 1
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "전자무역론(키스톤",
-          "professor" : "손효준",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "전자무역론(키스톤",
-          "professor" : "손효준",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "관세론",
-          "professor" : "유재선",
-          "status" : 1
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
-      }
-    },
-    "415호" : {
-      "info" : {
-        "status" : "사용 가능",
-        "capacity" : 0,
-        "features" : "",
-        "computerCount" : 0
-      },
-      "schedule" : {
-        "월" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "※금융시장의이해",
-          "professor" : "김태완",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "※금융시장의이해",
-          "professor" : "김태완",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "경제학원론",
-          "professor" : "김태완",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "AI와디지털의인문",
-          "professor" : "이은정",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "AI와디지털의인문",
-          "professor" : "이은정",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "화" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "시장경제의이해",
-          "professor" : "배근호",
-          "status" : 1
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "시장경제의이해",
-          "professor" : "배근호",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "화폐금융론",
-          "professor" : "배근호",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "프로젝트와기업가",
-          "professor" : "이은정",
-          "status" : 1
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "글로벌이슈분석",
-          "professor" : "정순계",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "글로벌이슈분석",
-          "professor" : "정순계",
-          "status" : 1
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "수" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "영어회화",
-          "professor" : "아데",
-          "status" : 1
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "영어회화",
-          "professor" : "아데",
-          "status" : 1
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "글로벌이슈분석",
-          "professor" : "정순계",
-          "status" : 1
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "목" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ],
-        "금" : [ {
-          "time" : "09:00-09:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "10:00-10:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "11:00-11:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "12:00-12:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "13:00-13:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "14:00-14:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "15:00-15:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "16:00-16:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        }, {
-          "time" : "17:00-17:50",
-          "subject" : "빈 시간",
-          "professor" : "없음",
-          "status" : 0
-        } ]
+      "415호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "※금융시장의이해김태완",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "※금융시장의이해김태완",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "경제학원론김태완",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "AI와디지털의인문이은정",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "AI와디지털의인문이은정",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "시장경제의이해배근호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "시장경제의이해배근호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "화폐금융론배근호",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "프로젝트와기업가이은정",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "글로벌이슈분석정순계",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "글로벌이슈분석정순계",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "영어회화아데",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "영어회화아데",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "글로벌이슈분석정순계",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
       }
     }
   }

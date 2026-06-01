@@ -56,9 +56,6 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // 컬럼 클릭으로 정렬
-        table.setAutoCreateRowSorter(true);
-
         // 선택된 칸 파란색
         table.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
             @Override
@@ -75,7 +72,7 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
                 String period = (row + 1) + "교시";
 
                 for (ReservationDTO.Response reservation
-                        : CRSystemReservation.reservationList) {
+                        : ReservationController.getInstance().getReservationCache()) {
                     boolean sameRoom
                             = reservation.getRoomName()
                                     .equals(roomName);
@@ -192,7 +189,7 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         }
 
         for (ReservationDTO.Response reservation
-                : CRSystemReservation.reservationList) {
+                : ReservationController.getInstance().getReservationCache()) {
 
             boolean sameRoom
                     = reservation.getRoomName()
@@ -316,7 +313,7 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
                 "ALL",
                 response -> {
                     if (response.isSuccess()) {
-                        CRSystemReservation.updateReservationCache(response.getPayload());
+                        ReservationController.getInstance().updateCache(response.getPayload());
                         table.repaint();
                     }
                 },

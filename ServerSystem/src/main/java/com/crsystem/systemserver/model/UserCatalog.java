@@ -47,6 +47,14 @@ public class UserCatalog {
     }
 
     // ====================
+    // 목록 전체 교체 (테스트 전용)
+    // ====================
+    public synchronized void replaceAll(List<User> newUsers) {
+        this.userList.clear();
+        this.userList.addAll(newUsers);
+    }
+
+    // ====================
     // 사용자 추가
     // ====================
     public synchronized boolean addUser(User user) {

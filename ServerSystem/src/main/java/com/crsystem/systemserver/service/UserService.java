@@ -137,5 +137,8 @@ public class UserService {
             return catalog.findUser(id);
         }
     }
-    
+
+    void reloadForTesting() {
+        catalog.replaceAll(fileManager.loadAll());
+    }
 }

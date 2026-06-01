@@ -4,7 +4,6 @@
  */
 package com.crsystem.systemclient.view.Reservation;
 
-import com.crsystem.systemclient.view.Reservation.CRSystemTimetableUI;
 import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.controller.ReservationController;
@@ -322,11 +321,7 @@ public class RoomListGUI extends javax.swing.JPanel {
             "ALL",
             (ResponseDTO response) -> {
                 if (response.isSuccess()) {
-                    List<ReservationDTO.Response> list =
-                            (List<ReservationDTO.Response>) response.getPayload();
-                    // 서버 응답을 로컬 static 리스트에도 반영 (CRSystemTimetableUI 등과 공유)
-                    CRSystemReservation.reservationList.clear();
-                    if (list != null) CRSystemReservation.reservationList.addAll(list);
+                    ReservationController.getInstance().updateCache(response.getPayload());
                     updateReservationTable();
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this,
@@ -357,8 +352,9 @@ public class RoomListGUI extends javax.swing.JPanel {
 
         String targetRoomName = building + " " + floor + "층 " + room + "호";
 
-        if (CRSystemReservation.reservationList != null) {
-            for (ReservationDTO.Response info : CRSystemReservation.reservationList) {
+        List<ReservationDTO.Response> cache = ReservationController.getInstance().getReservationCache();
+        if (cache != null) {
+            for (ReservationDTO.Response info : cache) {
                 if (targetRoomName.equals(info.getRoomName())) {
                     model.addRow(new Object[]{
                         info.getDate() != null ? info.getDate().toString() : "",

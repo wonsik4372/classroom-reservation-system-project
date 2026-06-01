@@ -68,8 +68,8 @@ public class LoginService {
         UserDTO.Response userInfo = new UserDTO.Response(user.getRole(), user.getId(), user.getName());
 
         // ====================
-        // [SFR-408] 로그인 시 미읽음 승인 알림 즉시 전달
-        // [SFR-409] 로그인 시 미읽음 거부 알림(거부 사유 포함) 즉시 전달
+        // [SFR-504] 로그인 시 미읽음 승인 알림 즉시 전달
+        // [SFR-508] 로그인 시 미읽음 거부 알림(거부 사유 포함) 즉시 전달
         // ====================
         // 학생인 경우 미읽음 알림 첨부 (로그인 즉시 알림 전달)
         if (user.getRole() == Role.STUDENT) {

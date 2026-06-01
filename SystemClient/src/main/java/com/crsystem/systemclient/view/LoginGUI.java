@@ -10,6 +10,7 @@ import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.*;
 import com.crsystem.systemclient.controller.NotificationController;
+import com.crsystem.systemclient.controller.SessionManager;
 import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
 import com.crsystem.systemclient.view.Assistant.AssistantGUI;
@@ -260,6 +261,9 @@ public class LoginGUI extends javax.swing.JFrame {
                     SwingUtilities.invokeLater(() -> {
                         JOptionPane.showMessageDialog(this, "로그인 성공! 환영합니다, " + userInfo.getName() + "님");
 
+                        // 세션 저장 (이후 모든 화면에서 SessionManager로 사용자 정보 접근)
+                        SessionManager.getInstance().login(userInfo);
+
                         Role displayRole = userInfo.getRole();
 
                         // 실제 계정은 조교인데 교직원(교수)을 선택해 성공했다면 교수 화면으로 우회
@@ -274,18 +278,17 @@ public class LoginGUI extends javax.swing.JFrame {
                                 NotificationController.getInstance()
                                     .showImmediateNotifications(userInfo.getPendingNotifications(), this);
                                 // 이후 Push 형태 폴링 시작 (5초 주기)
-                                NotificationController.getInstance()
-                                    .startPolling(userInfo.getId(), null);
-                                // new StudentGUI(userInfo).setVisible(true);
+                                NotificationController.getInstance().startPolling(null);
+                                // new StudentGUI().setVisible(true);
                                 break;
                             case PROFESSOR:
                                 // new ProfessorGUI().setVisible(true);
                                 break;
                             case ASSISTANT:
-                                new AssistantGUI(userInfo).setVisible(true);
+                                new AssistantGUI().setVisible(true);
                                 break;
                             case ADMIN:
-                                new AdminGUI(userInfo).setVisible(true);
+                                new AdminGUI().setVisible(true);
                                 break;
                         }
                         this.dispose(); // 로그인 창 닫기

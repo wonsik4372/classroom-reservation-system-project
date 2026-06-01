@@ -7,6 +7,7 @@ package com.crsystem.systemclient.view.Admin;
 import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
+import com.crsystem.systemclient.controller.SessionManager;
 import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.main.CRSystemClient;
 import com.crsystem.systemclient.view.LoginGUI;
@@ -23,23 +24,13 @@ public class AdminGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminGUI.class.getName());
     
-    private UserDTO.Response currentUser;
-    
-    /**
-     * Creates new form AdminGUI
-     */
     public AdminGUI() {
         initComponents();
-        requestUserListFromServer();        
-    }
-    
-    public AdminGUI(UserDTO.Response loggedInUser) {
-        this.currentUser = loggedInUser;
-        initComponents();
         this.setLocationRelativeTo(null);
-        requestUserListFromServer();  
-        
-        this.setTitle("조교 메인 시스템 - [" + currentUser.getName() + "]님 로그인 중");
+        requestUserListFromServer();
+
+        UserDTO.Response currentUser = SessionManager.getInstance().getCurrentUser();
+        this.setTitle("관리자 시스템 - [" + currentUser.getName() + "]님 로그인 중");
     }
 
     // ==========================================

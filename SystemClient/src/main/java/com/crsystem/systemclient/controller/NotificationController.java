@@ -30,7 +30,6 @@ public class NotificationController {
     private static final int POLLING_INTERVAL_MS = 5000; // 5초 주기
 
     private javax.swing.Timer pollingTimer;
-    private String currentUserId;
 
     private NotificationController() {}
 
@@ -42,7 +41,7 @@ public class NotificationController {
     }
 
     // ====================
-    // [SFR-408] [SFR-409] 미로그인 상태에서 쌓인 알림을 로그인 즉시 표시
+    // [SFR-504] [SFR-508] 미로그인 상태에서 쌓인 알림을 로그인 즉시 표시
     // ====================
     public void showImmediateNotifications(List<NotificationDTO> notifications, Component parent) {
         if (notifications == null || notifications.isEmpty()) return;
@@ -55,11 +54,9 @@ public class NotificationController {
     }
 
     // ====================
-    // [SFR-408] [SFR-409] 로그인 중인 학생에게 5초 주기 폴링으로 push 형태 알림 전달
+    // [SFR-504] [SFR-508] 로그인 중인 학생에게 5초 주기 폴링으로 push 형태 알림 전달
     // ====================
-    public void startPolling(String userId, Component parent) {
-        this.currentUserId = userId;
-
+    public void startPolling(Component parent) {
         if (pollingTimer != null && pollingTimer.isRunning()) {
             pollingTimer.stop();
         }
@@ -68,7 +65,8 @@ public class NotificationController {
         pollingTimer.setInitialDelay(POLLING_INTERVAL_MS); // 첫 폴링은 즉시 표시 이후 딜레이
         pollingTimer.start();
 
-        System.out.println("[NotificationController] 알림 폴링 시작: userId=" + userId);
+        System.out.println("[NotificationController] 알림 폴링 시작: userId="
+                + SessionManager.getInstance().getCurrentUser().getId());
     }
 
     // ==========================================
@@ -78,7 +76,6 @@ public class NotificationController {
         if (pollingTimer != null) {
             pollingTimer.stop();
         }
-        currentUserId = null;
         System.out.println("[NotificationController] 알림 폴링 중단");
     }
 
@@ -86,10 +83,13 @@ public class NotificationController {
     // 서버에 미읽음 알림 요청
     // ==========================================
     private void pollNotifications(Component parent) {
-        if (currentUserId == null) return;
+        String userId = SessionManager.getInstance().getCurrentUser() != null
+                ? SessionManager.getInstance().getCurrentUser().getId()
+                : null;
+        if (userId == null) return;
 
         CRSystemClient.getInstance().sendRequest(
-            new RequestDTO("GET_NOTIFICATIONS", currentUserId),
+            new RequestDTO("GET_NOTIFICATIONS", userId),
             (ResponseDTO response) -> {
                 if (response.isSuccess()) {
                     List<NotificationDTO> notifications =

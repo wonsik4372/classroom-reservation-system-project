@@ -68,7 +68,7 @@ public class ReservationService {
 
     // ====================
     // [SFR-502] 조교는 예약을 승인할 수 있어야 한다
-    // [SFR-408] 승인 시 로그인된 학생에게 push, 미로그인 학생은 로그인 시 즉각 알림
+    // [SFR-504] 승인 시 로그인된 학생에게 push, 미로그인 학생은 로그인 시 즉각 알림
     // ====================
     public ResponseDTO approveReservation(ReservationDTO.Request req) {
         String reservationId = req.getUserId(); // 재사용: userId 필드에 reservationId 전달
@@ -93,7 +93,7 @@ public class ReservationService {
 
     // ====================
     // [SFR-503] 조교는 거부 사유와 함께 예약을 거부할 수 있어야 한다
-    // [SFR-409] 거부 시 거부 사유를 포함해 로그인된 학생에게 push, 미로그인 학생은 로그인 시 즉각 알림
+    // [SFR-508] 거부 시 거부 사유를 포함해 로그인된 학생에게 push, 미로그인 학생은 로그인 시 즉각 알림
     // ====================
     public ResponseDTO rejectReservation(ReservationDTO.Request req) {
         String reservationId = req.getUserId(); // 재사용: userId 필드에 reservationId 전달

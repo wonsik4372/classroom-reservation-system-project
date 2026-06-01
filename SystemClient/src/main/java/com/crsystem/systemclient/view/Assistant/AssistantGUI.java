@@ -5,6 +5,7 @@
 package com.crsystem.systemclient.view.Assistant;
 
 import com.crsystem.common.dto.UserDTO;
+import com.crsystem.systemclient.controller.SessionManager;
 
 /**
  *
@@ -14,27 +15,18 @@ public class AssistantGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AssistantGUI.class.getName());
     
-    private UserDTO.Response currentUser;
-    
     // 대기 목록과 전체 목록을 각각 저장해둘 리스트
     private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentPendingList = new java.util.ArrayList<>();
     private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentAllList = new java.util.ArrayList<>();
-    
-    public AssistantGUI() { 
-        initComponents();
-    }
-    
-    /**
-     * Creates new form AssistantGUI
-     */
-    public AssistantGUI(UserDTO.Response loggedInUser) {
-        this.currentUser = loggedInUser;
+
+    public AssistantGUI() {
         initComponents();
         initCustomSettings();
-        
-        loadPendingReservations(); 
+
+        loadPendingReservations();
         loadAllReservations();
-        
+
+        UserDTO.Response currentUser = SessionManager.getInstance().getCurrentUser();
         this.setTitle("조교 메인 시스템 - [" + currentUser.getName() + "]님 로그인 중");
     }
     

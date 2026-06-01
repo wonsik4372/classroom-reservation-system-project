@@ -1,0 +1,26 @@
+[
+  {
+    "roomName": "23 정보공학관 9층 911호",
+    "date": "2026-06-02",
+    "day": "화",
+    "periodInfo": "5교시, 6교시",
+    "purpose": "테스트",
+    "partnerCount": 10,
+    "status": "PENDING",
+    "userId": "20201234",
+    "userName": "김학생",
+    "roleType": "STUDENT"
+  },
+  {
+    "roomName": "23 정보공학관 9층 911호",
+    "date": "2026-06-02",
+    "day": "화",
+    "periodInfo": "5교시, 6교시, 7교시",
+    "purpose": "덮어쓰기 테스트",
+    "partnerCount": 40,
+    "status": "APPROVED",
+    "userId": "45678",
+    "userName": "이교수",
+    "roleType": "PROFESSOR"
+  }
+]

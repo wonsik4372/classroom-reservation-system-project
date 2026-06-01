@@ -7,6 +7,7 @@ package com.crsystem.systemclient.view.Reservation;
 import java.util.List;
 import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.systemclient.session.SessionManager;
+import com.crsystem.systemclient.controller.ReservationController;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.common.enums.Role;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
 public class CRSystemReservation extends javax.swing.JFrame {
 
     public static List<ReservationDTO.Response> reservationList
-            = ReservationFileManager.loadReservations();
+            = new java.util.ArrayList<>();
     private java.util.List<java.time.LocalDate> dateValues = new java.util.ArrayList<>();
 
     private String day;
@@ -237,8 +238,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
                     reservation.setRejectReason(
                             "교수 보강"
                     );
-
-                    ReservationFileManager.saveReservations();
                 }
             }
         }
@@ -249,16 +248,23 @@ public class CRSystemReservation extends javax.swing.JFrame {
             info.setStatus(ReservationDTO.Status.PENDING);
         }
 
-        reservationList.add(info);
-
-        ReservationFileManager.saveReservations();
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "예약이 등록되었습니다."
+        ReservationController.getInstance().addReservation(
+                info,
+                response -> {
+                    reservationList.add(info);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "예약이 등록되었습니다."
+                    );
+                    dispose();
+                },
+                error -> {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            error
+                    );
+                }
         );
-
-        this.dispose();
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListActionPerformed

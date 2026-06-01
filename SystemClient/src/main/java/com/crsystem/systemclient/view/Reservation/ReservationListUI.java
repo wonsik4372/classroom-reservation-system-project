@@ -5,6 +5,7 @@
 package com.crsystem.systemclient.view.Reservation;
 
 import com.crsystem.common.dto.ReservationDTO;
+import com.crsystem.systemclient.controller.ReservationController;
 
 /**
  *
@@ -21,26 +22,73 @@ public class ReservationListUI extends javax.swing.JFrame {
         initComponents();
 
         // 표(JTable)의 헤더(제목) 설정
-        String[] columnNames = {"예약 강의실", "예약 날짜", "요일", "선택 교시", "구분", "사용 목적", "동반 인원", "승인 상태"};
+        String[] columnNames = {
+            "예약 강의실",
+            "예약 날짜",
+            "요일",
+            "선택 교시",
+            "학번",
+            "예약자",
+            "구분",
+            "사용 목적",
+            "동반 인원",
+            "승인 상태"
+        };
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(columnNames, 0);
 
-        for (ReservationDTO.Response info
-                : CRSystemReservation.reservationList) {
-            Object[] rowData = {
-                info.getRoomName(),
-                info.getDate(),
-                info.getDay(),
-                info.getPeriodInfo(),
-                info.getUserId(),
-                info.getUserName(),
-                info.getRoleType(),
-                info.getPurpose(),
-                info.getPartnerCount(),
-                info.getStatus()
-            };
+        ReservationController.getInstance()
+                .getReservationList(
+                        "ALL",
+                        response -> {
 
-            model.addRow(rowData);
-        }
+                            System.out.println("응답 성공");
+                            System.out.println(response.getPayload());
+
+                            java.util.List<ReservationDTO.Response> list
+                            = (java.util.List<ReservationDTO.Response>) response.getPayload();
+
+                            if (list == null) {
+                                System.out.println("payload : null");
+                                return;
+                            }
+
+                            System.out.println("리스트 크기 = " + list.size());
+
+                            javax.swing.SwingUtilities.invokeLater(() -> {
+
+                                for (ReservationDTO.Response info : list) {
+
+                                    System.out.println(
+                                            info.getRoomName()
+                                            + " / "
+                                            + info.getUserName()
+                                    );
+
+                                    Object[] rowData = {
+                                        info.getRoomName(),
+                                        info.getDate(),
+                                        info.getDay(),
+                                        info.getPeriodInfo(),
+                                        info.getUserId(),
+                                        info.getUserName(),
+                                        info.getRoleType(),
+                                        info.getPurpose(),
+                                        info.getPartnerCount(),
+                                        info.getStatus()
+                                    };
+
+                                    model.addRow(rowData);
+                                }
+                                listTable.setModel(model);
+                            });
+                        },
+                        error -> {
+                            javax.swing.JOptionPane.showMessageDialog(
+                                    this,
+                                    error
+                            );
+                        }
+                );
 
         listTable.setModel(model);
         listTable.setRowHeight(30);

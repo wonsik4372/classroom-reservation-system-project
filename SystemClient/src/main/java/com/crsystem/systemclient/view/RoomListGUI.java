@@ -5,7 +5,12 @@
 package com.crsystem.systemclient.view;
 
 import com.crsystem.systemclient.view.Reservation.CRSystemTimetableUI;
+import com.crsystem.systemclient.controller.ReservationController;
+import com.crsystem.systemclient.view.Reservation.CRSystemReservation;
 import com.crsystem.common.dto.ReservationDTO;
+
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,8 +22,26 @@ public class RoomListGUI extends javax.swing.JPanel {
      * Creates new form RoomListGUI
      */
     public RoomListGUI() {
+
         initComponents();
-        updateReservationTable();
+
+        ReservationController.getInstance()
+                .getReservationList(
+                        "ALL",
+                        response -> {
+
+                            List<ReservationDTO.Response> list
+                            = (List<ReservationDTO.Response>) response.getPayload();
+
+                            CRSystemReservation.reservationList.clear();
+                            CRSystemReservation.reservationList.addAll(list);
+
+                            updateReservationTable();
+                        },
+                        error -> {
+                            JOptionPane.showMessageDialog(this, error);
+                        }
+                );
     }
 
     /**

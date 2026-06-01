@@ -17,9 +17,9 @@ import java.net.Socket;
 import java.util.Properties;
 import java.util.function.Consumer;
 
-
 /**
- * 클라이언트 메인 
+ * 클라이언트 메인
+ *
  * @author wonsik
  */
 public class CRSystemClient {
@@ -34,7 +34,8 @@ public class CRSystemClient {
     private ObjectInputStream reader;
 
     // 외부에서 객체 생성 차단
-    private CRSystemClient() {}
+    private CRSystemClient() {
+    }
 
     // 인스턴스 접근 메서드
     public static CRSystemClient getInstance() {
@@ -49,25 +50,24 @@ public class CRSystemClient {
 
         try {
             // 서버 연결 시도
-            client.connectToServer();            
+            client.connectToServer();
 
             // 성공 시 LoginGUI 실행
             SwingUtilities.invokeLater(() -> {
                 new LoginGUI().setVisible(true);
-            });            
+            });
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, 
-                "서버에 연결할 수 없습니다.\n" + e.getMessage(), 
-                "연결 실패", JOptionPane.ERROR_MESSAGE);
-            System.exit(1); 
+            JOptionPane.showMessageDialog(null,
+                    "서버에 연결할 수 없습니다.\n" + e.getMessage(),
+                    "연결 실패", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
     }
 
     // ====================
     // 설정 로드 및 네트워크 초기화
     // ====================
-
     private void loadProperties() throws IOException {
         Properties props = new Properties();
         // 루트 디렉토리의 application.properties 파일을 읽음
@@ -79,7 +79,7 @@ public class CRSystemClient {
     }
 
     public void connectToServer() throws Exception {
-        loadProperties(); 
+        loadProperties();
 
         System.out.println("서버 연결 시도: " + serverIp + ":" + serverPort);
         this.socket = new Socket(serverIp, serverPort);
@@ -95,7 +95,6 @@ public class CRSystemClient {
     // ====================
     // 비동기 통신 로직 (프리징 방지)
     // ====================
-
     /**
      * @param request 서버로 보낼 DTO 객체
      * @param onSuccess 통신 성공 시 GUI를 갱신할 콜백 함수
@@ -117,17 +116,36 @@ public class CRSystemClient {
                 // 응답 대기
                 Object responseObj = reader.readObject();
 
-                // 성공 콜백 실행
-                if (responseObj instanceof ResponseDTO) {
-                    ResponseDTO response = (ResponseDTO) responseObj;
-                    SwingUtilities.invokeLater(() -> onSuccess.accept(response));
+                System.out.println("===== 응답 수신 =====");
+
+                if (responseObj != null) {
+                    System.out.println(responseObj.getClass().getName());
                 } else {
-                    SwingUtilities.invokeLater(() -> onFailure.accept("알 수 없는 응답 객체입니다."));
+                    System.out.println("responseObj = null");
                 }
 
+                // 성공 콜백 실행
+                if (responseObj instanceof ResponseDTO) {
+                    System.out.println("ResponseDTO 확인");
+                    ResponseDTO response = (ResponseDTO) responseObj;
+                    SwingUtilities.invokeLater(() -> onSuccess.accept(response));
+
+                } else {
+                    System.out.println("ResponseDTO 아님");
+                    SwingUtilities.invokeLater(()
+                            -> onFailure.accept("알 수 없는 응답 객체입니다."));
+                }
+                
             } catch (Exception e) {
+                System.out.println("===== 통신 예외 발생 =====");
                 e.printStackTrace();
-                SwingUtilities.invokeLater(() -> onFailure.accept("통신 중 오류 발생: " + e.getMessage()));
+                SwingUtilities.invokeLater(()
+                        -> onFailure.accept(
+                                "통신 중 오류 발생: "
+                                + e.getClass().getSimpleName()
+                                + " : "
+                                + e.getMessage()
+                        ));
             }
         }).start();
     }
@@ -135,12 +153,17 @@ public class CRSystemClient {
     // 자원 해제
     public void close() {
         try {
-            if (writer != null) writer.close();
-            if (reader != null) reader.close();
-            if (socket != null) socket.close();
+            if (writer != null) {
+                writer.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-    

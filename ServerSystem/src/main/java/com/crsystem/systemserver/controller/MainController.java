@@ -7,6 +7,7 @@ package com.crsystem.systemserver.controller;
 import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
+import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.systemserver.service.AuthService;
 import com.crsystem.systemserver.service.ClassroomService;
 import com.crsystem.systemserver.service.ReservationService;
@@ -20,9 +21,11 @@ import java.util.Map;
  * @author wonsik
  */
 public class MainController {
+
     // 1. 행위(Action)를 추상화할 내부 함수형 인터페이스 정의 (Command 패턴)
     @FunctionalInterface
     private interface Command {
+
         ResponseDTO execute(RequestDTO req);
     }
 
@@ -39,7 +42,7 @@ public class MainController {
         commandMap.put("GET_USER_LIST", req -> UserService.getInstance().getUserList());
         commandMap.put("ADD_USER", req -> UserService.getInstance().addUser((UserDTO.Request) req.getPayload()));
         commandMap.put("DELETE_USER", req -> UserService.getInstance().deleteUser((UserDTO.Request) req.getPayload()));
-        
+
         // ==========================================
         // 2. [ClassroomService 위임] (주석 해제 시 사용 가능하도록 패턴 적용)
         // ==========================================
@@ -49,7 +52,6 @@ public class MainController {
         // commandMap.put("REQUEST_ROOM_ACTION", req -> 
         //     ClassroomService.getInstance().processRoomAction((ClassroomDto.Request) req.getPayload())
         // );
-        
         // ==========================================
         // 3. [ReservationService 위임]
         // ==========================================
@@ -62,7 +64,6 @@ public class MainController {
         // commandMap.put("GET_MY_RESERVATIONS", req -> 
         //     ReservationService.getInstance().getMyReservations((ReservationDto.Request) req.getPayload())
         // );
-
         // 전체 조회 등 파라미터가 필요 없는 메서드는 
         // payload를 꺼낼 필요 없이 단순히 메서드만 호출
 //        commandMap.put("GET_PENDING_RESERVATIONS", req -> 
@@ -82,6 +83,43 @@ public class MainController {
 //        commandMap.put("CANCEL_RESERVATION", req -> 
 //            ReservationService.getInstance().cancelReservation((ReservationDto.Request) req.getPayload())
 //        );
+        commandMap.put(
+                "ADD_RESERVATION",
+                req -> ReservationService
+                        .getInstance()
+                        .addReservation(
+                                (ReservationDTO.Response) req.getPayload()
+                        )
+        );
+
+        commandMap.put(
+                "GET_RESERVATION_LIST",
+                req -> ReservationService
+                        .getInstance()
+                        .getReservationList()
+        );
+
+        commandMap.put(
+                "APPROVE_RESERVATION",
+                req -> ReservationService
+                        .getInstance()
+                        .approveReservation(
+                                ((ReservationDTO.Request) req.getPayload())
+                                        .getReservationId()
+                        )
+        );
+
+        commandMap.put(
+                "REJECT_RESERVATION",
+                req -> ReservationService
+                        .getInstance()
+                        .rejectReservation(
+                                ((ReservationDTO.Request) req.getPayload())
+                                        .getReservationId(),
+                                ((ReservationDTO.Request) req.getPayload())
+                                        .getRejectReason()
+                        )
+        );
     }
 
     /**
@@ -90,10 +128,10 @@ public class MainController {
     public static ResponseDTO handleRequest(RequestDTO req) {
         String cmd = req.getCommand();
         System.out.println("[ServerController] 라우팅 중... -> Command: " + cmd);
-        
+
         // 4. if-else 분기문 없이 다형성(Map)을 이용한 즉시 바인딩 
         Command commandAction = commandMap.get(cmd);
-        
+
         if (commandAction != null) {
             // 해당하는 커맨드가 존재하면 실행 후 결과 반환
             return commandAction.execute(req);

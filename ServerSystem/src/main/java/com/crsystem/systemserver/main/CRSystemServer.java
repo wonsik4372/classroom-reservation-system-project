@@ -4,6 +4,8 @@
  */
 package com.crsystem.systemserver.main;
 
+import com.crsystem.systemserver.service.ScheduleInitializer;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,9 +22,12 @@ public class CRSystemServer {
     public CRSystemServer() {}
 
     public static void main(String[] args) {
+        // XLS → JSON 초기화
+        new ScheduleInitializer().convertAllTimetableToJsons("data/timetable", "data/masterfile");
+
         CRSystemServer server = new CRSystemServer();
-        server.loadProperties(); 
-        server.startServer();      
+        server.loadProperties();
+        server.startServer();
     }
     
     // application.properties 로드 (src/main/resources → classpath에서 읽음)

@@ -4,13 +4,9 @@ import com.crsystem.common.dto.ScheduleData;
 import com.crsystem.common.dto.Classroom;
 import com.crsystem.common.dto.Reservation;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import technology.tabula.ObjectExtractor;
-import technology.tabula.Page;
-import technology.tabula.PageIterator;
-import technology.tabula.Table;
-import technology.tabula.writers.CSVWriter;
-import technology.tabula.extractors.SpreadsheetExtractionAlgorithm;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -33,8 +29,7 @@ public class ScheduleInitializer {
 
     private static final String[] DAYS_HEADER = {"월", "화", "수", "목", "금"};
 
-    // 1단계: 루트 폴더에서 각 건물 폴더 탐색
-    public void convertAllBuildingsToJsons(String rootFolderPath, String outputDirPath) {
+    public void convertAllTimetableToJsons(String rootFolderPath, String outputDirPath) {
         File rootFolder = new File(rootFolderPath);
 
         if (!rootFolder.exists() || !rootFolder.isDirectory()) {
@@ -42,157 +37,232 @@ public class ScheduleInitializer {
             return;
         }
 
-        File[] buildingFolders = rootFolder.listFiles(File::isDirectory);
+        File[] yearFolders = rootFolder.listFiles(File::isDirectory);
 
-        if (buildingFolders == null || buildingFolders.length == 0) {
-            System.out.println("⚠️ 하위 건물 폴더가 존재하지 않습니다: " + rootFolderPath);
+        if (yearFolders == null || yearFolders.length == 0) {
+            System.out.println("⚠️ 하위 년도 폴더가 존재하지 않습니다: " + rootFolderPath);
             return;
         }
 
         File outDir = new File(outputDirPath);
-        if (!outDir.exists()) outDir.mkdirs();
+        if (!outDir.exists()) {
+            outDir.mkdirs();
+        }
 
-        for (File buildingFolder : buildingFolders) {
-            String buildingName = buildingFolder.getName();
-            File outFile = new File(outDir, buildingName + ".json");
+        for (File yearFolder : yearFolders) {
+            String yearName = yearFolder.getName();
+            File outFile = new File(outDir, yearName + ".json");
 
-            // JSON이 존재하고 모든 PDF보다 새로우면 재변환 스킵
             if (outFile.exists()) {
                 long jsonModified = outFile.lastModified();
-                boolean anyPdfNewer = collectPdfsRecursively(buildingFolder)
+                boolean anyExcelNewer = collectExcelsRecursively(yearFolder)
                         .stream()
-                        .anyMatch(pdf -> pdf.lastModified() > jsonModified);
-                if (!anyPdfNewer) {
-                    System.out.println("⏭️ [" + buildingName + "] 변경 없음, 스킵.");
+                        .anyMatch(excel -> excel.lastModified() > jsonModified);
+                if (!anyExcelNewer) {
+                    System.out.println("⏭️ [" + yearName + ".json] 변경 사항 없음, 스킵합니다.");
                     continue;
                 }
             }
 
-            System.out.println("🚀 [" + buildingName + "] 건물 시간표 구조화 시작 -> " + outFile.getAbsolutePath());
-            convertSingleBuildingWithFloorsToJson(buildingFolder, outFile.getAbsolutePath(), buildingName);
+            System.out.println("📅 [" + yearName + "] 년도 마스터 시간표 동기화 및 구조화 시작...");
+            
+            Map<String, Object> yearJsonStructure = parseYearFolderHierarchy(yearFolder);
+
+            ObjectMapper mapper = new ObjectMapper();
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"))) {
+                mapper.writerWithDefaultPrettyPrinter().writeValue(writer, yearJsonStructure);
+                System.out.println("🎉 [" + yearName + ".json] 마스터 데이터 생성 완료 -> " + outFile.getAbsolutePath());
+            } catch (Exception e) {
+                System.err.println("❌ 파일 저장 중 오류 발생 (" + yearName + ".json): " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
-    // 폴더 및 하위 폴더의 모든 PDF를 재귀적으로 수집 (스킵 여부 판단용)
-    private List<File> collectPdfsRecursively(File folder) {
+    private List<File> collectExcelsRecursively(File folder) {
         List<File> result = new ArrayList<>();
         File[] items = folder.listFiles();
         if (items == null) return result;
         for (File item : items) {
             if (item.isDirectory()) {
-                result.addAll(collectPdfsRecursively(item));
-            } else if (item.getName().toLowerCase().endsWith(".pdf")) {
-                result.add(item);
+                result.addAll(collectExcelsRecursively(item));
+            } else {
+                String name = item.getName().toLowerCase();
+                if (name.endsWith(".xls") || name.endsWith(".xlsx")) {
+                    result.add(item);
+                }
             }
         }
         return result;
     }
 
-    // 2단계: 건물 내부의 층(Floor) 폴더들을 순회하여 복합 계층 JSON 구조로 변환
-    private void convertSingleBuildingWithFloorsToJson(File buildingFolder, String jsonOutputPath, String buildingName) {
-        try {
-            File[] floorFolders = buildingFolder.listFiles(File::isDirectory);
-            if (floorFolders == null || floorFolders.length == 0) {
-                System.out.println("⚠️ [" + buildingName + "] 내부에 층(Floor) 폴더가 없습니다.");
-                return;
-            }
+    private Map<String, Object> parseYearFolderHierarchy(File yearFolder) {
+        Map<String, Object> yearMap = new LinkedHashMap<>();
+        
+        File[] semesterFolders = yearFolder.listFiles(File::isDirectory);
+        if (semesterFolders == null) return yearMap;
 
-            Map<String, Map<String, Object>> floorsJsonMap = new LinkedHashMap<>();
+        for (File semesterFolder : semesterFolders) {
+            String semesterName = semesterFolder.getName();
+            System.out.println(" ├─ 📝 [학기] " + semesterName);
+            
+            Map<String, Object> buildingsMap = new LinkedHashMap<>();
+            File[] buildingFolders = semesterFolder.listFiles(File::isDirectory);
+            if (buildingFolders == null) continue;
 
-            for (File floorFolder : floorFolders) {
-                String floorName = floorFolder.getName().trim();
+            for (File buildingFolder : buildingFolders) {
+                String buildingName = buildingFolder.getName();
+                System.out.println(" │   ├─ 🏢 [건물] " + buildingName);
+                
+                Map<String, Map<String, Object>> floorsMap = new LinkedHashMap<>();
+                File[] floorFolders = buildingFolder.listFiles(File::isDirectory);
+                if (floorFolders == null) continue;
 
-                File[] pdfFiles = floorFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
-                if (pdfFiles == null || pdfFiles.length == 0) {
-                    continue;
-                }
+                for (File floorFolder : floorFolders) {
+                    String floorName = floorFolder.getName().trim();
+                    
+                    File[] excelFiles = floorFolder.listFiles((dir, name) -> {
+                        String lower = name.toLowerCase();
+                        return lower.endsWith(".xls") || lower.endsWith(".xlsx");
+                    });
+                    if (excelFiles == null || excelFiles.length == 0) continue;
+                    
+                    System.out.println(" │   │   ├─ 🏷️ [층] " + floorName + " (엑셀 파일: " + excelFiles.length + "개)");
 
-                System.out.println("  └ 🏢 " + floorName + " 탐색 중... (PDF 파일: " + pdfFiles.length + "개)");
-
-                ScheduleData floorScheduleData = new ScheduleData();
-
-                for (File pdfFile : pdfFiles) {
-                    parseSinglePdf(pdfFile, floorScheduleData);
-                }
-
-                Map<String, Object> classroomsInFloor = new LinkedHashMap<>();
-                Map<String, Classroom> parsedClassrooms = floorScheduleData.getClassrooms();
-
-                if (parsedClassrooms != null && !parsedClassrooms.isEmpty()) {
-                    for (Map.Entry<String, Classroom> entry : parsedClassrooms.entrySet()) {
-                        String clsName = entry.getKey();
-                        Classroom clsObj = entry.getValue();
-
-                        Map<String, Object> classroomDetails = new LinkedHashMap<>();
-                        classroomDetails.put("info", clsObj.getInfo());
-                        classroomDetails.put("schedule", clsObj.getSchedule());
-
-                        classroomsInFloor.put(clsName, classroomDetails);
+                    ScheduleData floorScheduleData = new ScheduleData();
+                    for (File excelFile : excelFiles) {
+                        try {
+                            parseSingleExcel(excelFile, floorScheduleData);
+                        } catch (IOException e) {
+                            System.err.println(" │   │   │  ❌ 엑셀 파싱 실패: " + excelFile.getName());
+                        }
                     }
 
-                    floorsJsonMap.put(floorName, classroomsInFloor);
+                    Map<String, Object> classroomsInFloor = new LinkedHashMap<>();
+                    Map<String, Classroom> parsedClassrooms = floorScheduleData.getClassrooms();
+
+                    if (parsedClassrooms != null && !parsedClassrooms.isEmpty()) {
+                        for (Map.Entry<String, Classroom> entry : parsedClassrooms.entrySet()) {
+                            String clsName = entry.getKey();
+                            Classroom clsObj = entry.getValue();
+
+                            Map<String, Object> classroomDetails = new LinkedHashMap<>();
+                            classroomDetails.put("info", clsObj.getInfo());
+                            classroomDetails.put("schedule", clsObj.getSchedule());
+
+                            classroomsInFloor.put(clsName, classroomDetails);
+                        }
+                        floorsMap.put(floorName, classroomsInFloor);
+                    }
                 }
+                buildingsMap.put(buildingName, floorsMap);
             }
-
-            Map<String, Object> jsonWrapper = new LinkedHashMap<>();
-            jsonWrapper.put("buildingName", buildingName);
-            jsonWrapper.put("floors", floorsJsonMap);
-
-            ObjectMapper mapper = new ObjectMapper();
-            File outFile = new File(jsonOutputPath);
-            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"))) {
-                mapper.writerWithDefaultPrettyPrinter().writeValue(writer, jsonWrapper);
-            }
-
-            System.out.println("✅ [" + buildingName + "] 변환 완료!");
-
-        } catch (Exception e) {
-            System.err.println("❌ 실행 오류 발생 (" + buildingName + "):");
-            e.printStackTrace();
+            yearMap.put(semesterName, buildingsMap);
         }
+        return yearMap;
     }
 
-    // 3단계: 단일 PDF 파일 스트림 로드 및 스프레드시트 알고리즘 파싱 연동
-    private void parseSinglePdf(File pdfFile, ScheduleData scheduleData) throws IOException {
-        String classroomName = pdfFile.getName().replace(".pdf", "").replace(".PDF", "") + "호";
+    private void parseSingleExcel(File excelFile, ScheduleData scheduleData) throws IOException {
+        String classroomName = excelFile.getName().replaceAll("(?i)\\.xlsx?$", "");
+        if (!classroomName.endsWith("호")) {
+            classroomName += "호";
+        }
 
-        try (PDDocument document = PDDocument.load(pdfFile);
-             ObjectExtractor extractor = new ObjectExtractor(document)) {
+        Classroom classroom = scheduleData.getClassrooms().computeIfAbsent(classroomName, k -> new Classroom());
+        initializeEmptySchedule(classroom);
 
-            try {
-                org.apache.pdfbox.text.PDFTextStripper stripper = new org.apache.pdfbox.text.PDFTextStripper();
-                stripper.setStartPage(1);
-                stripper.setEndPage(1);
-                String firstPageText = stripper.getText(document);
-                if (firstPageText != null && !firstPageText.isBlank()) {
-                    String[] lines = firstPageText.split("\\r?\\n");
-                    if (lines.length > 0 && !lines[0].trim().isBlank()) {
-                        String candidate = lines[0].trim();
-                        if (candidate.matches("^[0-9a-zA-Z가-힣\\s]+$")) {
-                            classroomName = candidate;
+        DataFormatter dataFormatter = new DataFormatter();
+
+        try (InputStream is = new FileInputStream(excelFile);
+             Workbook workbook = excelFile.getName().toLowerCase().endsWith(".xlsx") ? 
+                                 new XSSFWorkbook(is) : new HSSFWorkbook(is)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+
+            int headerRowIdx = -1;
+            Map<Integer, String> colToDay = new HashMap<>();
+
+            for (int r = 0; r <= Math.min(sheet.getLastRowNum(), 10); r++) {
+                Row row = sheet.getRow(r);
+                if (row == null) continue;
+
+                String currentDay = null;
+                for (int c = 0; c < row.getLastCellNum(); c++) {
+                    String cellVal = dataFormatter.formatCellValue(row.getCell(c)).replaceAll("\\s+", "");
+                    if (cellVal.contains("구분")) {
+                        headerRowIdx = r;
+                    }
+                    if (headerRowIdx != -1) {
+                        if (Arrays.asList(DAYS_HEADER).contains(cellVal)) {
+                            currentDay = cellVal;
+                        }
+                        if (currentDay != null) {
+                            colToDay.put(c, currentDay);
                         }
                     }
                 }
-            } catch (Exception e) {
-                // 예외 발생 시 파일명 기본값 유지
+                if (headerRowIdx != -1) break;
             }
 
-            Classroom classroom = scheduleData.getClassrooms().computeIfAbsent(classroomName, k -> new Classroom());
-            initializeEmptySchedule(classroom);
+            if (headerRowIdx == -1) return; 
 
-            SpreadsheetExtractionAlgorithm algorithm = new SpreadsheetExtractionAlgorithm();
-            PageIterator pages = extractor.extract();
+            for (int r = headerRowIdx + 1; r <= sheet.getLastRowNum(); r++) {
+                Row row = sheet.getRow(r);
+                if (row == null) continue;
 
-            while (pages.hasNext()) {
-                Page page = pages.next();
-                List<Table> tables = algorithm.extract(page);
+                String periodCell = "";
+                for (int c = 0; c <= 3; c++) {
+                    String val = dataFormatter.formatCellValue(row.getCell(c));
+                    if (val.contains("교시")) {
+                        periodCell = val;
+                        break;
+                    }
+                }
 
-                for (Table table : tables) {
-                    StringWriter stringWriter = new StringWriter();
-                    CSVWriter csvWriter = new CSVWriter();
-                    csvWriter.write(stringWriter, table);
+                String matchedPeriod = detectPeriod(periodCell);
+                if (matchedPeriod.isEmpty()) continue; 
 
-                    parseCleanCsv(stringWriter.toString(), classroom);
+                String targetTimeRange = STANDARD_TIME_SLOTS.get(matchedPeriod);
+                Row nextRow = sheet.getRow(r + 1); 
+
+                for (Map.Entry<Integer, String> entry : colToDay.entrySet()) {
+                    int colIdx = entry.getKey();
+                    String day = entry.getValue();
+
+                    String rawSubject = dataFormatter.formatCellValue(row.getCell(colIdx));
+                    String subject = rawSubject.replaceAll("\\(학\\)|\\(대\\)|\\(행\\)|\\(경\\)|\\(산\\)|\\(교\\)|\\(중\\)|\\(영\\)", "").trim();
+
+                    if (!subject.isEmpty() && !subject.equals("빈 시간")) {
+                        String professor = "없음";
+                        
+                        // 💡 주변 셀 탐색 로직: 셀 병합으로 인해 교수가 좌우 한두 칸 밀려있어도 무조건 찾아냄
+                        if (nextRow != null) {
+                            for (int offset = -2; offset <= 2; offset++) {
+                                int pColIdx = colIdx + offset;
+                                if (pColIdx >= 0 && pColIdx < nextRow.getLastCellNum()) {
+                                    String pVal = dataFormatter.formatCellValue(nextRow.getCell(pColIdx)).trim();
+                                    
+                                    // 공백이 아니고 범례(예: (학))가 아닌 문자열을 교수로 취급
+                                    if (!pVal.isEmpty() && !pVal.matches(".*\\([가-힣]\\).*")) {
+                                        professor = pVal;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        List<Reservation> dailyList = classroom.getSchedule().get(day);
+                        if (dailyList != null) {
+                            for (Reservation res : dailyList) {
+                                if (res.getTime().equals(targetTimeRange)) {
+                                    res.setSubject(subject);
+                                    res.setProfessor(professor);
+                                    res.setStatus(1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -206,72 +276,6 @@ public class ScheduleInitializer {
             for (Map.Entry<String, String> entry : STANDARD_TIME_SLOTS.entrySet()) {
                 String timeRange = entry.getValue();
                 dailyList.add(new Reservation(timeRange, "빈 시간", "없음", 0));
-            }
-        }
-    }
-
-    private void parseCleanCsv(String csvContent, Classroom classroom) throws IOException {
-        byte[] bytes = csvContent.getBytes("UTF-8");
-        String utf8Csv = new String(bytes, "UTF-8");
-
-        String[] rows = utf8Csv.split("\\r?\\n(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-
-        for (String row : rows) {
-            if (row.trim().isBlank()) continue;
-
-            String[] rawCols = row.split(",", -1);
-            List<String> cols = new ArrayList<>();
-            for (String col : rawCols) {
-                String cleanCol = col.trim().replaceAll("^\"|\"$", "").trim();
-                cols.add(cleanCol);
-            }
-
-            if (cols.isEmpty()) continue;
-
-            String firstCol = cols.get(0).replaceAll("\\s+", " ").trim();
-            String matchedPeriod = detectPeriod(firstCol);
-            if (matchedPeriod.isEmpty()) continue;
-
-            for (int i = 0; i < DAYS_HEADER.length; i++) {
-                int csvColIdx = i + 1;
-
-                if (csvColIdx >= cols.size()) break;
-
-                String cleanedCell = cols.get(csvColIdx).replaceAll("\\s+", " ").replace("(학)", "").trim();
-
-                if (!cleanedCell.isEmpty()) {
-                    String subject = "과목";
-                    String professor = "없음";
-
-                    String[] words = cleanedCell.split(" ");
-
-                    if (words.length >= 2) {
-                        String candidateProf = words[words.length - 1];
-                        if (candidateProf.matches("^[가-힣]{2,4}$")) {
-                            professor = candidateProf;
-                            subject = cleanedCell.substring(0, cleanedCell.lastIndexOf(professor)).trim();
-                        } else {
-                            subject = cleanedCell;
-                        }
-                    } else {
-                        subject = cleanedCell;
-                    }
-
-                    String day = DAYS_HEADER[i];
-                    String targetTimeRange = STANDARD_TIME_SLOTS.get(matchedPeriod);
-                    List<Reservation> dailyList = classroom.getSchedule().get(day);
-
-                    if (dailyList != null) {
-                        for (Reservation res : dailyList) {
-                            if (res.getTime().equals(targetTimeRange)) {
-                                res.setSubject(subject);
-                                res.setProfessor(professor);
-                                res.setStatus(1);
-                                break;
-                            }
-                        }
-                    }
-                }
             }
         }
     }

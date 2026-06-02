@@ -148,6 +148,11 @@ public class RoomListGUI extends javax.swing.JPanel {
         jLabelClassRoom.setText("강의실");
 
         jComboBoxYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2026", "2025", "2024", "2023" }));
+        jComboBoxYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxYearActionPerformed(evt);
+            }
+        });
 
         jComboBoxSemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1학기", "2학기" }));
 
@@ -375,6 +380,10 @@ public class RoomListGUI extends javax.swing.JPanel {
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         loadReservationsFromServer();
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void jComboBoxYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxYearActionPerformed
 
     // ==========================================
     // 서버에서 전체 예약 목록 조회 후 테이블 갱신

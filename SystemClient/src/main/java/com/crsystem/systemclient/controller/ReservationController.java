@@ -35,11 +35,11 @@ public class ReservationController {
         }
     }
 
-    public void createReservation(ReservationDTO.Request request,
-                                  Consumer<ResponseDTO> onSuccess,
-                                  Consumer<String> onFailure) {
+    public void addReservation(ReservationDTO.Response reservation,
+                               Consumer<ResponseDTO> onSuccess,
+                               Consumer<String> onFailure) {
         CRSystemClient.getInstance().sendRequest(
-                new RequestDTO("CREATE_RESERVATION", request),
+                new RequestDTO("ADD_RESERVATION", reservation),
                 onSuccess,
                 onFailure
         );
@@ -48,7 +48,7 @@ public class ReservationController {
     public void getReservationList(String status,
                                    Consumer<ResponseDTO> onSuccess,
                                    Consumer<String> onFailure) {
-        String command = "PENDING".equals(status) ? "GET_PENDING_RESERVATIONS" : "GET_ALL_RESERVATIONS";
+        String command = "PENDING".equals(status) ? "GET_PENDING_RESERVATIONS" : "GET_RESERVATION_LIST";
         CRSystemClient.getInstance().sendRequest(
                 new RequestDTO(command, null),
                 onSuccess,
@@ -67,23 +67,7 @@ public class ReservationController {
         approveNext(reservationIds, 0, onSuccess, onFailure);
     }
 
-    public void rejectReservation(String reservationId,
-                                  String rejectReason,
-                                  Consumer<ResponseDTO> onSuccess,
-                                  Consumer<String> onFailure) {
-        ReservationDTO.Request payload = new ReservationDTO.Request();
-        payload.setReservationId(reservationId);
-        payload.setPurpose(rejectReason);
-
-        CRSystemClient.getInstance().sendRequest(
-                new RequestDTO("REJECT_RESERVATION", payload),
-                onSuccess,
-                onFailure
-        );
-    }
-
-    private void approveNext(List<String> reservationIds,
-                             int index,
+    private void approveNext(List<String> reservationIds, int index,
                              Consumer<ResponseDTO> onSuccess,
                              Consumer<String> onFailure) {
         if (index >= reservationIds.size()) {
@@ -103,6 +87,21 @@ public class ReservationController {
                     }
                     approveNext(reservationIds, index + 1, onSuccess, onFailure);
                 },
+                onFailure
+        );
+    }
+
+    public void rejectReservation(String reservationId,
+                                  String rejectReason,
+                                  Consumer<ResponseDTO> onSuccess,
+                                  Consumer<String> onFailure) {
+        ReservationDTO.Request payload = new ReservationDTO.Request();
+        payload.setReservationId(reservationId);
+        payload.setRejectReason(rejectReason);
+
+        CRSystemClient.getInstance().sendRequest(
+                new RequestDTO("REJECT_RESERVATION", payload),
+                onSuccess,
                 onFailure
         );
     }

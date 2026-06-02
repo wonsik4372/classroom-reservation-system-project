@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author abalo
  */
-public class CRSystemReservation extends javax.swing.JFrame {
+public class ReservationRegisterGUI extends javax.swing.JFrame {
 
     private java.util.List<java.time.LocalDate> dateValues = new java.util.ArrayList<>();
 
@@ -24,12 +24,12 @@ public class CRSystemReservation extends javax.swing.JFrame {
     private int duration;
     private String roomName;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CRSystemReservation.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReservationRegisterGUI.class.getName());
 
     /**
      * Creates new form CRSystemReservation
      */
-    public CRSystemReservation(String roomName, String day, String periodInfo, int duration) {
+    public ReservationRegisterGUI(String roomName, String day, String periodInfo, int duration) {
         this.roomName = roomName;
         this.day = day;
         this.periodInfo = periodInfo;
@@ -136,7 +136,6 @@ public class CRSystemReservation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(purposeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(104, 104, 104)
@@ -172,17 +171,24 @@ public class CRSystemReservation extends javax.swing.JFrame {
             return;
         }
 
-        ReservationDTO.Request request = new ReservationDTO.Request();
-        request.setUserId(user.getId());
-        request.setRoomName(this.roomName);
-        request.setDate(selectedDate);
-        request.setPeriodInfo(this.periodInfo);
-        request.setPurpose(purposeField.getText());
-        request.setPartnerCount((int) partnerSpinner.getValue());
+        ReservationDTO.Response reservation = new ReservationDTO.Response();
+        reservation.setReservationId("RES-" + System.currentTimeMillis());
+        reservation.setUserId(user.getId());
+        reservation.setUserName(user.getName());
+        reservation.setRoleType(user.getRole());
+        reservation.setRoomName(this.roomName);
+        reservation.setDate(selectedDate);
+        reservation.setDay(this.day);
+        reservation.setPeriodInfo(this.periodInfo);
+        reservation.setPurpose(purposeField.getText());
+        reservation.setPartnerCount((int) partnerSpinner.getValue());
+        reservation.setStatus(user.getRole() == com.crsystem.common.enums.Role.PROFESSOR
+                ? ReservationDTO.Status.APPROVED
+                : ReservationDTO.Status.PENDING);
 
         btnSubmit.setEnabled(false);
-        ReservationController.getInstance().createReservation(
-                request,
+        ReservationController.getInstance().addReservation(
+                reservation,
                 response -> handleCreateReservationResponse(response),
                 error -> {
                     btnSubmit.setEnabled(true);
@@ -245,7 +251,7 @@ public class CRSystemReservation extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new CRSystemReservation("23 정보공학관 9층 912호", "월", "1교시", 1).setVisible(true);
+            new ReservationRegisterGUI("23 정보공학관 9층 912호", "월", "1교시", 1).setVisible(true);
         });
     }
 

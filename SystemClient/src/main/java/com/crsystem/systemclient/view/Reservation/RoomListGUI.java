@@ -291,7 +291,7 @@ public class RoomListGUI extends javax.swing.JPanel {
         // 어떤 강의실인지 명칭 결합 ("23 정보공학관 9층 912호")
         String roomName = building + " " + floor + "층 " + room + "호";
 
-        CRSystemTimetableUI timetableFrame = new CRSystemTimetableUI(roomName);
+        TimeTableGUI timetableFrame = new TimeTableGUI(roomName);
 
         timetableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

@@ -24,19 +24,19 @@ import com.crsystem.systemclient.controller.SessionManager;
  *
  * @author abalo
  */
-public class CRSystemTimetableUI extends javax.swing.JFrame {
+public class TimeTableGUI extends javax.swing.JFrame {
 
     private List<Point> selectedCells = new ArrayList<>();
     private String[] days = {"월", "화", "수", "목", "금"};
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CRSystemTimetableUI.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TimeTableGUI.class.getName());
 
     private String roomName;
 
     /**
      * Creates new form CRSystemTimetableUI
      */
-    public CRSystemTimetableUI(String roomName) {
+    public TimeTableGUI(String roomName) {
         this.roomName = roomName;
         initComponents();
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
@@ -296,7 +296,7 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         String periodString = rows.stream().map(r -> (r + 1) + "교시").collect(java.util.stream.Collectors.joining(", "));
 
         // 상세 예약창 호출
-        CRSystemReservation reservationFrame = new CRSystemReservation(this.roomName, days[col - 1], periodString, rows.size());
+        ReservationRegisterGUI reservationFrame = new ReservationRegisterGUI(this.roomName, days[col - 1], periodString, rows.size());
         reservationFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
@@ -343,7 +343,7 @@ public class CRSystemTimetableUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CRSystemTimetableUI("23 정보공학관 9층 912호").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TimeTableGUI("23 정보공학관 9층 912호").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

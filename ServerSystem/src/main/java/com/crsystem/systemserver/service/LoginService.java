@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.crsystem.systemserver.service;
-
 
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.dto.UserDTO;
@@ -11,11 +6,11 @@ import com.crsystem.common.enums.Role;
 import com.crsystem.systemserver.model.User;
 
 /**
- * 로그인 전문가 
+ * 인증 전문가
  * @author wonsik
  */
 public class LoginService {
-    
+
     // Initialization-on-demand holder: JVM 클래스 로딩 메커니즘으로 동기화 없이 스레드 안전
     private static class Holder {
         private static final LoginService INSTANCE = new LoginService();
@@ -36,25 +31,25 @@ public class LoginService {
         String id = req.getId();
         String pw = req.getPw();
         Role requestedRole = req.getRole();
-        
-        // UserService를 통해 Catalog 접근 
+
+        // UserService를 통해 Catalog 접근
         User user = UserService.getInstance().getUserById(id);
-        
+
         // 계정이 없는 경우
         if (user == null) {
             return new ResponseDTO(false, "로그인 실패: 존재하지 않는 계정입니다.", null);
         }
-        
-        // 권한 검증 
+
+        // 권한 검증
         boolean isRoleValid = false;
-        
+
         if (user.getRole() == requestedRole) {
-            isRoleValid = true; // 본인 권한 로그인 
+            isRoleValid = true; // 본인 권한 로그인
         } else if (user.getRole() == Role.ASSISTANT && requestedRole == Role.PROFESSOR) {
-            isRoleValid = true; // 조교가 교수 화면 접근 가능 
+            isRoleValid = true; // 조교가 교수 화면 접근 가능
         }
 
-        // 권한 접근 제한 
+        // 권한 접근 제한
         if (!isRoleValid) {
             return new ResponseDTO(false, "로그인 실패: 해당 권한으로 로그인할 수 없습니다.", null);
         }
@@ -63,7 +58,7 @@ public class LoginService {
         if (!user.verifyPassword(pw)) {
             return new ResponseDTO(false, "로그인 실패: 비밀번호가 일치하지 않습니다.", null);
         }
-        
+
         // 응답 생성
         UserDTO.Response userInfo = new UserDTO.Response(user.getRole(), user.getId(), user.getName());
 
@@ -71,7 +66,6 @@ public class LoginService {
         // [SFR-504] 로그인 시 미읽음 승인 알림 즉시 전달
         // [SFR-508] 로그인 시 미읽음 거부 알림(거부 사유 포함) 즉시 전달
         // ====================
-        // 학생인 경우 미읽음 알림 첨부 (로그인 즉시 알림 전달)
         if (user.getRole() == Role.STUDENT) {
             java.util.List<com.crsystem.common.dto.NotificationDTO> pending =
                 com.crsystem.systemserver.model.NotificationStore.getInstance()
@@ -86,7 +80,6 @@ public class LoginService {
             }
         }
 
-        // 응답 반환
         return new ResponseDTO(true, "로그인 성공!", userInfo);
     }
 }

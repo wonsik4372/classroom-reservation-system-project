@@ -30,6 +30,7 @@ public class ReservationDTO implements Serializable {
         private LocalDate date;       // 예약 날짜
         private String periodInfo;    // 교시
         private String purpose;       // 사유
+        private String rejectReason;  // 거부 사유 (거부 요청 시 사용)
         private int partnerCount;     // 동반 인원
 
         public Request() {}
@@ -86,6 +87,14 @@ public class ReservationDTO implements Serializable {
 
         public void setPurpose(String purpose) {
             this.purpose = purpose;
+        }
+
+        public String getRejectReason() {
+            return rejectReason;
+        }
+
+        public void setRejectReason(String rejectReason) {
+            this.rejectReason = rejectReason;
         }
 
         public void setPartnerCount(int partnerCount) {

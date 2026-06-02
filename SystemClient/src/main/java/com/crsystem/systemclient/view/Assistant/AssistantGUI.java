@@ -506,6 +506,11 @@ public class AssistantGUI extends javax.swing.JFrame {
         jLabelTime.setText("Current Time");
 
         jButtonLogout.setText("Logout");
+        jButtonLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogoutActionPerformed(evt);
+            }
+        });
 
         jButtonRefresh.setText("새로고침");
         jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -638,13 +643,23 @@ public class AssistantGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonApproveActionPerformed
 
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
-        // TODO add your handling code here:
-        // 모든 탭의 데이터를 서버(또는 컨트롤러)에 다시 요청해서 표를 싹 갈아엎음
         loadPendingReservations();
         loadAllReservations();
-        
-        System.out.println("새로고침 완료!"); // 확인용 로그
+        System.out.println("새로고침 완료!");
     }//GEN-LAST:event_jButtonRefreshActionPerformed
+
+    private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {
+        int reply = javax.swing.JOptionPane.showConfirmDialog(this,
+                "로그아웃 하시겠습니까?", "로그아웃 확인",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (reply == javax.swing.JOptionPane.YES_OPTION) {
+            com.crsystem.systemclient.controller.SessionManager.getInstance().logout();
+            this.dispose();
+            new com.crsystem.systemclient.view.LoginGUI().setVisible(true);
+            System.out.println("로그아웃 완료. 로그인 화면으로 이동합니다.");
+        }
+    }
 
     /**
      * @param args the command line arguments

@@ -39,4 +39,8 @@ public class ReservationCatalog {
         }
         return null;
     }
+
+    public void removeReservation(String reservationId) {
+        reservationList.removeIf(r -> reservationId.equals(r.getReservationId()));
+    }
 }

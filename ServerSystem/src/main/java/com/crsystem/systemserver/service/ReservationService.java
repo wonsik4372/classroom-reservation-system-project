@@ -35,6 +35,22 @@ public class ReservationService {
     // ====================
     public ResponseDTO addReservation(ReservationDTO.Response reservation) {
         try {
+            // 하루 예약 교시 수 제한 검사
+            int newPeriodCount = countPeriods(reservation.getPeriodInfo());
+            int existingPeriodCount = catalog.getAllReservations().stream()
+                    .filter(r -> r.getUserId().equals(reservation.getUserId())
+                            && r.getDate().equals(reservation.getDate())
+                            && r.getStatus() != ReservationDTO.Status.REJECTED)
+                    .mapToInt(r -> countPeriods(r.getPeriodInfo()))
+                    .sum();
+
+            int maxPeriods = reservation.getRoleType() == Role.STUDENT ? 2 : 3;
+            if (existingPeriodCount + newPeriodCount > maxPeriods) {
+                String roleLabel = reservation.getRoleType() == Role.STUDENT ? "학생" : "교수";
+                return new ResponseDTO(false,
+                        "예약 실패: " + roleLabel + "은 하루 최대 " + maxPeriods + "교시까지만 예약 가능합니다.", null);
+            }
+
             for (ReservationDTO.Response existing : catalog.getAllReservations()) {
                 if (isSameSlot(existing, reservation)) {
                     // 교수가 학생 슬롯을 덮어쓰는 경우: 학생 예약 거부 처리
@@ -102,6 +118,35 @@ public class ReservationService {
     }
 
     // ====================
+    // 예약 취소 (본인만)
+    // ====================
+    public ResponseDTO cancelReservation(String reservationId, String requesterId) {
+        try {
+            ReservationDTO.Response target = catalog.findReservation(reservationId);
+
+            if (target == null) {
+                return new ResponseDTO(false, "해당 예약을 찾을 수 없습니다: " + reservationId, null);
+            }
+
+            if (!target.getUserId().equals(requesterId)) {
+                return new ResponseDTO(false, "본인의 예약만 취소할 수 있습니다.", null);
+            }
+
+            if (target.getStatus() == ReservationDTO.Status.REJECTED) {
+                return new ResponseDTO(false, "이미 거부된 예약입니다.", null);
+            }
+
+            catalog.removeReservation(reservationId);
+            fileManager.saveAll(catalog.getAllReservations());
+
+            return new ResponseDTO(true, "예약이 취소되었습니다.", null);
+
+        } catch (Exception e) {
+            return new ResponseDTO(false, "취소 실패", null);
+        }
+    }
+
+    // ====================
     // 예약 거부
     // ====================
     public ResponseDTO rejectReservation(String reservationId, String rejectReason) {
@@ -126,6 +171,14 @@ public class ReservationService {
         } catch (Exception e) {
             return new ResponseDTO(false, "거부 실패", null);
         }
+    }
+
+    private int countPeriods(String periodInfo) {
+        if (periodInfo == null || periodInfo.isBlank()) return 0;
+        return (int) java.util.Arrays.stream(periodInfo.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .count();
     }
 
     private boolean isSameSlot(ReservationDTO.Response a, ReservationDTO.Response b) {

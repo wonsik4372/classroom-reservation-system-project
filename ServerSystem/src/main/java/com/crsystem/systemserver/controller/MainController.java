@@ -82,6 +82,12 @@ public class MainController {
                 ((ReservationDTO.Request) req.getPayload()).getRejectReason()
             )
         );
+        commandMap.put("CANCEL_RESERVATION", req ->
+            ReservationService.getInstance().cancelReservation(
+                ((ReservationDTO.Request) req.getPayload()).getReservationId(),
+                ((ReservationDTO.Request) req.getPayload()).getUserId()
+            )
+        );
     }
 
     /**

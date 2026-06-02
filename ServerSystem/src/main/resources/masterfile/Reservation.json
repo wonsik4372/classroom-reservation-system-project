@@ -39,19 +39,6 @@
     "roleType": "STUDENT"
   },
   {
-    "reservationId": "RES-1780360168047",
-    "roomName": "23 정보공학관 9층 912호",
-    "date": "2026-06-01",
-    "day": "월",
-    "periodInfo": "2교시, 3교시",
-    "purpose": "개인 공부",
-    "partnerCount": 5,
-    "status": "APPROVED",
-    "userId": "24002400",
-    "userName": "김찬호",
-    "roleType": "STUDENT"
-  },
-  {
     "reservationId": "RES-1780360185090",
     "roomName": "23 정보공학관 9층 912호",
     "date": "2026-06-01",

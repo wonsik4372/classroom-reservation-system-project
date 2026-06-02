@@ -6,6 +6,7 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.main.CRSystemClient;
 import java.util.List;
 import java.util.function.Consumer;
+import com.crsystem.systemclient.controller.SessionManager;
 
 /**
  * 예약 컨트롤러
@@ -87,6 +88,20 @@ public class ReservationController {
                     }
                     approveNext(reservationIds, index + 1, onSuccess, onFailure);
                 },
+                onFailure
+        );
+    }
+
+    public void cancelReservation(String reservationId,
+                                  Consumer<ResponseDTO> onSuccess,
+                                  Consumer<String> onFailure) {
+        ReservationDTO.Request payload = new ReservationDTO.Request();
+        payload.setReservationId(reservationId);
+        payload.setUserId(SessionManager.getInstance().getCurrentUser().getId());
+
+        CRSystemClient.getInstance().sendRequest(
+                new RequestDTO("CANCEL_RESERVATION", payload),
+                onSuccess,
                 onFailure
         );
     }

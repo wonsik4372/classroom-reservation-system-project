@@ -45,12 +45,12 @@ public class CRSystemReservation extends javax.swing.JFrame {
     private void customInit() {
         lblInfo.setText("[" + roomName + "] " + day + "요일 / " + periodInfo);
 
-        // 오늘 기준 -14일 ~ +14일 날짜 생성
+        // 오늘 기준 +14일 날짜 생성
         java.time.LocalDate today = java.time.LocalDate.now();
         String[] dayNames = {"", "월", "화", "수", "목", "금", "토", "일"};
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
 
-        for (int i = -14; i <= 14; i++) {
+        for (int i = 2; i <= 14; i++) {
             java.time.LocalDate d = today.plusDays(i);
             String label = d.toString() + " (" + dayNames[d.getDayOfWeek().getValue()] + ")";
             model.addElement(label);
@@ -58,7 +58,7 @@ public class CRSystemReservation extends javax.swing.JFrame {
         }
 
         dateCombo.setModel(model);
-        dateCombo.setSelectedIndex(14); // 오늘 날짜 선택
+        dateCombo.setSelectedIndex(0); // 예약 가능한 제일 가까운 날짜 선택
 
         // 창을 닫아도 프로그램 전체가 꺼지지 않게 설정
         setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);

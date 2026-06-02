@@ -351,13 +351,6 @@ public class RoomListGUI extends javax.swing.JPanel {
             return;
         }
 
-        if (!"23 정보공학관".equals(building) || !"9".equals(floor)
-                || !("911".equals(room) || "912".equals(room) || "913".equals(room))) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "선택하신 강의실은 현재 준비 중입니다.\n(현재는 '23 정보공학관' - '9층' - '911, 912, 913호'만 예약 가능합니다.)");
-            return;
-        }
-
         // 어떤 강의실인지 명칭 결합 ("23 정보공학관 9층 912호")
         String roomName = building + " " + floor + "층 " + room + "호";
 
@@ -525,29 +518,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         jTable2.setModel(model);
         jTable2.setRowHeight(25);
     }
-
-    public static void main(String args[]) { //테스트용 Jframe 생성용 메인 코드라 삭제해도 됩니다.
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(RoomListGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(() -> {
-            javax.swing.JFrame frame = new javax.swing.JFrame("RoomListGUI 테스트 창");
-            frame.setContentPane(new RoomListGUI());
-            frame.pack();
-            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGoToReserve;

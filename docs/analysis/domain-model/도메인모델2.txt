@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+'left to right direction
+'skinparam linetype ortho
+
+hide circle
+hide empty members
+
+skinparam ranksep 80
+skinparam nodesep 80
+
+class Assistant{}
+
+class User {}
+
+class Building {}
+
+class LectureRoom {}
+
+class LectureRoomSpec {}
+
+class TimeTable
+
+class Reservation {}
+
+
+LectureRoom "1" -right- "0..*" Reservation : Has
+LectureRoom "1" -up- "*" Building : Located In
+LectureRoom "*"-- "1" LectureRoomSpec : Described By
+TimeTable "1" -right- "1" LectureRoom : Restrict
+Reservation "0..*" -up- "1" User : < Reserve
+LectureRoom "*" -- "1" Assistant : < Manage
+Reservation "0..*" -- "1" Assistant : < Approve
+
+
+
+
+@enduml

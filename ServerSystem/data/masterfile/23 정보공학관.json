@@ -1,0 +1,2169 @@
+{
+  "buildingName" : "23 정보공학관",
+  "floors" : {
+    "7층" : {
+      "713호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "정보통신과미래사이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "정보통신과미래사이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "통신망설계김동일",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "안테나공학이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "멀티미디어시스템빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "714호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "정보통신과미래사이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "정보통신과미래사이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "통신망설계김동일",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "안테나공학이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII이유종",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "멀티미디어시스템빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      }
+    },
+    "9층" : {
+      "911호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "컴퓨터비전응용권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "컴퓨터비전응용권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "컴퓨터비전응용권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "공학설계입문김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "Python프로그래밍빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "Python프로그래밍빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "Python프로그래밍빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "그래픽스프로그래빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "그래픽스프로그래빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "그래픽스프로그래빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "캡스톤디자인II권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "캡스톤디자인II권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "캡스톤디자인II권순각",
+            "professor" : "없음",
+            "status" : 1
+          } ]
+        }
+      },
+      "912호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "교과교육론(정보.최병윤",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "교과교육론(정보.최병윤",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "데이터구조이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "데이터구조이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "정보보호론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "정보보호론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "운영체제김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "확률및통계이유태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "교과교육론(정보.최병윤",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)논문지도(박)I권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "(대)논문지도(박)I권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "운영체제김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "운영체제김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "데이터구조이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "컴퓨터네트워크빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "AI시대의사고와표김용하",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "AI시대의사고와표김용하",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "컴퓨터개론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "컴퓨터개론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "컴퓨터개론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "913호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "프로젝트와기업가정윤희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "멀티미디어시스템빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "멀티미디어시스템빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "컴퓨터네트워크빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "컴퓨터네트워크빈기철",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "확률및통계이유태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "확률및통계이유태",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "정보보호론권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "AI시대의사고와표정윤희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "AI시대의사고와표정윤희",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "914호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "프로젝트와기업가안장혁",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "ICT기반의창조경제권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "ICT기반의창조경제권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "※콜라보인성의실박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "(대)디지털신호처리특권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "(대)디지털신호처리특권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "(대)디지털신호처리특권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "※콜라보인성의실박유현",
+            "professor" : "없음",
+            "status" : 1
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "(대)AI프로그래밍입문권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "(대)AI프로그래밍입문권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "(대)AI프로그래밍입문권순각",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "기초수학김양곡",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "915호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)IT융합서비스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "(대)IT융합서비스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)IT융합서비스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "객체지향프로그래장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "컴퓨터프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)디지털영상처리장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "Python프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "Python프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "Python프로그래밍장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "컴퓨터개론장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "컴퓨터개론장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "컴퓨터개론장희숙",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "916호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "머신러닝권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "머신러닝권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "머신러닝권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "객체지향설계이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "객체지향설계이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "소프트웨어공학(키이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "객체지향설계이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "객체지향설계이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)소프트웨어공학개이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "(대)소프트웨어공학개이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)소프트웨어공학개이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "(대)인공지능특강권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "(대)인공지능특강권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "(대)인공지능특강권오준",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ]
+        }
+      },
+      "918호" : {
+        "info" : {
+          "status" : "사용 가능",
+          "capacity" : 0,
+          "features" : "",
+          "computerCount" : 0
+        },
+        "schedule" : {
+          "월" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "(대)임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "(대)임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "(대)임베디드소프트웨김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "데이터사이언스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "임베디드시스템(키김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "임베디드시스템(키김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "임베디드시스템(키김성우",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "화" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "데이터사이언스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "데이터사이언스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "지도교수멘토링VII이종민",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "수" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "데이터베이스이론이중화",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "데이터사이언스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "데이터사이언스박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "목" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          } ],
+          "금" : [ {
+            "time" : "09:00-09:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "10:00-10:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "11:00-11:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "12:00-12:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "13:00-13:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "14:00-14:50",
+            "subject" : "빈 시간",
+            "professor" : "없음",
+            "status" : 0
+          }, {
+            "time" : "15:00-15:50",
+            "subject" : "캡스톤디자인II박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "16:00-16:50",
+            "subject" : "캡스톤디자인II박유현",
+            "professor" : "없음",
+            "status" : 1
+          }, {
+            "time" : "17:00-17:50",
+            "subject" : "캡스톤디자인II박유현",
+            "professor" : "없음",
+            "status" : 1
+          } ]
+        }
+      }
+    }
+  }
+}

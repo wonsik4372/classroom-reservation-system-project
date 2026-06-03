@@ -8,7 +8,9 @@ import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.controller.ReservationController;
 import com.crsystem.systemclient.controller.SessionManager;
+import com.crsystem.systemclient.controller.TimetableController;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,6 +21,7 @@ public class UserGUI extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserGUI.class.getName());
 
     private java.util.List<ReservationDTO.Response> myReservationList = new java.util.ArrayList<>();
+    private Map<String, Object> timetableData = null;
 
     /**
      * Creates new form UserGUI
@@ -27,6 +30,7 @@ public class UserGUI extends javax.swing.JFrame {
         initComponents();
         initCustomSettings();
         loadReservationsFromServer();
+        loadTimetableFromServer();
     }
 
     private void initCustomSettings() {
@@ -60,11 +64,181 @@ public class UserGUI extends javax.swing.JFrame {
                 updateMyReservationTable();
             }
         });
+
+        jComboBoxYear.addActionListener(e -> loadTimetableFromServer());
+        jComboBoxSemester.addActionListener(e -> updateBuildingComboBox());
+        jComboBoxBuildingNo.addActionListener(e -> updateFloorComboBox());
+        jComboBoxFloor.addActionListener(e -> updateClassroomComboBox());
+        jComboBox4.addActionListener(e -> updateTimetableTable());
     }
 
     private String getCurrentTime() {
         return java.time.LocalDateTime.now()
                 .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadTimetableFromServer() {
+        String year = (String) jComboBoxYear.getSelectedItem();
+        TimetableController.getInstance().getTimetable(year,
+            response -> {
+                if (response.isSuccess() && response.getPayload() instanceof Map) {
+                    timetableData = (Map<String, Object>) response.getPayload();
+                    updateBuildingComboBox();
+                } else {
+                    logger.warning("시간표 로드 실패: " + response.getMessage());
+                }
+            },
+            error -> logger.warning("시간표 통신 오류: " + error)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateBuildingComboBox() {
+        if (timetableData == null) return;
+
+        String semester = (String) jComboBoxSemester.getSelectedItem();
+        Map<String, Object> semesterMap = (Map<String, Object>) timetableData.get(semester);
+
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("건물선택");
+        if (semesterMap != null) {
+            for (String building : semesterMap.keySet()) {
+                model.addElement(building);
+            }
+        }
+        jComboBoxBuildingNo.setModel(model);
+        updateFloorComboBox();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateFloorComboBox() {
+        if (timetableData == null) return;
+
+        String semester = (String) jComboBoxSemester.getSelectedItem();
+        String building = (String) jComboBoxBuildingNo.getSelectedItem();
+
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("층 선택");
+
+        if (!"건물선택".equals(building)) {
+            try {
+                Map<String, Object> semesterMap = (Map<String, Object>) timetableData.get(semester);
+                if (semesterMap != null) {
+                    Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
+                    if (buildingMap != null) {
+                        for (String floor : buildingMap.keySet()) {
+                            model.addElement(floor);
+                        }
+                    }
+                }
+            } catch (ClassCastException ignored) {}
+        }
+        jComboBoxFloor.setModel(model);
+        updateClassroomComboBox();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateClassroomComboBox() {
+        if (timetableData == null) return;
+
+        String semester = (String) jComboBoxSemester.getSelectedItem();
+        String building = (String) jComboBoxBuildingNo.getSelectedItem();
+        String floor    = (String) jComboBoxFloor.getSelectedItem();
+
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("강의실 선택");
+
+        if (!"건물선택".equals(building) && !"층 선택".equals(floor)) {
+            try {
+                Map<String, Object> semesterMap = (Map<String, Object>) timetableData.get(semester);
+                if (semesterMap != null) {
+                    Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
+                    if (buildingMap != null) {
+                        Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor);
+                        if (floorMap != null) {
+                            for (String room : floorMap.keySet()) {
+                                // 호수만 추출 (예: "911호" -> "911")
+                                model.addElement(room.replace("호", ""));
+                            }
+                        }
+                    }
+                }
+            } catch (ClassCastException ignored) {}
+        }
+        jComboBox4.setModel(model);
+        updateTimetableTable();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateTimetableTable() {
+        if (timetableData == null) return;
+
+        String semester = (String) jComboBoxSemester.getSelectedItem();
+        String building = (String) jComboBoxBuildingNo.getSelectedItem();
+        String floor    = (String) jComboBoxFloor.getSelectedItem();
+        String room     = (String) jComboBox4.getSelectedItem();
+
+        String[] columns = {"교시 / 시간", "월", "화", "수", "목", "금"};
+        javax.swing.table.DefaultTableModel model =
+                new javax.swing.table.DefaultTableModel(columns, 0) {
+                    @Override public boolean isCellEditable(int r, int c) { return false; }
+                };
+
+        if ("건물선택".equals(building) || "층 선택".equals(floor) || "강의실 선택".equals(room)) {
+            jTableTimeTable.setModel(model);
+            return;
+        }
+
+        String roomKey = room + "호";
+        try {
+            Map<String, Object> semesterMap = (Map<String, Object>) timetableData.get(semester);
+            if (semesterMap == null) { jTableTimeTable.setModel(model); return; }
+            Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
+            if (buildingMap == null) { jTableTimeTable.setModel(model); return; }
+            Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor);
+            if (floorMap == null) { jTableTimeTable.setModel(model); return; }
+            Map<String, Object> roomData = (Map<String, Object>) floorMap.get(roomKey);
+            if (roomData == null) { jTableTimeTable.setModel(model); return; }
+
+            Map<String, java.util.List<Map<String, Object>>> schedule =
+                    (Map<String, java.util.List<Map<String, Object>>>) roomData.get("schedule");
+            if (schedule == null) { jTableTimeTable.setModel(model); return; }
+
+            String[] days = {"월", "화", "수", "목", "금"};
+            String[] periodLabels = {
+                "1교시(09:00-09:50)", "2교시(10:00-10:50)", "3교시(11:00-11:50)",
+                "4교시(12:00-12:50)", "5교시(13:00-13:50)", "6교시(14:00-14:50)",
+                "7교시(15:00-15:50)", "8교시(16:00-16:50)", "9교시(17:00-17:50)"
+            };
+
+            for (int i = 0; i < 9; i++) {
+                Object[] row = new Object[6];
+                row[0] = periodLabels[i];
+                for (int d = 0; d < days.length; d++) {
+                    java.util.List<Map<String, Object>> daySlots = schedule.get(days[d]);
+                    if (daySlots != null && i < daySlots.size()) {
+                        Map<String, Object> slot = daySlots.get(i);
+                        String subject = (String) slot.get("subject");
+                        String professor = (String) slot.get("professor");
+                        int status = slot.get("status") instanceof Integer ? (int) slot.get("status") : 0;
+                        if (status == 0) {
+                            row[d + 1] = "";
+                        } else {
+                            row[d + 1] = subject + (professor != null && !"없음".equals(professor) ? "\n(" + professor + ")" : "");
+                        }
+                    } else {
+                        row[d + 1] = "";
+                    }
+                }
+                model.addRow(row);
+            }
+        } catch (ClassCastException e) {
+            logger.warning("시간표 데이터 파싱 오류: " + e.getMessage());
+        }
+
+        jTableTimeTable.setModel(model);
+        jTableTimeTable.setRowHeight(40);
     }
 
     private void handleLogout() {

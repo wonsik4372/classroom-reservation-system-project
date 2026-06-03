@@ -38,6 +38,65 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
 
     private void customInit() {
         lblInfo.setText("[" + roomName + "] " + selectedDate + " (" + day + "요일) / " + periodInfo);
+        updateCapacityLabel();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateCapacityLabel() {
+        com.crsystem.systemclient.controller.TimetableController.getInstance().getTimetable("2026",
+            response -> {
+                if (!response.isSuccess() || !(response.getPayload() instanceof java.util.Map)) return;
+
+                java.util.Map<String, Object> timetableData = (java.util.Map<String, Object>) response.getPayload();
+
+                java.util.regex.Matcher m = java.util.regex.Pattern
+                        .compile("^(.+?)\\s+(\\d+층)\\s+(\\d+호)$")
+                        .matcher(roomName);
+                if (!m.matches()) return;
+
+                String building = m.group(1);
+                String floor    = m.group(2);
+                String roomKey  = m.group(3);
+
+                int capacity = 0;
+                outer:
+                for (Object semObj : timetableData.values()) {
+                    if (!(semObj instanceof java.util.Map)) continue;
+                    java.util.Map<String, Object> semMap = (java.util.Map<String, Object>) semObj;
+                    java.util.Map<String, Object> bMap = (java.util.Map<String, Object>) semMap.get(building);
+                    if (bMap == null) continue;
+                    java.util.Map<String, Object> fMap = (java.util.Map<String, Object>) bMap.get(floor);
+                    if (fMap == null) continue;
+                    java.util.Map<String, Object> rData = (java.util.Map<String, Object>) fMap.get(roomKey);
+                    if (rData == null) continue;
+                    java.util.Map<String, Object> info = (java.util.Map<String, Object>) rData.get("info");
+                    if (info != null && info.get("capacity") instanceof Integer) {
+                        capacity = (Integer) info.get("capacity");
+                    }
+                    break outer;
+                }
+
+                if (capacity <= 0) return;
+
+                int maxAllowed = capacity / 2;
+                int occupied = ReservationController.getInstance().getReservationCache().stream()
+                        .filter(r -> roomName.equals(r.getRoomName())
+                                && selectedDate.equals(r.getDate())
+                                && r.getPeriodInfo() != null
+                                && java.util.Arrays.stream(periodInfo.split(","))
+                                        .anyMatch(p -> r.getPeriodInfo().contains(p.trim()))
+                                && r.getStatus() != com.crsystem.common.dto.ReservationDTO.Status.REJECTED)
+                        .mapToInt(com.crsystem.common.dto.ReservationDTO.Response::getPartnerCount)
+                        .sum();
+
+                int remaining = Math.max(0, maxAllowed - occupied);
+                lblCapacity.setText("잔여석 : " + remaining + " / " + maxAllowed + "석 (최대 수용 " + capacity + "명의 50%)");
+                lblCapacity.setForeground(remaining <= 5
+                        ? new java.awt.Color(200, 0, 0)
+                        : new java.awt.Color(0, 120, 0));
+            },
+            error -> lblCapacity.setText("잔여석 조회 실패")
+        );
     }
 
     /**
@@ -50,6 +109,7 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
     private void initComponents() {
 
         lblInfo = new javax.swing.JLabel();
+        lblCapacity = new javax.swing.JLabel();
         purposeField = new javax.swing.JTextField();
         partnerSpinner = new javax.swing.JSpinner();
         btnSubmit = new javax.swing.JButton();
@@ -76,6 +136,9 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
 
         jLabel5.setText("동반 인원 수 :");
 
+        lblCapacity.setText("잔여석 : -");
+        lblCapacity.setForeground(new java.awt.Color(0, 120, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,7 +149,8 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                        .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -99,7 +163,9 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(6, 6, 6)
+                .addComponent(lblCapacity)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(purposeField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -181,6 +247,7 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblCapacity;
     private javax.swing.JLabel lblInfo;
     private javax.swing.JSpinner partnerSpinner;
     private javax.swing.JTextField purposeField;

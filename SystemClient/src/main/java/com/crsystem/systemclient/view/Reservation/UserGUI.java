@@ -23,6 +23,9 @@ public class UserGUI extends javax.swing.JFrame {
     private java.util.List<ReservationDTO.Response> myReservationList = new java.util.ArrayList<>();
     private Map<String, Object> timetableData = null;
 
+    private javax.swing.JComboBox<String> resFilterModeCombo;
+    private javax.swing.JSpinner resFilterDateSpinner;
+
     /**
      * Creates new form UserGUI
      */
@@ -70,6 +73,27 @@ public class UserGUI extends javax.swing.JFrame {
         jComboBoxBuildingNo.addActionListener(e -> updateFloorComboBox());
         jComboBoxFloor.addActionListener(e -> updateClassroomComboBox());
         jComboBox4.addActionListener(e -> updateTimetableTable());
+
+        setupReservationFilter();
+    }
+
+    private void setupReservationFilter() {
+        resFilterModeCombo = new javax.swing.JComboBox<>(new String[]{"전체", "일별", "주별", "월별"});
+        resFilterDateSpinner = new javax.swing.JSpinner(
+            new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+        resFilterDateSpinner.setEditor(new javax.swing.JSpinner.DateEditor(resFilterDateSpinner, "yyyy-MM-dd"));
+        resFilterDateSpinner.setPreferredSize(new java.awt.Dimension(120, 26));
+
+        javax.swing.JPanel filterBar = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 6));
+        filterBar.add(new javax.swing.JLabel("기간:"));
+        filterBar.add(resFilterModeCombo);
+        filterBar.add(new javax.swing.JLabel("기준일:"));
+        filterBar.add(resFilterDateSpinner);
+
+        jScrollPaneReservationList.setColumnHeaderView(filterBar);
+
+        resFilterModeCombo.addActionListener(e -> updateReservationTable());
+        resFilterDateSpinner.addChangeListener(e -> updateReservationTable());
     }
 
     private String getCurrentTime() {
@@ -698,21 +722,40 @@ public class UserGUI extends javax.swing.JFrame {
 
         String targetRoomName = building + " " + floor + "층 " + room + "호";
 
+        String filterMode = resFilterModeCombo != null ? (String) resFilterModeCombo.getSelectedItem() : "전체";
+        java.time.LocalDate baseDate = resFilterDateSpinner != null
+            ? ((java.util.Date) resFilterDateSpinner.getValue())
+                .toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+            : java.time.LocalDate.now();
+
         List<ReservationDTO.Response> cache = ReservationController.getInstance().getReservationCache();
         if (cache != null) {
             for (ReservationDTO.Response info : cache) {
-                if (targetRoomName.equals(info.getRoomName())) {
-                    model.addRow(new Object[]{
-                        info.getDate() != null ? info.getDate().toString() : "",
-                        info.getDay() != null ? info.getDay() + "요일" : "",
-                        info.getPeriodInfo(),
-                        info.getUserName(),
-                        info.getRoleType(),
-                        info.getPurpose(),
-                        info.getPartnerCount() + "명",
-                        info.getStatus()
-                    });
-                }
+                if (!targetRoomName.equals(info.getRoomName())) continue;
+                java.time.LocalDate d = info.getDate();
+                boolean pass = switch (filterMode) {
+                    case "일별" -> d != null && d.equals(baseDate);
+                    case "주별" -> {
+                        if (d == null) yield false;
+                        java.time.temporal.WeekFields wf = java.time.temporal.WeekFields.ISO;
+                        yield d.getYear() == baseDate.getYear()
+                            && d.get(wf.weekOfWeekBasedYear()) == baseDate.get(wf.weekOfWeekBasedYear());
+                    }
+                    case "월별" -> d != null && d.getYear() == baseDate.getYear()
+                                        && d.getMonthValue() == baseDate.getMonthValue();
+                    default -> true;
+                };
+                if (!pass) continue;
+                model.addRow(new Object[]{
+                    d != null ? d.toString() : "",
+                    info.getDay() != null ? info.getDay() + "요일" : "",
+                    info.getPeriodInfo(),
+                    info.getUserName(),
+                    info.getRoleType(),
+                    info.getPurpose(),
+                    info.getPartnerCount() + "명",
+                    info.getStatus()
+                });
             }
         }
 

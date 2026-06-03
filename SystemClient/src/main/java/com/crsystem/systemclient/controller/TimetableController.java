@@ -4,6 +4,7 @@ import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.main.CRSystemClient;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class TimetableController {
@@ -23,6 +24,16 @@ public class TimetableController {
                              Consumer<String> onFailure) {
         CRSystemClient.getInstance().sendRequest(
                 new RequestDTO("GET_TIMETABLE", year),
+                onSuccess,
+                onFailure
+        );
+    }
+
+    public void updateRoomInfo(Map<String, Object> payload,
+                               Consumer<ResponseDTO> onSuccess,
+                               Consumer<String> onFailure) {
+        CRSystemClient.getInstance().sendRequest(
+                new RequestDTO("UPDATE_ROOM_INFO", payload),
                 onSuccess,
                 onFailure
         );

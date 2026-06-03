@@ -5,6 +5,9 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.common.enums.Role;
 import com.crsystem.systemserver.dao.ReservationFileManager;
 import com.crsystem.systemserver.model.ReservationCatalog;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,12 @@ public class ReservationService {
     // ====================
     public ResponseDTO addReservation(ReservationDTO.Response reservation) {
         try {
+            // 사용 불가 강의실 예약 차단
+            String roomStatus = getRoomStatus(reservation.getRoomName());
+            if (!"사용 가능".equals(roomStatus)) {
+                return new ResponseDTO(false, "예약 실패: 해당 강의실은 현재 사용 불가 상태입니다.", null);
+            }
+
             // 하루 예약 교시 수 제한 검사
             int newPeriodCount = countPeriods(reservation.getPeriodInfo());
             int existingPeriodCount = catalog.getAllReservations().stream()
@@ -49,6 +58,26 @@ public class ReservationService {
                 String roleLabel = reservation.getRoleType() == Role.STUDENT ? "학생" : "교수";
                 return new ResponseDTO(false,
                         "예약 실패: " + roleLabel + "은 하루 최대 " + maxPeriods + "교시까지만 예약 가능합니다.", null);
+            }
+
+            // 학생 예약 시 수용 인원 50% 초과 여부 검증
+            if (reservation.getRoleType() == Role.STUDENT) {
+                int capacity = getRoomCapacity(reservation.getRoomName());
+                if (capacity > 0) {
+                    int maxAllowed = capacity / 2;
+                    int currentOccupancy = catalog.getAllReservations().stream()
+                            .filter(r -> r.getRoomName().equals(reservation.getRoomName())
+                                    && r.getDate().equals(reservation.getDate())
+                                    && isPeriodConflict(r.getPeriodInfo(), reservation.getPeriodInfo())
+                                    && r.getStatus() != ReservationDTO.Status.REJECTED)
+                            .mapToInt(ReservationDTO.Response::getPartnerCount)
+                            .sum();
+                    if (currentOccupancy + reservation.getPartnerCount() > maxAllowed) {
+                        int remaining = Math.max(0, maxAllowed - currentOccupancy);
+                        return new ResponseDTO(false,
+                                "예약 실패: 해당 교시의 잔여석이 부족합니다. (잔여 " + remaining + "석)", null);
+                    }
+                }
             }
 
             for (ReservationDTO.Response existing : catalog.getAllReservations()) {
@@ -171,6 +200,74 @@ public class ReservationService {
         } catch (Exception e) {
             return new ResponseDTO(false, "거부 실패", null);
         }
+    }
+
+    /**
+     * roomName 예: "23 정보공학관 9층 911호"
+     * data/masterfile/2026.json 에서 해당 강의실의 capacity 반환. 찾지 못하면 0.
+     */
+    private int getRoomCapacity(String roomName) {
+        try {
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("^(.+?)\\s+(\\d+층)\\s+(\\d+호)$")
+                    .matcher(roomName);
+            if (!m.matches()) return 0;
+            String building = m.group(1);
+            String floor    = m.group(2);
+            String roomKey  = m.group(3);
+
+            File jsonFile = new File("data/masterfile/2026.json");
+            if (!jsonFile.exists()) return 0;
+
+            JsonNode root = new ObjectMapper().readTree(jsonFile);
+            for (JsonNode semNode : root) {
+                JsonNode buildingNode = semNode.get(building);
+                if (buildingNode == null) continue;
+                JsonNode floorNode = buildingNode.get(floor);
+                if (floorNode == null) continue;
+                JsonNode roomNode = floorNode.get(roomKey);
+                if (roomNode == null) continue;
+                JsonNode infoNode = roomNode.get("info");
+                if (infoNode != null && infoNode.has("capacity")) {
+                    return infoNode.get("capacity").asInt(0);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("capacity 조회 실패: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    private String getRoomStatus(String roomName) {
+        try {
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("^(.+?)\\s+(\\d+층)\\s+(\\d+호)$")
+                    .matcher(roomName);
+            if (!m.matches()) return "사용 가능";
+            String building = m.group(1);
+            String floor    = m.group(2);
+            String roomKey  = m.group(3);
+
+            File jsonFile = new File("data/masterfile/2026.json");
+            if (!jsonFile.exists()) return "사용 가능";
+
+            JsonNode root = new ObjectMapper().readTree(jsonFile);
+            for (JsonNode semNode : root) {
+                JsonNode buildingNode = semNode.get(building);
+                if (buildingNode == null) continue;
+                JsonNode floorNode = buildingNode.get(floor);
+                if (floorNode == null) continue;
+                JsonNode roomNode = floorNode.get(roomKey);
+                if (roomNode == null) continue;
+                JsonNode infoNode = roomNode.get("info");
+                if (infoNode != null && infoNode.has("status")) {
+                    return infoNode.get("status").asText("사용 가능");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("status 조회 실패: " + e.getMessage());
+        }
+        return "사용 가능";
     }
 
     private int countPeriods(String periodInfo) {

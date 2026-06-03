@@ -232,14 +232,13 @@ public class TimeTableGUI extends javax.swing.JPanel {
             .contains(selectedPeriod);
 
             if (sameRoom && sameDate && samePeriod) {
-                // 학생 차단
-
-                if (currentUser.getRole() == Role.STUDENT) {
+                // 학생: 교수 예약이 있는 경우만 차단 (capacity 초과는 서버에서 검증)
+                if (currentUser.getRole() == Role.STUDENT
+                    && reservation.getRoleType() == Role.PROFESSOR) {
                     JOptionPane.showMessageDialog(
                         this,
-                        "이미 예약된 교시입니다."
+                        "해당 교시에 교수 예약이 존재합니다."
                     );
-
                     return;
                 }
 
@@ -253,7 +252,7 @@ public class TimeTableGUI extends javax.swing.JPanel {
                     return;
                 }
 
-                // 교수 -> 학생 예약 시도
+                // 교수 -> 학생 예약 시도 (학생 예약 덮어쓰기 허용)
                 if (currentUser.getRole() == Role.PROFESSOR
                     && reservation.getRoleType() == Role.STUDENT) {
                     break;

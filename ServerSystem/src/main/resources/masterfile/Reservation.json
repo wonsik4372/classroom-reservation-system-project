@@ -77,5 +77,18 @@
     "userId": "99999",
     "userName": "홍길동",
     "roleType": "PROFESSOR"
+  },
+  {
+    "reservationId": "RES-1780483875168",
+    "roomName": "23 정보공학관 9층층 911호",
+    "date": "2026-06-08",
+    "day": "월",
+    "periodInfo": "5교시, 6교시",
+    "purpose": "개인 공부",
+    "partnerCount": 1,
+    "status": "PENDING",
+    "userId": "11223344",
+    "userName": "강원식",
+    "roleType": "STUDENT"
   }
 ]

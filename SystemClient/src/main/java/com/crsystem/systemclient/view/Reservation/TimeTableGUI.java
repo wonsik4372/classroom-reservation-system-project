@@ -18,6 +18,9 @@ import com.crsystem.common.enums.Role;
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.systemclient.controller.ReservationController;
 import com.crsystem.systemclient.controller.SessionManager;
+import com.crsystem.systemclient.controller.TimetableController;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -28,6 +31,8 @@ public class TimeTableGUI extends javax.swing.JPanel {
     private List<Point> selectedCells = new ArrayList<>();
     private String[] days = {"월", "화", "수", "목", "금"};
     private String roomName;
+    // day -> (period index 0-based -> subject name) for regular classes
+    private Map<String, Map<Integer, String>> regularClassSlots = new HashMap<>();
 
     public TimeTableGUI(String roomName) {
         this.roomName = roomName;
@@ -55,6 +60,19 @@ public class TimeTableGUI extends javax.swing.JPanel {
                 String day = column > 0 ? days[column - 1] : null;
                 String period = (row + 1) + "교시";
 
+                // 정규수업 - 회색으로 표시하고 과목명 렌더링 (선택 불가)
+                if (day != null) {
+                    Map<Integer, String> slots = regularClassSlots.get(day);
+                    if (slots != null && slots.containsKey(row)) {
+                        c.setBackground(new Color(200, 200, 200));
+                        if (c instanceof javax.swing.JLabel) {
+                            ((javax.swing.JLabel) c).setText(slots.get(row));
+                            ((javax.swing.JLabel) c).setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                        }
+                        return c;
+                    }
+                }
+
                 for (ReservationDTO.Response reservation : ReservationController.getInstance().getReservationCache()) {
                     if (reservation.getRoomName().equals(roomName)
                             && reservation.getDay().equals(day)
@@ -76,6 +94,7 @@ public class TimeTableGUI extends javax.swing.JPanel {
             }
         });
 
+        loadRegularClassSchedule();
         refreshReservationCache();
     }
 
@@ -150,6 +169,13 @@ public class TimeTableGUI extends javax.swing.JPanel {
 
         String selectedDay = days[col - 1];
         String selectedPeriod = (row + 1) + "교시";
+
+        // 정규수업 슬롯은 선택 불가
+        Map<Integer, String> slots = regularClassSlots.get(selectedDay);
+        if (slots != null && slots.containsKey(row)) {
+            JOptionPane.showMessageDialog(this, "해당 시간에는 정규 수업 [" + slots.get(row) + "] 이(가) 있어 예약할 수 없습니다.");
+            return;
+        }
 
         UserDTO.Response currentUser
         = SessionManager.getInstance().getCurrentUser();
@@ -284,6 +310,82 @@ public class TimeTableGUI extends javax.swing.JPanel {
         table.repaint();
     }//GEN-LAST:event_btnReserveActionPerformed
 
+
+    /**
+     * roomName 예: "23 정보공학관 9층 911호"
+     * -> semester는 현재연도 기준 기본 "1학기"로 요청
+     */
+    @SuppressWarnings("unchecked")
+    private void loadRegularClassSchedule() {
+        TimetableController.getInstance().getTimetable("2026",
+            response -> {
+                if (!response.isSuccess() || !(response.getPayload() instanceof Map)) return;
+
+                Map<String, Object> timetableData = (Map<String, Object>) response.getPayload();
+
+                // roomName 파싱: "[건물명] [N]층 [호수]호"
+                // 예: "23 정보공학관 9층 911호"
+                java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("^(.+?)\\s+(\\d+층)\\s+(\\d+호)$")
+                    .matcher(roomName);
+
+                if (!m.matches()) return;
+
+                String building = m.group(1);
+                String floor    = m.group(2);
+                String roomKey  = m.group(3);
+
+                Map<String, java.util.List<Map<String, Object>>> schedule = null;
+
+                outer:
+                for (Object semObj : timetableData.values()) {
+                    if (!(semObj instanceof Map)) continue;
+                    Map<String, Object> semMap = (Map<String, Object>) semObj;
+                    Map<String, Object> buildingMap = (Map<String, Object>) semMap.get(building);
+                    if (buildingMap == null) continue;
+                    Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor);
+                    if (floorMap == null) continue;
+                    Map<String, Object> roomData = (Map<String, Object>) floorMap.get(roomKey);
+                    if (roomData == null) continue;
+                    schedule = (Map<String, java.util.List<Map<String, Object>>>) roomData.get("schedule");
+                    break outer;
+                }
+
+                if (schedule == null) return;
+
+                regularClassSlots.clear();
+                String[] timeKeys = {
+                    "09:00-09:50","10:00-10:50","11:00-11:50","12:00-12:50","13:00-13:50",
+                    "14:00-14:50","15:00-15:50","16:00-16:50","17:00-17:50"
+                };
+
+                for (String day : days) {
+                    java.util.List<Map<String, Object>> daySlots = schedule.get(day);
+                    if (daySlots == null) continue;
+                    Map<Integer, String> blocked = new java.util.LinkedHashMap<>();
+                    for (int i = 0; i < daySlots.size(); i++) {
+                        Map<String, Object> slot = daySlots.get(i);
+                        Object statusObj = slot.get("status");
+                        int status = statusObj instanceof Integer ? (int) statusObj : 0;
+                        if (status == 1) {
+                            String slotTime = (String) slot.get("time");
+                            String subject  = (String) slot.get("subject");
+                            for (int p = 0; p < timeKeys.length; p++) {
+                                if (timeKeys[p].equals(slotTime)) {
+                                    blocked.put(p, subject != null ? subject : "정규수업");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    regularClassSlots.put(day, blocked);
+                }
+
+                table.repaint();
+            },
+            error -> System.err.println("[TimeTableGUI] 시간표 로드 실패: " + error)
+        );
+    }
 
     private void refreshReservationCache() {
         ReservationController.getInstance().getReservationList(

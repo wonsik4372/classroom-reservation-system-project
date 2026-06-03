@@ -128,7 +128,9 @@ public class UserGUI extends javax.swing.JFrame {
                     Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
                     if (buildingMap != null) {
                         for (String floor : buildingMap.keySet()) {
-                            model.addElement(floor);
+                            // JSON 키는 "9층" 형태이지만 콤보박스에는 숫자만 저장
+                            // (btnGoToReserveActionPerformed 등이 floor + "층" 으로 조합하므로)
+                            model.addElement(floor.replace("층", "").trim());
                         }
                     }
                 }
@@ -155,7 +157,8 @@ public class UserGUI extends javax.swing.JFrame {
                 if (semesterMap != null) {
                     Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
                     if (buildingMap != null) {
-                        Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor);
+                        // 콤보박스에는 숫자만 저장되므로 JSON 키 조회 시 "층" 재부착
+                        Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor + "층");
                         if (floorMap != null) {
                             for (String room : floorMap.keySet()) {
                                 // 호수만 추출 (예: "911호" -> "911")
@@ -196,7 +199,7 @@ public class UserGUI extends javax.swing.JFrame {
             if (semesterMap == null) { jTableTimeTable.setModel(model); return; }
             Map<String, Object> buildingMap = (Map<String, Object>) semesterMap.get(building);
             if (buildingMap == null) { jTableTimeTable.setModel(model); return; }
-            Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor);
+            Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floor + "층");
             if (floorMap == null) { jTableTimeTable.setModel(model); return; }
             Map<String, Object> roomData = (Map<String, Object>) floorMap.get(roomKey);
             if (roomData == null) { jTableTimeTable.setModel(model); return; }

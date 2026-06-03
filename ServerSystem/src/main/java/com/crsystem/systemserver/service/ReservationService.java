@@ -48,7 +48,7 @@ public class ReservationService {
             int newPeriodCount = countPeriods(reservation.getPeriodInfo());
             int existingPeriodCount = catalog.getAllReservations().stream()
                     .filter(r -> r.getUserId().equals(reservation.getUserId())
-                            && r.getDate().equals(reservation.getDate())
+                            && r.getDate() != null && r.getDate().equals(reservation.getDate())
                             && r.getStatus() != ReservationDTO.Status.REJECTED)
                     .mapToInt(r -> countPeriods(r.getPeriodInfo()))
                     .sum();
@@ -279,12 +279,13 @@ public class ReservationService {
     }
 
     private boolean isSameSlot(ReservationDTO.Response a, ReservationDTO.Response b) {
-        return a.getRoomName().equals(b.getRoomName())
-                && a.getDate().equals(b.getDate())
+        return a.getRoomName() != null && a.getRoomName().equals(b.getRoomName())
+                && a.getDate() != null && a.getDate().equals(b.getDate())
                 && isPeriodConflict(a.getPeriodInfo(), b.getPeriodInfo());
     }
 
     private boolean isPeriodConflict(String period1, String period2) {
+        if (period1 == null || period2 == null) return false;
         for (String p1 : period1.split(",")) {
             for (String p2 : period2.split(",")) {
                 if (p1.trim().equals(p2.trim())) {

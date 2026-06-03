@@ -29,6 +29,11 @@ public class TimeTableGUI extends javax.swing.JPanel {
     private String[] days = {"월", "화", "수", "목", "금"};
     private String roomName;
 
+    private java.util.List<java.time.LocalDate> dateValues
+            = new java.util.ArrayList<>();
+
+    private java.time.LocalDate selectedDate;
+
     public TimeTableGUI(String roomName) {
         this.roomName = roomName;
         initComponents();
@@ -57,6 +62,8 @@ public class TimeTableGUI extends javax.swing.JPanel {
 
                 for (ReservationDTO.Response reservation : ReservationController.getInstance().getReservationCache()) {
                     if (reservation.getRoomName().equals(roomName)
+                            && reservation.getDate() != null
+                            && reservation.getDate().equals(selectedDate)
                             && reservation.getDay().equals(day)
                             && reservation.getPeriodInfo().contains(period)) {
                         if (reservation.getRoleType() == Role.STUDENT) {
@@ -77,6 +84,8 @@ public class TimeTableGUI extends javax.swing.JPanel {
         });
 
         refreshReservationCache();
+
+        initDateCombo();
     }
 
     /**
@@ -91,6 +100,8 @@ public class TimeTableGUI extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         btnReserve = new javax.swing.JButton();
+        dateCombo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,6 +128,10 @@ public class TimeTableGUI extends javax.swing.JPanel {
             }
         });
 
+        dateCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("날짜 선택 :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,15 +140,23 @@ public class TimeTableGUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
-                    .addComponent(btnReserve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnReserve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReserve)
                 .addContainerGap())
         );
@@ -151,8 +174,26 @@ public class TimeTableGUI extends javax.swing.JPanel {
         String selectedDay = days[col - 1];
         String selectedPeriod = (row + 1) + "교시";
 
+        String[] dayNames
+                = {"", "월", "화", "수", "목", "금", "토", "일"};
+
+        String actualDay
+                = dayNames[selectedDate
+                        .getDayOfWeek()
+                        .getValue()];
+
+        if (!selectedDay.equals(actualDay)) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "선택한 날짜의 시간표를 선택해주세요."
+            );
+
+            return;
+        }
+
         UserDTO.Response currentUser
-        = SessionManager.getInstance().getCurrentUser();
+                = SessionManager.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
@@ -160,27 +201,28 @@ public class TimeTableGUI extends javax.swing.JPanel {
         }
 
         for (ReservationDTO.Response reservation
-            : ReservationController.getInstance().getReservationCache()) {
+                : ReservationController.getInstance().getReservationCache()) {
 
             boolean sameRoom
-            = reservation.getRoomName()
-            .equals(this.roomName);
+                    = reservation.getRoomName()
+                            .equals(this.roomName);
 
-            boolean sameDay
-            = reservation.getDay()
-            .equals(selectedDay);
+            boolean sameDate
+                    = reservation.getDate() != null
+                    && reservation.getDate()
+                            .equals(selectedDate);
 
             boolean samePeriod
-            = reservation.getPeriodInfo()
-            .contains(selectedPeriod);
+                    = reservation.getPeriodInfo()
+                            .contains(selectedPeriod);
 
-            if (sameRoom && sameDay && samePeriod) {
+            if (sameRoom && sameDate && samePeriod) {
                 // 학생 차단
 
                 if (currentUser.getRole() == Role.STUDENT) {
                     JOptionPane.showMessageDialog(
-                        this,
-                        "이미 예약된 교시입니다."
+                            this,
+                            "이미 예약된 교시입니다."
                     );
 
                     return;
@@ -188,17 +230,17 @@ public class TimeTableGUI extends javax.swing.JPanel {
 
                 // 교수 -> 교수 예약 시도
                 if (currentUser.getRole() == Role.PROFESSOR
-                    && reservation.getRoleType() == Role.PROFESSOR) {
+                        && reservation.getRoleType() == Role.PROFESSOR) {
                     JOptionPane.showMessageDialog(
-                        this,
-                        "이미 교수 예약이 존재합니다."
+                            this,
+                            "이미 교수 예약이 존재합니다."
                     );
                     return;
                 }
 
                 // 교수 -> 학생 예약 시도
                 if (currentUser.getRole() == Role.PROFESSOR
-                    && reservation.getRoleType() == Role.STUDENT) {
+                        && reservation.getRoleType() == Role.STUDENT) {
                     break;
                 }
             }
@@ -239,7 +281,7 @@ public class TimeTableGUI extends javax.swing.JPanel {
         }
 
         UserDTO.Response currentUser
-        = SessionManager.getInstance().getCurrentUser();
+                = SessionManager.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
@@ -247,19 +289,19 @@ public class TimeTableGUI extends javax.swing.JPanel {
         }
 
         if (currentUser.getRole() == Role.STUDENT
-            && rows.size() > 2) {
+                && rows.size() > 2) {
             JOptionPane.showMessageDialog(
-                this,
-                "학생은 최대 2교시까지만 예약 가능합니다."
+                    this,
+                    "학생은 최대 2교시까지만 예약 가능합니다."
             );
             return;
         }
 
         if (currentUser.getRole() == Role.PROFESSOR
-            && rows.size() > 3) {
+                && rows.size() > 3) {
             JOptionPane.showMessageDialog(
-                this,
-                "교수는 최대 3교시까지만 예약 가능합니다."
+                    this,
+                    "교수는 최대 3교시까지만 예약 가능합니다."
             );
             return;
         }
@@ -267,7 +309,13 @@ public class TimeTableGUI extends javax.swing.JPanel {
         String periodString = rows.stream().map(r -> (r + 1) + "교시").collect(java.util.stream.Collectors.joining(", "));
 
         // 상세 예약창 호출
-        ReservationRegisterGUI reservationPanel = new ReservationRegisterGUI(this.roomName, days[col - 1], periodString, rows.size());
+        ReservationRegisterGUI reservationPanel
+                = new ReservationRegisterGUI(
+                        this.roomName,
+                        selectedDate,
+                        periodString,
+                        rows.size()
+                );
         javax.swing.JFrame reservationFrame = new javax.swing.JFrame("강의실 예약 등록");
         reservationFrame.setContentPane(reservationPanel);
         reservationFrame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
@@ -284,7 +332,6 @@ public class TimeTableGUI extends javax.swing.JPanel {
         table.repaint();
     }//GEN-LAST:event_btnReserveActionPerformed
 
-
     private void refreshReservationCache() {
         ReservationController.getInstance().getReservationList(
                 "ALL",
@@ -298,8 +345,52 @@ public class TimeTableGUI extends javax.swing.JPanel {
         );
     }
 
+    private void initDateCombo() {
+
+        javax.swing.DefaultComboBoxModel<String> model
+                = new javax.swing.DefaultComboBoxModel<>();
+
+        String[] dayNames
+                = {"", "월", "화", "수", "목", "금", "토", "일"};
+
+        java.time.LocalDate today
+                = java.time.LocalDate.now();
+
+        for (int i = 2; i <= 14; i++) {
+
+            java.time.LocalDate d
+                    = today.plusDays(i);
+
+            model.addElement(
+                    d.toString()
+                    + " ("
+                    + dayNames[d.getDayOfWeek().getValue()]
+                    + ")"
+            );
+
+            dateValues.add(d);
+            dateCombo.setModel(model);
+        }
+
+        if (!dateValues.isEmpty()) {
+            selectedDate = dateValues.get(0);
+        }
+
+        dateCombo.addActionListener(e -> {
+
+            selectedDate
+                    = dateValues.get(
+                            dateCombo.getSelectedIndex()
+                    );
+
+            table.repaint();
+        });
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReserve;
+    private javax.swing.JComboBox<String> dateCombo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables

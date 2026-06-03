@@ -7,6 +7,7 @@ import com.crsystem.common.dto.UserDTO;
 import com.crsystem.systemserver.service.LoginService;
 import com.crsystem.systemserver.service.NotificationService;
 import com.crsystem.systemserver.service.ReservationService;
+import com.crsystem.systemserver.service.TimetableService;
 import com.crsystem.systemserver.service.UserService;
 
 import java.util.HashMap;
@@ -87,6 +88,19 @@ public class MainController {
                 ((ReservationDTO.Request) req.getPayload()).getReservationId(),
                 ((ReservationDTO.Request) req.getPayload()).getUserId()
             )
+        );
+
+        // ==========================================
+        // 5. [TimetableService 위임]
+        // ==========================================
+        commandMap.put("GET_TIMETABLE", req ->
+            TimetableService.getInstance().getTimetable((String) req.getPayload())
+        );
+        commandMap.put("GET_YEAR_LIST", req ->
+            TimetableService.getInstance().getAvailableYears()
+        );
+        commandMap.put("UPDATE_ROOM_INFO", req ->
+            TimetableService.getInstance().updateRoomInfo((java.util.Map<String, Object>) req.getPayload())
         );
     }
 

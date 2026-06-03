@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 알림 생성 및 조회 전문가
+ * 알림 처리 전문가
  * @author wonsik
  */
 public class NotificationService {
@@ -29,7 +29,7 @@ public class NotificationService {
     }
 
     // ====================
-    // [SFR-504] 예약 승인 알림 생성 → NotificationStore에 저장
+    // [SFR-601] 예약 승인 알림 생성 → NotificationStore에 저장
     // ====================
     public void notifyApproved(ReservationDTO.Response reservation) {
         String message = String.format("[예약 승인] %s %s (%s) 예약이 승인되었습니다.",
@@ -48,7 +48,7 @@ public class NotificationService {
     }
 
     // ====================
-    // [SFR-508] 예약 거부 알림 생성 (거부 사유 포함) → NotificationStore에 저장
+    // [SFR-602] 예약 거부 알림 생성 (거부 사유 포함) → NotificationStore에 저장
     // ====================
     public void notifyRejected(ReservationDTO.Response reservation, String rejectReason) {
         String message = String.format("[예약 거부] %s %s (%s) 예약이 거부되었습니다.",
@@ -67,7 +67,7 @@ public class NotificationService {
     }
 
     // ====================
-    // [SFR-504] [SFR-508] 클라이언트 폴링 요청 시 미읽음 알림 일괄 반환 후 읽음 처리
+    // [SFR-601] [SFR-602] 클라이언트 폴링 요청 시 미읽음 알림 일괄 반환 후 읽음 처리
     // ====================
     public ResponseDTO getAndMarkNotifications(String userId) {
         List<NotificationDTO> unread = NotificationStore.getInstance().getUnreadNotifications(userId);

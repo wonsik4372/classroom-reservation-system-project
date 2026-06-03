@@ -6,6 +6,8 @@ package com.crsystem.systemclient.view.Assistant;
 
 import com.crsystem.common.dto.UserDTO;
 import com.crsystem.systemclient.controller.SessionManager;
+import com.crsystem.systemclient.controller.TimetableController;
+import java.util.Map;
 
 /**
  *
@@ -18,6 +20,11 @@ public class AssistantGUI extends javax.swing.JFrame {
     // 대기 목록과 전체 목록을 각각 저장해둘 리스트
     private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentPendingList = new java.util.ArrayList<>();
     private java.util.List<com.crsystem.common.dto.ReservationDTO.Response> currentAllList = new java.util.ArrayList<>();
+
+    private javax.swing.JComboBox<String> filterModeCombo;
+    private javax.swing.JSpinner filterDateSpinner;
+
+    private Map<String, Object> timetableData = null;
 
     public AssistantGUI() {
         initComponents();
@@ -33,11 +40,19 @@ public class AssistantGUI extends javax.swing.JFrame {
     private void initCustomSettings() {
         this.setPreferredSize(new java.awt.Dimension(1150, 750));
         this.pack();
-        this.setLocationRelativeTo(null); // 창을 화면 중앙에 배치
+        this.setLocationRelativeTo(null);
 
         // 컬럼 클릭으로 정렬
         jTablePendingReservations.setAutoCreateRowSorter(true);
         jTableReservationList.setAutoCreateRowSorter(true);
+
+        // 강의실 정보 탭 초기화
+        jComboBoxBuilding.addActionListener(e -> updateRoomFloorCombo());
+        jComboBoxFloor.addActionListener(e -> updateRoomTable());
+        jButtonEdit.addActionListener(e -> openRoomModifyDialog());
+        jButtonLogout.addActionListener(e -> jButtonLogoutActionPerformed(e));
+        setupReservationFilter();
+        loadTimetableData();
 
         // 더블 클릭 감지 -> 상세 정보 띄우기
         jTableReservationList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -150,6 +165,64 @@ public class AssistantGUI extends javax.swing.JFrame {
     // ==========================================
     // 전체 예약 현황 로드 
     // ==========================================
+    private void setupReservationFilter() {
+        filterModeCombo = new javax.swing.JComboBox<>(new String[]{"전체", "일별", "주별", "월별"});
+        filterDateSpinner = new javax.swing.JSpinner(
+            new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+        filterDateSpinner.setEditor(new javax.swing.JSpinner.DateEditor(filterDateSpinner, "yyyy-MM-dd"));
+        filterDateSpinner.setPreferredSize(new java.awt.Dimension(120, 26));
+
+        javax.swing.JPanel filterBar = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 6));
+        filterBar.add(new javax.swing.JLabel("기간:"));
+        filterBar.add(filterModeCombo);
+        filterBar.add(new javax.swing.JLabel("기준일:"));
+        filterBar.add(filterDateSpinner);
+
+        jScrollPaneReservationSearch.setColumnHeaderView(filterBar);
+
+        filterModeCombo.addActionListener(e -> applyReservationFilter());
+        filterDateSpinner.addChangeListener(e -> applyReservationFilter());
+    }
+
+    private void applyReservationFilter() {
+        if (currentAllList == null) return;
+        String mode = (String) filterModeCombo.getSelectedItem();
+        java.time.LocalDate base = ((java.util.Date) filterDateSpinner.getValue())
+                .toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+
+        java.util.List<com.crsystem.common.dto.ReservationDTO.Response> filtered = currentAllList.stream()
+            .filter(r -> {
+                java.time.LocalDate d = r.getDate();
+                if (d == null) return "전체".equals(mode);
+                return switch (mode) {
+                    case "일별" -> d.equals(base);
+                    case "주별" -> {
+                        java.time.temporal.WeekFields wf = java.time.temporal.WeekFields.ISO;
+                        yield d.getYear() == base.getYear()
+                            && d.get(wf.weekOfWeekBasedYear()) == base.get(wf.weekOfWeekBasedYear());
+                    }
+                    case "월별" -> d.getYear() == base.getYear() && d.getMonthValue() == base.getMonthValue();
+                    default -> true;
+                };
+            })
+            .collect(java.util.stream.Collectors.toList());
+
+        javax.swing.table.DefaultTableModel model =
+            (javax.swing.table.DefaultTableModel) jTableReservationList.getModel();
+        model.setRowCount(0);
+        for (com.crsystem.common.dto.ReservationDTO.Response res : filtered) {
+            model.addRow(new Object[]{
+                res.getRoleType(),
+                res.getUserId(),
+                res.getRoomName(),
+                res.getPurpose(),
+                res.getDate() != null ? res.getDate().toString() : "",
+                res.getPeriodInfo(),
+                res.getStatus()
+            });
+        }
+    }
+
     private void loadAllReservations() {
         // "ALL" (또는 null)을 보내서 전체 예약을 달라고 컨트롤러에 요청
         com.crsystem.systemclient.controller.ReservationController.getInstance().getReservationList(
@@ -157,29 +230,7 @@ public class AssistantGUI extends javax.swing.JFrame {
             (com.crsystem.common.dto.ResponseDTO response) -> {
                 if (response.isSuccess()) {
                     currentAllList = (java.util.List<com.crsystem.common.dto.ReservationDTO.Response>) response.getPayload();
-                    
-                    javax.swing.SwingUtilities.invokeLater(() -> {
-                        javax.swing.table.DefaultTableModel model = 
-                            (javax.swing.table.DefaultTableModel) jTableReservationList.getModel();
-                        
-                        model.setRowCount(0); // 테이블 초기화
-                        
-                        if (currentAllList != null) {
-                            for (com.crsystem.common.dto.ReservationDTO.Response res : currentAllList) {
-                                // 넷빈즈 디자이너에서 설정한 컬럼 7개 순서에 맞춰 배열 생성
-                                Object[] rowData = {
-                                    res.getRoleType(), // 0: 구분
-                                    res.getUserId(),   // 1: ID
-                                    res.getRoomName(),   // 2: 강의실
-                                    res.getPurpose(),  // 3: 목적
-                                    res.getDate() != null ? res.getDate().toString() : "",     // 4: 예약일
-                                    res.getPeriodInfo(),     // 5: 예약 시간
-                                    res.getStatus()    // 6: 상태 (APPROVED, PENDING 등)
-                                };
-                                model.addRow(rowData);
-                            }
-                        }
-                    });
+                    javax.swing.SwingUtilities.invokeLater(this::applyReservationFilter);
                 } else {
                     System.err.println("전체 예약 목록 조회 실패: " + response.getMessage());
                 }
@@ -190,6 +241,128 @@ public class AssistantGUI extends javax.swing.JFrame {
         );
     }
     
+    @SuppressWarnings("unchecked")
+    private void loadTimetableData() {
+        loadTimetableData(false);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadTimetableData(boolean refreshTableAfterLoad) {
+        TimetableController.getInstance().getTimetable("2026",
+            response -> {
+                if (response.isSuccess() && response.getPayload() instanceof Map) {
+                    timetableData = (Map<String, Object>) response.getPayload();
+                    javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+                    model.addElement("건물 선택");
+                    for (Object semObj : timetableData.values()) {
+                        if (!(semObj instanceof Map)) continue;
+                        for (String building : ((Map<String, Object>) semObj).keySet()) {
+                            model.addElement(building);
+                        }
+                        break;
+                    }
+                    jComboBoxBuilding.setModel(model);
+                    if (refreshTableAfterLoad) updateRoomTable();
+                }
+            },
+            error -> logger.warning("시간표 로드 실패: " + error)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateRoomFloorCombo() {
+        if (timetableData == null) return;
+        String building = (String) jComboBoxBuilding.getSelectedItem();
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("층 선택");
+        if (!"건물 선택".equals(building)) {
+            for (Object semObj : timetableData.values()) {
+                if (!(semObj instanceof Map)) continue;
+                Map<String, Object> buildingMap = (Map<String, Object>) ((Map<String, Object>) semObj).get(building);
+                if (buildingMap != null) {
+                    for (String floor : buildingMap.keySet()) {
+                        model.addElement(floor.replace("층", "").trim());
+                    }
+                }
+                break;
+            }
+        }
+        jComboBoxFloor.setModel(model);
+        updateRoomTable();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void updateRoomTable() {
+        javax.swing.table.DefaultTableModel model =
+                (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        if (timetableData == null) return;
+
+        String building = (String) jComboBoxBuilding.getSelectedItem();
+        String floorNum = (String) jComboBoxFloor.getSelectedItem();
+        if ("건물 선택".equals(building) || "층 선택".equals(floorNum)) return;
+
+        String floorKey = floorNum + "층";
+        for (Object semObj : timetableData.values()) {
+            if (!(semObj instanceof Map)) continue;
+            Map<String, Object> buildingMap = (Map<String, Object>) ((Map<String, Object>) semObj).get(building);
+            if (buildingMap == null) break;
+            Map<String, Object> floorMap = (Map<String, Object>) buildingMap.get(floorKey);
+            if (floorMap == null) break;
+            for (Map.Entry<String, Object> entry : floorMap.entrySet()) {
+                String roomKey = entry.getKey();
+                Map<String, Object> roomData = (Map<String, Object>) entry.getValue();
+                Map<String, Object> info = (Map<String, Object>) roomData.get("info");
+                if (info == null) continue;
+                model.addRow(new Object[]{
+                    building + " " + floorKey + " " + roomKey,
+                    info.get("capacity"),
+                    info.get("computerCount"),
+                    info.get("status"),
+                    info.get("features")
+                });
+            }
+            break;
+        }
+        jTable1.setRowHeight(25);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void openRoomModifyDialog() {
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "수정할 강의실을 선택해주세요.");
+            return;
+        }
+        javax.swing.table.DefaultTableModel tableModel =
+                (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        String roomName = (String) tableModel.getValueAt(selectedRow, 0);
+
+        // 현재 info 구성
+        Map<String, Object> info = new java.util.LinkedHashMap<>();
+        info.put("capacity",      tableModel.getValueAt(selectedRow, 1));
+        info.put("computerCount", tableModel.getValueAt(selectedRow, 2));
+        info.put("status",        tableModel.getValueAt(selectedRow, 3));
+        info.put("features",      tableModel.getValueAt(selectedRow, 4));
+
+        RoomModifyGUI panel = new RoomModifyGUI(roomName, info, () ->
+            TimetableController.getInstance().getTimetable("2026",
+                response -> {
+                    if (response.isSuccess() && response.getPayload() instanceof Map) {
+                        timetableData = (Map<String, Object>) response.getPayload();
+                        updateRoomTable();
+                    }
+                },
+                error -> logger.warning("시간표 로드 실패: " + error)
+            )
+        );
+        javax.swing.JDialog dialog = new javax.swing.JDialog(this, roomName + " 정보 수정", true);
+        dialog.setContentPane(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
     // 현재 시간을 가져와서 ISO 8601 형태로 설정
     private String getTime() {
         return java.time.LocalDateTime.now()
@@ -205,27 +378,15 @@ public class AssistantGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanelEtc = new javax.swing.JPanel();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
         jPanelRoomInfo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jButtonEdit = new javax.swing.JButton();
+        jTable1 = new javax.swing.JTable();
         jLabelDeptNo = new javax.swing.JLabel();
-        jTextFieldDeptNo = new javax.swing.JTextField();
+        jComboBoxBuilding = new javax.swing.JComboBox<>();
         jLabelFloor = new javax.swing.JLabel();
-        jTextFieldFloor = new javax.swing.JTextField();
-        jLabelRoomNo = new javax.swing.JLabel();
-        jTextFieldRoomNo = new javax.swing.JTextField();
-        jLabelMaxCap = new javax.swing.JLabel();
-        jSpinnerMaxCap = new javax.swing.JSpinner();
-        jLabelComputerCnt = new javax.swing.JLabel();
-        jSpinnerComputerCnt = new javax.swing.JSpinner();
-        jLabelUseable = new javax.swing.JLabel();
-        jRadioButtonUseable = new javax.swing.JRadioButton();
-        jRadioButtonUnusable = new javax.swing.JRadioButton();
-        jLabelFeature = new javax.swing.JLabel();
-        jTextFieldFeature = new javax.swing.JTextField();
+        jComboBoxFloor = new javax.swing.JComboBox<>();
+        jButtonEdit = new javax.swing.JButton();
         jPanelReservationMng = new javax.swing.JPanel();
         jScrollPaneReservationMng = new javax.swing.JScrollPane();
         jTablePendingReservations = new javax.swing.JTable();
@@ -240,145 +401,55 @@ public class AssistantGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] { "강의실", "수용 인원", "컴퓨터 수", "사용 여부", "특이사항" }
+        ) {
+            public boolean isCellEditable(int r, int c) { return false; }
+        });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanelEtcLayout = new javax.swing.GroupLayout(jPanelEtc);
-        jPanelEtc.setLayout(jPanelEtcLayout);
-        jPanelEtcLayout.setHorizontalGroup(
-            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
-        );
-        jPanelEtcLayout.setVerticalGroup(
-            jPanelEtcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
-        );
+        jLabelDeptNo.setText("건물");
+        jComboBoxBuilding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"건물 선택"}));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelEtc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(470, Short.MAX_VALUE)
-                .addComponent(jPanelEtc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jLabelFloor.setText("층");
+        jComboBoxFloor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"층 선택"}));
 
-        jButtonEdit.setText("수정");
-
-        jLabelDeptNo.setText("건물 번호");
-
-        jTextFieldDeptNo.setText("jTextField1");
-
-        jLabelFloor.setText("층 수");
-
-        jTextFieldFloor.setText("jTextField1");
-
-        jLabelRoomNo.setText("강의실 번호");
-
-        jTextFieldRoomNo.setText("jTextField1");
-
-        jLabelMaxCap.setText("수용 인원");
-
-        jLabelComputerCnt.setText("컴퓨터 개수");
-
-        jLabelUseable.setText("사용 가능 여부");
-
-        jRadioButtonUseable.setText("사용 가능");
-
-        jRadioButtonUnusable.setText("사용 불가");
-
-        jLabelFeature.setText("특이사항");
-
-        jTextFieldFeature.setText("jTextField1");
+        jButtonEdit.setText("수정하기");
 
         javax.swing.GroupLayout jPanelRoomInfoLayout = new javax.swing.GroupLayout(jPanelRoomInfo);
         jPanelRoomInfo.setLayout(jPanelRoomInfoLayout);
         jPanelRoomInfoLayout.setHorizontalGroup(
             jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
                     .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                        .addGap(219, 219, 219)
-                        .addComponent(jButtonEdit))
-                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelFeature)
-                            .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                                    .addComponent(jLabelDeptNo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldDeptNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                                    .addComponent(jLabelFloor)
-                                    .addGap(66, 66, 66)
-                                    .addComponent(jTextFieldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelRoomNo)
-                                    .addComponent(jLabelMaxCap)
-                                    .addComponent(jLabelComputerCnt)
-                                    .addComponent(jLabelUseable))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                                        .addComponent(jRadioButtonUseable)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButtonUnusable))
-                                    .addComponent(jSpinnerComputerCnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSpinnerMaxCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jTextFieldFeature, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
+                        .addComponent(jLabelDeptNo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxBuilding, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelFloor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonEdit)))
                 .addContainerGap())
         );
         jPanelRoomInfoLayout.setVerticalGroup(
             jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRoomInfoLayout.createSequentialGroup()
-                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelDeptNo)
-                            .addComponent(jTextFieldDeptNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelFloor)
-                            .addComponent(jTextFieldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelRoomNo)
-                            .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelMaxCap)
-                            .addComponent(jSpinnerMaxCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelComputerCnt)
-                            .addComponent(jSpinnerComputerCnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelUseable)
-                            .addComponent(jRadioButtonUseable)
-                            .addComponent(jRadioButtonUnusable))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelFeature)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFeature, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEdit)))
+            .addGroup(jPanelRoomInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelRoomInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelDeptNo)
+                    .addComponent(jComboBoxBuilding, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelFloor)
+                    .addComponent(jComboBoxFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -506,11 +577,6 @@ public class AssistantGUI extends javax.swing.JFrame {
         jLabelTime.setText("Current Time");
 
         jButtonLogout.setText("Logout");
-        jButtonLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLogoutActionPerformed(evt);
-            }
-        });
 
         jButtonRefresh.setText("새로고침");
         jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -534,11 +600,6 @@ public class AssistantGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonLogout)))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,11 +612,6 @@ public class AssistantGUI extends javax.swing.JFrame {
                     .addComponent(jButtonLogout)
                     .addComponent(jButtonRefresh))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -692,32 +748,20 @@ public class AssistantGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLogout;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonReject;
-    private javax.swing.JLabel jLabelComputerCnt;
+    private javax.swing.JComboBox<String> jComboBoxBuilding;
+    private javax.swing.JComboBox<String> jComboBoxFloor;
     private javax.swing.JLabel jLabelDeptNo;
-    private javax.swing.JLabel jLabelFeature;
     private javax.swing.JLabel jLabelFloor;
-    private javax.swing.JLabel jLabelMaxCap;
-    private javax.swing.JLabel jLabelRoomNo;
     private javax.swing.JLabel jLabelTime;
-    private javax.swing.JLabel jLabelUseable;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelEtc;
     private javax.swing.JPanel jPanelReservationList;
     private javax.swing.JPanel jPanelReservationMng;
     private javax.swing.JPanel jPanelRoomInfo;
-    private javax.swing.JRadioButton jRadioButtonUnusable;
-    private javax.swing.JRadioButton jRadioButtonUseable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPaneReservationMng;
     private javax.swing.JScrollPane jScrollPaneReservationSearch;
-    private javax.swing.JSpinner jSpinnerComputerCnt;
-    private javax.swing.JSpinner jSpinnerMaxCap;
     private javax.swing.JTabbedPane jTabbedPaneMain;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTablePendingReservations;
     private javax.swing.JTable jTableReservationList;
-    private javax.swing.JTextField jTextFieldDeptNo;
-    private javax.swing.JTextField jTextFieldFeature;
-    private javax.swing.JTextField jTextFieldFloor;
-    private javax.swing.JTextField jTextFieldRoomNo;
     // End of variables declaration//GEN-END:variables
 }

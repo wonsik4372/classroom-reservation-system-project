@@ -5,9 +5,9 @@
         "411호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
-            "computerCount" : 0
+            "computerCount" : 2
           },
           "schedule" : {
             "월" : [ {
@@ -245,7 +245,7 @@
         "412호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 30,
             "features" : "",
             "computerCount" : 0
           },
@@ -485,7 +485,7 @@
         "413호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -725,7 +725,7 @@
         "414호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -965,7 +965,7 @@
         "415호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -1209,7 +1209,7 @@
         "713호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -1449,7 +1449,7 @@
         "714호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -1689,7 +1689,7 @@
         "715호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -1929,7 +1929,7 @@
         "716호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -2169,7 +2169,7 @@
         "717호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -2411,9 +2411,9 @@
         "911호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
-            "features" : "",
-            "computerCount" : 0
+            "capacity" : 40,
+            "features" : "실습실",
+            "computerCount" : 40
           },
           "schedule" : {
             "월" : [ {
@@ -2651,7 +2651,7 @@
         "912호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -2891,7 +2891,7 @@
         "913호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
+            "capacity" : 60,
             "features" : "",
             "computerCount" : 0
           },
@@ -3131,9 +3131,9 @@
         "915호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
-            "features" : "",
-            "computerCount" : 0
+            "capacity" : 40,
+            "features" : "실습실",
+            "computerCount" : 40
           },
           "schedule" : {
             "월" : [ {
@@ -3371,9 +3371,9 @@
         "916호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
-            "features" : "",
-            "computerCount" : 0
+            "capacity" : 40,
+            "features" : "실습실",
+            "computerCount" : 40
           },
           "schedule" : {
             "월" : [ {
@@ -3611,9 +3611,9 @@
         "918호" : {
           "info" : {
             "status" : "사용 가능",
-            "capacity" : 0,
-            "features" : "",
-            "computerCount" : 0
+            "capacity" : 40,
+            "features" : "실습실",
+            "computerCount" : 40
           },
           "schedule" : {
             "월" : [ {

@@ -2,6 +2,7 @@ package com.crsystem.systemserver.service;
 
 import com.crsystem.common.dto.ScheduleData;
 import com.crsystem.common.dto.Classroom;
+import com.crsystem.common.dto.ClassroomInfo;
 import com.crsystem.common.dto.Reservation;
 
 import org.apache.poi.ss.usermodel.*;
@@ -174,7 +175,7 @@ public class ScheduleInitializer {
         DataFormatter dataFormatter = new DataFormatter();
 
         try (InputStream is = new FileInputStream(excelFile);
-             Workbook workbook = excelFile.getName().toLowerCase().endsWith(".xlsx") ? 
+             Workbook workbook = excelFile.getName().toLowerCase().endsWith(".xlsx") ?
                                  new XSSFWorkbook(is) : new HSSFWorkbook(is)) {
 
             Sheet sheet = workbook.getSheetAt(0);
@@ -182,6 +183,7 @@ public class ScheduleInitializer {
             int headerRowIdx = -1;
             Map<Integer, String> colToDay = new HashMap<>();
 
+            boolean isLab = false;
             for (int r = 0; r <= Math.min(sheet.getLastRowNum(), 10); r++) {
                 Row row = sheet.getRow(r);
                 if (row == null) continue;
@@ -189,6 +191,9 @@ public class ScheduleInitializer {
                 String currentDay = null;
                 for (int c = 0; c < row.getLastCellNum(); c++) {
                     String cellVal = dataFormatter.formatCellValue(row.getCell(c)).replaceAll("\\s+", "");
+                    if (cellVal.contains("실습실")) {
+                        isLab = true;
+                    }
                     if (cellVal.contains("구분")) {
                         headerRowIdx = r;
                     }
@@ -202,6 +207,16 @@ public class ScheduleInitializer {
                     }
                 }
                 if (headerRowIdx != -1) break;
+            }
+
+            ClassroomInfo info = classroom.getInfo();
+            if (isLab) {
+                info.setFeatures("실습실");
+                info.setCapacity(40);
+                info.setComputerCount(40);
+            } else {
+                info.setCapacity(60);
+                info.setComputerCount(0);
             }
 
             if (headerRowIdx == -1) return; 

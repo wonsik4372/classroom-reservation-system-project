@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.crsystem.systemclient.view.Reservation;
 
@@ -13,36 +13,28 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author abalo
+ * @author wonsik
  */
-public class ReservationRegisterGUI extends javax.swing.JFrame {
+public class ReservationRegisterGUI extends javax.swing.JPanel {
 
     private java.util.List<java.time.LocalDate> dateValues = new java.util.ArrayList<>();
-
     private String day;
     private String periodInfo;
     private int duration;
     private String roomName;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReservationRegisterGUI.class.getName());
-
-    /**
-     * Creates new form CRSystemReservation
-     */
     public ReservationRegisterGUI(String roomName, String day, String periodInfo, int duration) {
         this.roomName = roomName;
         this.day = day;
         this.periodInfo = periodInfo;
         this.duration = duration;
-
         initComponents();
-        customInit(); // 날짜 세팅 등을 위한 추가 메서드 호출
+        customInit();
     }
 
     private void customInit() {
         lblInfo.setText("[" + roomName + "] " + day + "요일 / " + periodInfo);
 
-        // 오늘 기준 +14일 날짜 생성
         java.time.LocalDate today = java.time.LocalDate.now();
         String[] dayNames = {"", "월", "화", "수", "목", "금", "토", "일"};
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
@@ -51,14 +43,11 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
             java.time.LocalDate d = today.plusDays(i);
             String label = d.toString() + " (" + dayNames[d.getDayOfWeek().getValue()] + ")";
             model.addElement(label);
-            dateValues.add(d); // 실제 LocalDate 값 저장
+            dateValues.add(d);
         }
 
         dateCombo.setModel(model);
-        dateCombo.setSelectedIndex(0); // 예약 가능한 제일 가까운 날짜 선택
-
-        // 창을 닫아도 프로그램 전체가 꺼지지 않게 설정
-        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        dateCombo.setSelectedIndex(0);
     }
 
     /**
@@ -80,8 +69,6 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         lblInfo.setText("jLabel1");
 
         jLabel2.setText("날짜 선택 :");
@@ -89,20 +76,32 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
         dateCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         purposeField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        purposeField.addActionListener(this::purposeFieldActionPerformed);
+        purposeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                purposeFieldActionPerformed(evt);
+            }
+        });
 
         btnList.setText("예약 목록 확인");
-        btnList.addActionListener(this::btnListActionPerformed);
+        btnList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListActionPerformed(evt);
+            }
+        });
 
         btnSubmit.setText("예약 등록");
-        btnSubmit.addActionListener(this::btnSubmitActionPerformed);
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("사용 목적 : ");
 
         jLabel5.setText("동반 인원 수 :");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -114,7 +113,7 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(partnerSpinner)
@@ -145,11 +144,16 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(partnerSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void purposeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purposeFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_purposeFieldActionPerformed
+
+    private void btnListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListActionPerformed
+    }//GEN-LAST:event_btnListActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
@@ -160,7 +164,7 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
         // 1. 요일 매칭 검증 (시간표 요일과 선택 날짜 요일 대조)
         if (!actualDay.equals(this.day)) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "선택하신 날짜는 " + actualDay + "요일입니다.\n시간표에서 선택한 " + this.day + "요일과 일치해야 합니다.");
+                "선택하신 날짜는 " + actualDay + "요일입니다.\n시간표에서 선택한 " + this.day + "요일과 일치해야 합니다.");
             return;
         }
 
@@ -183,28 +187,20 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
         reservation.setPurpose(purposeField.getText());
         reservation.setPartnerCount((int) partnerSpinner.getValue());
         reservation.setStatus(user.getRole() == com.crsystem.common.enums.Role.PROFESSOR
-                ? ReservationDTO.Status.APPROVED
-                : ReservationDTO.Status.PENDING);
+            ? ReservationDTO.Status.APPROVED
+            : ReservationDTO.Status.PENDING);
 
         btnSubmit.setEnabled(false);
         ReservationController.getInstance().addReservation(
-                reservation,
-                response -> handleCreateReservationResponse(response),
-                error -> {
-                    btnSubmit.setEnabled(true);
-                    JOptionPane.showMessageDialog(this, error);
-                }
+            reservation,
+            response -> handleCreateReservationResponse(response),
+            error -> {
+                btnSubmit.setEnabled(true);
+                JOptionPane.showMessageDialog(this, error);
+            }
         );
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-    private void btnListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListActionPerformed
-        // TODO add your handling code here:
-        new ReservationListUI().setVisible(true);
-    }//GEN-LAST:event_btnListActionPerformed
-
-    private void purposeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purposeFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_purposeFieldActionPerformed
 
     private void handleCreateReservationResponse(ResponseDTO response) {
         btnSubmit.setEnabled(true);
@@ -219,40 +215,15 @@ public class ReservationRegisterGUI extends javax.swing.JFrame {
                 listResponse -> {
                     ReservationController.getInstance().updateCache(listResponse.getPayload());
                     JOptionPane.showMessageDialog(this, response.getMessage());
-                    this.dispose();
+                    javax.swing.JFrame f = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+                    if (f != null) f.dispose();
                 },
                 error -> {
                     JOptionPane.showMessageDialog(this, response.getMessage());
-                    this.dispose();
+                    javax.swing.JFrame f = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+                    if (f != null) f.dispose();
                 }
         );
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new ReservationRegisterGUI("23 정보공학관 9층 912호", "월", "1교시", 1).setVisible(true);
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

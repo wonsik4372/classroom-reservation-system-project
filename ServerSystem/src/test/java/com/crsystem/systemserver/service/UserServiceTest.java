@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends BaseUserFileTest {
-
+    
+    // User.json에서 읽고 일치 여부 검증 
     @Test
     @SuppressWarnings("unchecked")
     public void getUserList_returnsUsersLoadedFromFile() {
@@ -29,6 +30,7 @@ public class UserServiceTest extends BaseUserFileTest {
         assertEquals("Admin User", users.get(0).getName());
     }
 
+    // 사용자 추가 시 비번은 아이디와 같게 
     @Test
     public void addUser_addsStudentWithInitialPasswordEqualToId() {
         UserService service = UserService.getInstance();
@@ -47,6 +49,7 @@ public class UserServiceTest extends BaseUserFileTest {
         assertTrue(savedUser.verifyPassword("20240001"));
     }
 
+    // 이미 존재하는 아이디에 대한 추가 시 실패 
     @Test
     public void addUser_failsWhenIdAlreadyExists() {
         UserService service = UserService.getInstance();
@@ -59,6 +62,7 @@ public class UserServiceTest extends BaseUserFileTest {
         assertEquals(3, getUserCount(service));
     }
 
+    
     @Test
     public void addUser_failsWhenIdFormatDoesNotMatchRole() {
         UserService service = UserService.getInstance();

@@ -14,7 +14,7 @@ import com.crsystem.systemclient.controller.SessionManager;
 import com.crsystem.systemclient.controller.UserController;
 import com.crsystem.systemclient.view.Admin.AdminGUI;
 import com.crsystem.systemclient.view.Assistant.AssistantGUI;
-import com.crsystem.systemclient.view.Reservation.RoomListGUI;
+import com.crsystem.systemclient.view.Reservation.UserGUI;
 
 // import javax.swing.ButtonModel;
 
@@ -280,16 +280,16 @@ public class LoginGUI extends javax.swing.JFrame {
                                     .showImmediateNotifications(userInfo.getPendingNotifications(), this);
                                 // 이후 Push 형태 폴링 시작 (5초 주기)
                                 NotificationController.getInstance().startPolling(null);
-                                // RoomListGUI는 JPanel이므로 JFrame으로 감싸서 표시
-                                javax.swing.JFrame studentFrame = new javax.swing.JFrame("강의실 예약 시스템 - [" + userInfo.getName() + "]님");
-                                studentFrame.setContentPane(new RoomListGUI());
-                                studentFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-                                studentFrame.pack();
+                                UserGUI studentFrame = new UserGUI();
+                                studentFrame.setTitle("강의실 예약 시스템 - [" + userInfo.getName() + "]님");
                                 studentFrame.setLocationRelativeTo(null);
                                 studentFrame.setVisible(true);
                                 break;
                             case PROFESSOR:
-                                // new ProfessorGUI().setVisible(true);
+                                UserGUI professorFrame = new UserGUI();
+                                professorFrame.setTitle("강의실 예약 시스템 - [" + userInfo.getName() + "]님");
+                                professorFrame.setLocationRelativeTo(null);
+                                professorFrame.setVisible(true);
                                 break;
                             case ASSISTANT:
                                 new AssistantGUI().setVisible(true);

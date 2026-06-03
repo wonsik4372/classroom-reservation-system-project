@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.crsystem.systemclient.view.Reservation;
 
@@ -9,34 +9,35 @@ import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.controller.ReservationController;
 import com.crsystem.systemclient.controller.SessionManager;
 import java.util.List;
+
 /**
  *
  * @author wonsik
  */
-public class RoomListGUI extends javax.swing.JPanel {
+public class UserGUI extends javax.swing.JFrame {
 
-    // 내 예약 탭에서 행 인덱스 → ReservationDTO 매핑용
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserGUI.class.getName());
+
     private java.util.List<ReservationDTO.Response> myReservationList = new java.util.ArrayList<>();
 
-    public RoomListGUI() {
+    /**
+     * Creates new form UserGUI
+     */
+    public UserGUI() {
         initComponents();
         initCustomSettings();
         loadReservationsFromServer();
     }
 
     private void initCustomSettings() {
-        // 시계
         jLabelTime.setText(getCurrentTime());
         new javax.swing.Timer(1000, e -> jLabelTime.setText(getCurrentTime())).start();
 
-        // 로그아웃 버튼
         jButtonLogout.addActionListener(e -> handleLogout());
 
-        // 컬럼 클릭으로 정렬
         jTableTimeTable.setAutoCreateRowSorter(true);
         jTable2.setAutoCreateRowSorter(true);
 
-        // 내 예약 테이블 모델 (체크박스 포함)
         String[] myResColumns = {"선택", "강의실", "날짜", "교시", "목적", "상태"};
         javax.swing.table.DefaultTableModel myResModel = new javax.swing.table.DefaultTableModel(myResColumns, 0) {
             @Override
@@ -52,10 +53,8 @@ public class RoomListGUI extends javax.swing.JPanel {
         jTableMyReservation.setAutoCreateRowSorter(true);
         jTableMyReservation.getColumnModel().getColumn(0).setMaxWidth(50);
 
-        // 예약 취소 버튼
         jButtonCancel.addActionListener(e -> handleCancelReservation());
 
-        // 내 예약 탭 진입 시 최신화
         jTabbedPaneTop.addChangeListener(e -> {
             if (jTabbedPaneTop.getSelectedIndex() == 2) {
                 updateMyReservationTable();
@@ -70,13 +69,7 @@ public class RoomListGUI extends javax.swing.JPanel {
 
     private void handleLogout() {
         SessionManager.getInstance().logout();
-
-        // 현재 부모 JFrame 닫기
-        javax.swing.JFrame parentFrame =
-                (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        if (parentFrame != null) parentFrame.dispose();
-
-        // 로그인 화면으로 이동
+        this.dispose();
         javax.swing.SwingUtilities.invokeLater(() ->
                 new com.crsystem.systemclient.view.LoginGUI().setVisible(true));
     }
@@ -90,6 +83,7 @@ public class RoomListGUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jPanelTitle = new javax.swing.JPanel();
         jLabelClassRoomListTitle = new javax.swing.JLabel();
         jPanelCondition = new javax.swing.JPanel();
@@ -117,7 +111,9 @@ public class RoomListGUI extends javax.swing.JPanel {
         btnGoToReserve = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(850, 500));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(850, 500));
 
         jLabelClassRoomListTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         jLabelClassRoomListTitle.setText("Class-Room List");
@@ -148,11 +144,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         jLabelClassRoom.setText("강의실");
 
         jComboBoxYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2026", "2025", "2024", "2023" }));
-        jComboBoxYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxYearActionPerformed(evt);
-            }
-        });
 
         jComboBoxSemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1학기", "2학기" }));
 
@@ -285,7 +276,7 @@ public class RoomListGUI extends javax.swing.JPanel {
             jPanelMyReservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMyReservationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneMyReservation, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(jScrollPaneMyReservation, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCancel)
                 .addContainerGap())
@@ -307,17 +298,17 @@ public class RoomListGUI extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPaneTop)
                     .addComponent(jPanelCondition, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnGoToReserve, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(178, 178, 178)
                         .addComponent(jLabelTime)
@@ -327,26 +318,52 @@ public class RoomListGUI extends javax.swing.JPanel {
                         .addComponent(jButtonLogout)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelCondition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPaneTop, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jTabbedPaneTop, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTime)
                     .addComponent(jButtonLogout)
                     .addComponent(btnGoToReserve)
                     .addComponent(btnRefresh))
                 .addContainerGap())
         );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        updateReservationTable();
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
     private void btnGoToReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoToReserveActionPerformed
-        // TODO add your handling code here:
         String building = (String) jComboBoxBuildingNo.getSelectedItem();
         String floor = (String) jComboBoxFloor.getSelectedItem();
         String room = (String) jComboBox4.getSelectedItem();
@@ -356,38 +373,46 @@ public class RoomListGUI extends javax.swing.JPanel {
             return;
         }
 
-        // 어떤 강의실인지 명칭 결합 ("23 정보공학관 9층 912호")
         String roomName = building + " " + floor + "층 " + room + "호";
 
-        TimeTableGUI timetableFrame = new TimeTableGUI(roomName);
-
+        javax.swing.JFrame timetableFrame = new javax.swing.JFrame(roomName + " - 시간표 예약");
+        timetableFrame.setContentPane(new TimeTableGUI(roomName));
+        timetableFrame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        timetableFrame.pack();
+        timetableFrame.setLocationRelativeTo(this);
         timetableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
-                // 사용자가 예약 처리를 마친 후 창을 닫으면, 메인 화면의 테이블을 즉시 새로고침
                 updateReservationTable();
             }
         });
         timetableFrame.setVisible(true);
     }//GEN-LAST:event_btnGoToReserveActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        // TODO add your handling code here:
-        // 강의실 선택이 변경될 때마다 해당 강의실 전용 예약 정보로 표를 갱신합니다.
-        updateReservationTable();
-    }//GEN-LAST:event_jComboBox4ActionPerformed
-
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         loadReservationsFromServer();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-    private void jComboBoxYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxYearActionPerformed
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
-    // ==========================================
-    // 서버에서 전체 예약 목록 조회 후 테이블 갱신
-    // ==========================================
+        java.awt.EventQueue.invokeLater(() -> new UserGUI().setVisible(true));
+    }
+
     private void loadReservationsFromServer() {
         ReservationController.getInstance().getReservationList(
             "ALL",
@@ -405,9 +430,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         );
     }
 
-    // ==========================================
-    // 내 예약 탭 테이블 렌더링
-    // ==========================================
     private void updateMyReservationTable() {
         String myId = SessionManager.getInstance().getCurrentUser().getId();
         List<ReservationDTO.Response> cache = ReservationController.getInstance().getReservationCache();
@@ -435,9 +457,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         jTableMyReservation.setRowHeight(25);
     }
 
-    // ==========================================
-    // 예약 취소 처리
-    // ==========================================
     private void handleCancelReservation() {
         javax.swing.table.DefaultTableModel model =
                 (javax.swing.table.DefaultTableModel) jTableMyReservation.getModel();
@@ -486,9 +505,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         );
     }
 
-    // ==========================================
-    // 조회된 데이터로 예약 현황 테이블 렌더링
-    // ==========================================
     public void updateReservationTable() {
         String building = (String) jComboBoxBuildingNo.getSelectedItem();
         String floor    = (String) jComboBoxFloor.getSelectedItem();
@@ -498,7 +514,6 @@ public class RoomListGUI extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel model =
                 new javax.swing.table.DefaultTableModel(columnNames, 0);
 
-        // 강의실이 선택되지 않으면 빈 테이블
         if ("건물선택".equals(building) || "층 선택".equals(floor) || "강의실 선택".equals(room)) {
             jTable2.setModel(model);
             return;
@@ -545,6 +560,7 @@ public class RoomListGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelSemester;
     private javax.swing.JLabel jLabelTime;
     private javax.swing.JLabel jLabelYear;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelCondition;
     private javax.swing.JPanel jPanelMyReservation;
     private javax.swing.JPanel jPanelTitle;

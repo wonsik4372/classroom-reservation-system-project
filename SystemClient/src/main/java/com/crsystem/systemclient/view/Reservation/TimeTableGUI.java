@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.crsystem.systemclient.view.Reservation;
 
@@ -13,7 +13,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-
 import com.crsystem.common.dto.ReservationDTO;
 import com.crsystem.common.enums.Role;
 import com.crsystem.common.dto.UserDTO;
@@ -22,29 +21,20 @@ import com.crsystem.systemclient.controller.SessionManager;
 
 /**
  *
- * @author abalo
+ * @author wonsik
  */
-public class TimeTableGUI extends javax.swing.JFrame {
+public class TimeTableGUI extends javax.swing.JPanel {
 
     private List<Point> selectedCells = new ArrayList<>();
     private String[] days = {"월", "화", "수", "목", "금"};
-
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TimeTableGUI.class.getName());
-
     private String roomName;
 
-    /**
-     * Creates new form CRSystemTimetableUI
-     */
     public TimeTableGUI(String roomName) {
         this.roomName = roomName;
         initComponents();
-        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
 
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) table.getModel();
         model.setRowCount(9);
-
-        setTitle(roomName + " - 시간표 예약");
 
         String[] times = {"1교시(09:00)", "2교시(10:00)", "3교시(11:00)", "4교시(12:00)",
             "5교시(13:00)", "6교시(14:00)", "7교시(15:00)", "8교시(16:00)", "9교시(17:00)"};
@@ -56,41 +46,22 @@ public class TimeTableGUI extends javax.swing.JFrame {
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // 선택된 칸 파란색
         table.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(Color.WHITE);
 
-                String day = null;
-
-                if (column > 0) {
-                    day = days[column - 1];
-                }
-
+                String day = column > 0 ? days[column - 1] : null;
                 String period = (row + 1) + "교시";
 
-                for (ReservationDTO.Response reservation
-                        : ReservationController.getInstance().getReservationCache()) {
-                    boolean sameRoom
-                            = reservation.getRoomName()
-                                    .equals(roomName);
-
-                    boolean sameDay
-                            = reservation.getDay()
-                                    .equals(day);
-
-                    boolean samePeriod
-                            = reservation.getPeriodInfo()
-                                    .contains(period);
-
-                    if (sameRoom && sameDay && samePeriod) {
+                for (ReservationDTO.Response reservation : ReservationController.getInstance().getReservationCache()) {
+                    if (reservation.getRoomName().equals(roomName)
+                            && reservation.getDay().equals(day)
+                            && reservation.getPeriodInfo().contains(period)) {
                         if (reservation.getRoleType() == Role.STUDENT) {
-                            // 학생 예약 
                             c.setBackground(new Color(180, 255, 180));
                         } else if (reservation.getRoleType() == Role.PROFESSOR) {
-                            // 교수 예약
                             c.setBackground(new Color(255, 200, 220));
                         }
                     }
@@ -121,8 +92,6 @@ public class TimeTableGUI extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         btnReserve = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -142,16 +111,20 @@ public class TimeTableGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(table);
 
         btnReserve.setText("선택한 교시 예약 신청하기");
-        btnReserve.addActionListener(this::btnReserveActionPerformed);
+        btnReserve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReserveActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
                     .addComponent(btnReserve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -164,8 +137,6 @@ public class TimeTableGUI extends javax.swing.JFrame {
                 .addComponent(btnReserve)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -181,7 +152,7 @@ public class TimeTableGUI extends javax.swing.JFrame {
         String selectedPeriod = (row + 1) + "교시";
 
         UserDTO.Response currentUser
-                = SessionManager.getInstance().getCurrentUser();
+        = SessionManager.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
@@ -189,27 +160,27 @@ public class TimeTableGUI extends javax.swing.JFrame {
         }
 
         for (ReservationDTO.Response reservation
-                : ReservationController.getInstance().getReservationCache()) {
+            : ReservationController.getInstance().getReservationCache()) {
 
             boolean sameRoom
-                    = reservation.getRoomName()
-                            .equals(this.roomName);
+            = reservation.getRoomName()
+            .equals(this.roomName);
 
             boolean sameDay
-                    = reservation.getDay()
-                            .equals(selectedDay);
+            = reservation.getDay()
+            .equals(selectedDay);
 
             boolean samePeriod
-                    = reservation.getPeriodInfo()
-                            .contains(selectedPeriod);
+            = reservation.getPeriodInfo()
+            .contains(selectedPeriod);
 
             if (sameRoom && sameDay && samePeriod) {
                 // 학생 차단
 
                 if (currentUser.getRole() == Role.STUDENT) {
                     JOptionPane.showMessageDialog(
-                            this,
-                            "이미 예약된 교시입니다."
+                        this,
+                        "이미 예약된 교시입니다."
                     );
 
                     return;
@@ -217,17 +188,17 @@ public class TimeTableGUI extends javax.swing.JFrame {
 
                 // 교수 -> 교수 예약 시도
                 if (currentUser.getRole() == Role.PROFESSOR
-                        && reservation.getRoleType() == Role.PROFESSOR) {
+                    && reservation.getRoleType() == Role.PROFESSOR) {
                     JOptionPane.showMessageDialog(
-                            this,
-                            "이미 교수 예약이 존재합니다."
+                        this,
+                        "이미 교수 예약이 존재합니다."
                     );
                     return;
                 }
 
                 // 교수 -> 학생 예약 시도
                 if (currentUser.getRole() == Role.PROFESSOR
-                        && reservation.getRoleType() == Role.STUDENT) {
+                    && reservation.getRoleType() == Role.STUDENT) {
                     break;
                 }
             }
@@ -268,7 +239,7 @@ public class TimeTableGUI extends javax.swing.JFrame {
         }
 
         UserDTO.Response currentUser
-                = SessionManager.getInstance().getCurrentUser();
+        = SessionManager.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
@@ -276,27 +247,32 @@ public class TimeTableGUI extends javax.swing.JFrame {
         }
 
         if (currentUser.getRole() == Role.STUDENT
-                && rows.size() > 2) {
+            && rows.size() > 2) {
             JOptionPane.showMessageDialog(
-                    this,
-                    "학생은 최대 2교시까지만 예약 가능합니다."
+                this,
+                "학생은 최대 2교시까지만 예약 가능합니다."
             );
             return;
         }
 
         if (currentUser.getRole() == Role.PROFESSOR
-                && rows.size() > 3) {
+            && rows.size() > 3) {
             JOptionPane.showMessageDialog(
-                    this,
-                    "교수는 최대 3교시까지만 예약 가능합니다."
+                this,
+                "교수는 최대 3교시까지만 예약 가능합니다."
             );
             return;
         }
-        
+
         String periodString = rows.stream().map(r -> (r + 1) + "교시").collect(java.util.stream.Collectors.joining(", "));
 
         // 상세 예약창 호출
-        ReservationRegisterGUI reservationFrame = new ReservationRegisterGUI(this.roomName, days[col - 1], periodString, rows.size());
+        ReservationRegisterGUI reservationPanel = new ReservationRegisterGUI(this.roomName, days[col - 1], periodString, rows.size());
+        javax.swing.JFrame reservationFrame = new javax.swing.JFrame("강의실 예약 등록");
+        reservationFrame.setContentPane(reservationPanel);
+        reservationFrame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        reservationFrame.pack();
+        reservationFrame.setLocationRelativeTo(javax.swing.SwingUtilities.getWindowAncestor(this));
         reservationFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
@@ -308,6 +284,7 @@ public class TimeTableGUI extends javax.swing.JFrame {
         table.repaint();
     }//GEN-LAST:event_btnReserveActionPerformed
 
+
     private void refreshReservationCache() {
         ReservationController.getInstance().getReservationList(
                 "ALL",
@@ -317,33 +294,8 @@ public class TimeTableGUI extends javax.swing.JFrame {
                         table.repaint();
                     }
                 },
-                error -> System.err.println("[CRSystemTimetableUI] 예약 목록 조회 실패: " + error)
+                error -> System.err.println("[TimeTableGUI] 예약 목록 조회 실패: " + error)
         );
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TimeTableGUI("23 정보공학관 9층 912호").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

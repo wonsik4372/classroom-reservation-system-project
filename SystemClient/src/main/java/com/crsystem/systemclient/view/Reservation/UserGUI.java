@@ -33,7 +33,7 @@ public class UserGUI extends javax.swing.JFrame {
         initComponents();
         initCustomSettings();
         loadReservationsFromServer();
-        loadTimetableFromServer();
+        loadYearList();
     }
 
     private void initCustomSettings() {
@@ -102,19 +102,50 @@ public class UserGUI extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
+    private void loadYearList() {
+        TimetableController.getInstance().getAvailableYears(
+            response -> {
+                if (response.isSuccess() && response.getPayload() instanceof java.util.List) {
+                    java.util.List<String> years = (java.util.List<String>) response.getPayload();
+                    javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+                    for (String year : years) model.addElement(year);
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        jComboBoxYear.setModel(model);
+                        if (model.getSize() > 0) {
+                            jComboBoxYear.setSelectedIndex(0);
+                            loadTimetableFromServer();
+                        }
+                    });
+                }
+            },
+            error -> logger.warning("연도 목록 로드 실패: " + error)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
     private void loadTimetableFromServer() {
-        String year = (String) jComboBoxYear.getSelectedItem();
+        if (jComboBoxYear.getSelectedItem() == null) return;
+        String year = String.valueOf(jComboBoxYear.getSelectedItem());
         TimetableController.getInstance().getTimetable(year,
             response -> {
                 if (response.isSuccess() && response.getPayload() instanceof Map) {
                     timetableData = (Map<String, Object>) response.getPayload();
-                    updateBuildingComboBox();
+                    javax.swing.SwingUtilities.invokeLater(this::updateSemesterComboBox);
                 } else {
                     logger.warning("시간표 로드 실패: " + response.getMessage());
                 }
             },
             error -> logger.warning("시간표 통신 오류: " + error)
         );
+    }
+
+    private void updateSemesterComboBox() {
+        if (timetableData == null) return;
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        model.addElement("학기 선택");
+        for (String semester : timetableData.keySet()) model.addElement(semester);
+        jComboBoxSemester.setModel(model);
+        updateBuildingComboBox();
     }
 
     @SuppressWarnings("unchecked")

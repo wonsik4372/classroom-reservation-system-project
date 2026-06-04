@@ -96,6 +96,9 @@ public class MainController {
         commandMap.put("GET_TIMETABLE", req ->
             TimetableService.getInstance().getTimetable((String) req.getPayload())
         );
+        commandMap.put("GET_YEAR_LIST", req ->
+            TimetableService.getInstance().getAvailableYears()
+        );
         commandMap.put("UPDATE_ROOM_INFO", req ->
             TimetableService.getInstance().updateRoomInfo((java.util.Map<String, Object>) req.getPayload())
         );

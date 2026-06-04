@@ -96,4 +96,19 @@ public class TimetableService {
             return new ResponseDTO(false, "수정 실패: " + e.getMessage(), null);
         }
     }
+
+    public ResponseDTO getAvailableYears() {
+        File folder = new File(MASTERFILE_DIR);
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
+
+        java.util.List<String> years = new java.util.ArrayList<>();
+        if (files != null) {
+            for (File file : files) {
+                years.add(file.getName().replace(".json", ""));
+            }
+        }
+        years.sort((a, b) -> b.compareTo(a));
+
+        return new ResponseDTO(true, "연도 목록 조회 성공", years);
+    }
 }

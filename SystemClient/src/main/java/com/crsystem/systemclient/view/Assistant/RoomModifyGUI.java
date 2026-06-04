@@ -21,6 +21,12 @@ public class RoomModifyGUI extends javax.swing.JPanel {
         this.roomName = roomName;
         this.onSaved  = onSaved;
         initComponents();
+
+        int cap  = roomInfo.get("capacity")      instanceof Integer c ? c : 0;
+        int comp = roomInfo.get("computerCount") instanceof Integer cc ? cc : 0;
+        jSpinnerMaxCap.setModel(new javax.swing.SpinnerNumberModel(cap,  0, 60, 1));
+        jSpinnerComputerCnt.setModel(new javax.swing.SpinnerNumberModel(comp, 0, 60, 1));
+
         populateFields(roomInfo);
         jButton1.addActionListener(e -> handleSave());
     }

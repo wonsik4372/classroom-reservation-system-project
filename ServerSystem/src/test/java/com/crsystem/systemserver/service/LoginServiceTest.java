@@ -23,6 +23,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         store.clear();
     }
 
+    // ====================
+    // [TC-01] 로그인 기본 흐름 - 올바른 ID/역할/비밀번호로 로그인 성공
+    // ====================
     @Test
     public void processLogin_succeedsWhenIdRoleAndPasswordMatch() {
         LoginService service = LoginService.getInstance();
@@ -41,6 +44,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         assertEquals("Professor User", userInfo.getName());
     }
 
+    // ====================
+    // [TC-02] 로그인 권한정보검증 - 조교가 교수 화면으로 로그인 허용 (특수 허용 규칙)
+    // ====================
     @Test
     public void processLogin_allowsAssistantToLoginAsProfessorScreen() {
         LoginService service = LoginService.getInstance();
@@ -59,6 +65,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         assertEquals("Assistant User", userInfo.getName());
     }
 
+    // ====================
+    // [TC-03] [TC-04] 로그인 결과알림 / 실패흐름 - 존재하지 않는 계정으로 로그인 실패
+    // ====================
     @Test
     public void processLogin_failsWhenUserDoesNotExist() {
         LoginService service = LoginService.getInstance();
@@ -72,6 +81,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         assertNull(response.getPayload());
     }
 
+    // ====================
+    // [TC-02] [TC-04] 로그인 권한정보검증 / 실패흐름 - 권한 불일치로 로그인 실패
+    // ====================
     @Test
     public void processLogin_failsWhenRoleDoesNotMatch() {
         LoginService service = LoginService.getInstance();
@@ -85,6 +97,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         assertNull(response.getPayload());
     }
 
+    // ====================
+    // [TC-03] [TC-04] 로그인 결과알림 / 실패흐름 - 비밀번호 불일치로 로그인 실패
+    // ====================
     @Test
     public void processLogin_failsWhenPasswordDoesNotMatch() {
         LoginService service = LoginService.getInstance();
@@ -99,9 +114,8 @@ public class LoginServiceTest extends BaseUserFileTest {
     }
 
     // ====================
-    // 미읽음 알림 전달 (TC-36, TC-40)
+    // [TC-36] 예약 승인 알림 - 로그인 시 미읽음 알림 즉각 전달
     // ====================
-
     @Test
     public void processLogin_includesPendingNotificationsForStudentWithUnreadAlerts() {
         // 학생 계정을 User.json에 추가
@@ -145,6 +159,9 @@ public class LoginServiceTest extends BaseUserFileTest {
         assertTrue(unread.isEmpty());
     }
 
+    // ====================
+    // [TC-36] 예약 승인 알림 - 미읽음 알림 없을 때 빈 목록 반환
+    // ====================
     @Test
     public void processLogin_returnsNoPendingNotificationsWhenNoneExist() {
         try {

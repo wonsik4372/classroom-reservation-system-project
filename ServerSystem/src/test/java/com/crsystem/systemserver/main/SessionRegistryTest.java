@@ -56,7 +56,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-65] SFR-801 - 세션 등록 시 고유 ID 부여
+    // [TC-52] SFR-801 - 세션 등록 시 고유 ID 부여
     // ====================
     @Test
     public void register_assignsUniqueSessionId() throws Exception {
@@ -71,7 +71,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-66] SFR-801 - 세션 해제 시 접속 수 감소
+    // [TC-53] SFR-801 - 세션 해제 시 접속 수 감소
     // ====================
     @Test
     public void unregister_decreasesSessionCount() throws Exception {
@@ -87,7 +87,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-67] SFR-801 - 초기 상태에서 접속 수 0
+    // [TC-54] SFR-801 - 초기 상태에서 접속 수 0
     // ====================
     @Test
     public void getCount_returnsZeroWhenNoSessions() {
@@ -95,7 +95,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-68] SFR-801 - 세션 목록 조회
+    // [TC-55] SFR-801 - 세션 목록 조회
     // ====================
     @Test
     public void getSessions_returnsAllRegisteredHandlers() throws Exception {
@@ -112,7 +112,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-69] SFR-801 - 싱글톤 인스턴스 동일성 보장
+    // [TC-56] SFR-801 - 싱글톤 인스턴스 동일성 보장
     // ====================
     @Test
     public void getInstance_returnsSameInstance() {

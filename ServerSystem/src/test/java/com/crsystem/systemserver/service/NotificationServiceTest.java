@@ -97,7 +97,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-37] [TC-38] 예약상태관리-거부 - 거부 알림 생성 및 거부 사유 저장
+    // [TC-36] SFR-505 예약상태관리-거부 - 거부 알림 생성 및 거부 사유 저장
     // ====================
     @Test
     public void notifyRejected_createsRejectedNotificationWithReasonInStore() {
@@ -115,7 +115,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-37] 예약상태관리-거부 - 거부 알림 메시지에 강의실 정보 포함
+    // [TC-36] SFR-505 예약상태관리-거부 - 거부 알림 메시지에 강의실 정보 포함
     // ====================
     @Test
     public void notifyRejected_messageContainsRoomInfo() {
@@ -131,7 +131,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-39] 예약상태관리-거부 - 거부 사유가 알림에 정확히 저장
+    // [TC-37] SFR-506 예약상태관리-거부 - 거부 사유가 알림에 정확히 저장
     // ====================
     @Test
     public void notifyRejected_rejectReasonIsStoredInNotification() {
@@ -148,7 +148,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-35] [TC-36] [TC-40] 예약상태관리 - 미읽음 알림 조회 후 읽음 처리
+    // [TC-35] SFR-503 / [TC-38] SFR-507 예약상태관리 - 미읽음 알림 조회 후 읽음 처리
     // ====================
     @Test
     public void getAndMarkNotifications_returnsUnreadNotificationsAndMarksThem() {
@@ -172,7 +172,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-40] 예약상태관리-거부 - 미읽음 알림 없을 때 빈 목록 반환
+    // [TC-41] SFR-602 알림처리-거부 - 미읽음 알림 없을 때 빈 목록 반환
     // ====================
     @Test
     public void getAndMarkNotifications_returnsEmptyListWhenNoUnreadNotifications() {
@@ -187,7 +187,7 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // [TC-40] 예약상태관리-거부 - 이미 읽은 알림은 재조회 시 반환하지 않음
+    // [TC-35] SFR-503 / [TC-38] SFR-507 예약상태관리 - 이미 읽은 알림은 재조회 시 반환하지 않음
     // ====================
     @Test
     public void getAndMarkNotifications_doesNotReturnAlreadyReadNotifications() {

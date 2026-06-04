@@ -36,7 +36,10 @@ public class NotificationStore {
         return Holder.INSTANCE;
     }
 
-    // 알림 추가
+    // ====================
+    // [SFR-601] 알림 처리 - 승인 알림을 사용자별 저장소에 추가
+    // [SFR-602] 알림 처리 - 거부 알림(거부 사유 포함)을 사용자별 저장소에 추가
+    // ====================
     public void addNotification(NotificationDTO notification) {
         store.computeIfAbsent(notification.getUserId(), k -> new CopyOnWriteArrayList<>())
              .add(notification);
@@ -44,7 +47,11 @@ public class NotificationStore {
                 + ", type=" + notification.getType());
     }
 
-    // 해당 유저의 미읽음 알림 목록 조회 (읽음 처리 전 스냅샷 반환)
+    // ====================
+    // [SFR-601] 알림 처리 - 로그인/폴링 시 미읽음 알림 목록 조회 (Observer Pattern)
+    // [TC-35] getUnreadNotifications - 미읽음 알림 반환
+    // [TC-41] getUnreadNotifications - 이미 읽은 알림은 제외
+    // ====================
     public List<NotificationDTO> getUnreadNotifications(String userId) {
         CopyOnWriteArrayList<NotificationDTO> list = store.get(userId);
         if (list == null) return List.of();
@@ -53,7 +60,10 @@ public class NotificationStore {
                    .collect(Collectors.toList());
     }
 
-    // 알림 ID 목록에 해당하는 알림을 읽음 처리
+    // ====================
+    // [SFR-601] 알림 처리 - 지정한 알림 ID 목록을 읽음 처리
+    // [TC-41] markAsRead - 지정 ID만 읽음 처리, 나머지 유지
+    // ====================
     public void markAsRead(String userId, List<String> notificationIds) {
         CopyOnWriteArrayList<NotificationDTO> list = store.get(userId);
         if (list == null) return;

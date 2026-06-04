@@ -114,7 +114,7 @@ public class LoginServiceTest extends BaseUserFileTest {
     }
 
     // ====================
-    // [TC-36] 예약 승인 알림 - 로그인 시 미읽음 알림 즉각 전달
+    // [TC-40] SFR-601 알림처리 - 로그인 시 미읽음 알림 즉각 전달
     // ====================
     @Test
     public void processLogin_includesPendingNotificationsForStudentWithUnreadAlerts() {
@@ -160,7 +160,7 @@ public class LoginServiceTest extends BaseUserFileTest {
     }
 
     // ====================
-    // [TC-36] 예약 승인 알림 - 미읽음 알림 없을 때 빈 목록 반환
+    // [TC-40] SFR-601 알림처리 - 미읽음 알림 없을 때 빈 목록 반환
     // ====================
     @Test
     public void processLogin_returnsNoPendingNotificationsWhenNoneExist() {

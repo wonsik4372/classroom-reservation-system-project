@@ -34,7 +34,19 @@ public class ReservationService {
     }
 
     // ====================
-    // 예약 등록
+    // [SFR-401] 예약 등록 공통 - 강의실 상태·시간 중복 검증
+    // [SFR-402] 교수 예약 - 보강/세미나 목적 예약 등록
+    // [SFR-403] 교수 예약 - 사용 목적·참석 인원 등록
+    // [SFR-404] 교수 예약 - 본인 예약 중복 시 예약 불가
+    // [SFR-405] 교수 예약 - 최대 3교시 제한
+    // [SFR-406] 교수 예약 - 즉시 반영 (APPROVED 상태)
+    // [SFR-407] 교수 예약 - 학생 대기 예약 덮어쓰기(거부) 처리
+    // [SFR-408] 학생 예약 - 개인/조별 학습 목적 사전 신청
+    // [SFR-409] 학생 예약 - 동반 학생 수·학번·성명 등록
+    // [SFR-410] 학생 예약 - 수용 인원 50% 초과 시 예약 불가 (Singleton 동기화)
+    // [SFR-411] 학생 예약 - 최대 2교시 제한
+    // [SFR-412] 학생 예약 - 최소 하루 전 사전 신청 (PENDING 상태)
+    // [SFR-413] 교수 예약 - 이미 교수 예약 존재 시 추가 예약 불가
     // ====================
     public ResponseDTO addReservation(ReservationDTO.Response reservation) {
         try {
@@ -103,7 +115,7 @@ public class ReservationService {
     }
 
     // ====================
-    // 전체 예약 조회
+    // [SFR-201] 강의실 현황 조회 - 전체 예약 목록 반환
     // ====================
     public ResponseDTO getReservationList() {
         List<ReservationDTO.Response> reservationList = fileManager.loadAll();
@@ -111,7 +123,7 @@ public class ReservationService {
     }
 
     // ====================
-    // 대기 예약 조회
+    // [SFR-501] 예약 상태 관리 - 승인 대기 중인 예약 목록 조회
     // ====================
     public ResponseDTO getPendingReservationList() {
         List<ReservationDTO.Response> pendingList = catalog.getAllReservations().stream()
@@ -121,7 +133,10 @@ public class ReservationService {
     }
 
     // ====================
-    // 예약 승인
+    // [SFR-501] 예약 승인 - 대기 상태 예약을 APPROVED로 변경
+    // [SFR-502] 예약 승인 - 승인 시 알림 생성 (NotificationService 호출)
+    // [SFR-503] 예약 승인 - 단건 또는 복수 건 승인 가능
+    // [SFR-504] 예약 승인 - 로그인 중인 학생에게 푸시 형태로 즉시 전달
     // ====================
     public ResponseDTO approveReservation(String reservationId) {
         try {
@@ -147,7 +162,7 @@ public class ReservationService {
     }
 
     // ====================
-    // 예약 취소 (본인만)
+    // [STR-010] 예약 취소 - 대기/승인 상태 본인 예약만 취소 가능
     // ====================
     public ResponseDTO cancelReservation(String reservationId, String requesterId) {
         try {
@@ -176,7 +191,10 @@ public class ReservationService {
     }
 
     // ====================
-    // 예약 거부
+    // [SFR-505] 예약 거부 - 대기 상태 예약을 REJECTED로 변경
+    // [SFR-506] 예약 거부 - 거부 사유 등록 필수
+    // [SFR-507] 예약 거부 - 단건 또는 복수 건 거부 가능
+    // [SFR-508] 예약 거부 - 로그인 여부와 관계없이 학생에게 알림 전달
     // ====================
     public ResponseDTO rejectReservation(String reservationId, String rejectReason) {
         try {

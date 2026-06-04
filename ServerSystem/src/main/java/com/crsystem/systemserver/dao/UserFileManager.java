@@ -36,9 +36,10 @@ public class UserFileManager implements FileManager <User>{
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
-    // ==========================================
-    // 1. 전부 불러오기 (JSON -> List<User>)
-    // ==========================================
+    // ====================
+    // [SFR-701] 데이터 관리 - User.json 파일에서 사용자 목록 로드
+    // [TC-42] loadAll - JSON 파일로부터 사용자 목록 정상 반환 / 파일 없으면 빈 목록 반환
+    // ====================
     @Override
     public List<User> loadAll() {
         File file = new File(FILE_PATH);
@@ -62,7 +63,10 @@ public class UserFileManager implements FileManager <User>{
     }
     
     
-    // 전체 데이터 덮어쓰기 (저장)
+    // ====================
+    // [SFR-702] 데이터 관리 - 전체 사용자 목록을 User.json에 덮어쓰기
+    // [TC-43] saveAll - 지정한 목록으로 JSON 파일 덮어쓰기
+    // ====================
     @Override
     public void saveAll(List<User> list) {
         File file = new File(FILE_PATH);
@@ -80,7 +84,10 @@ public class UserFileManager implements FileManager <User>{
         }
     }
     
-    // 단일 객체 추가 (또는 수정)
+    // ====================
+    // [SFR-703] 데이터 관리 - 신규 사용자를 목록에 추가 후 파일에 반영
+    // [TC-44] add - 신규 사용자 추가 후 JSON 파일에 저장
+    // ====================
     @Override
     public void add(User user){
         List<User> currentList = loadAll(); 
@@ -88,7 +95,12 @@ public class UserFileManager implements FileManager <User>{
         saveAll(currentList);
     }
     
-    // 고유 ID로 삭제
+    // ====================
+    // [SFR-704] 데이터 관리 - ID에 해당하는 사용자를 파일에서 제거
+    // [SFR-705] 데이터 관리 - 존재하지 않는 ID 삭제 시 목록 유지
+    // [TC-45] delete - ID 일치 사용자 제거 후 파일 저장
+    // [TC-46] delete - 존재하지 않는 ID 삭제 시 목록 변화 없음
+    // ====================
     @Override
     public void delete(String id){
         List<User> currentList = loadAll();

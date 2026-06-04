@@ -119,7 +119,7 @@ public class NotificationStoreTest {
     }
 
     // ====================
-    // markAsRead
+    // [TC-41] SFR-602 알림처리-거부 - 지정 ID 읽음 처리 / 지정 ID만 읽음 처리
     // ====================
 
     @Test

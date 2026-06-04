@@ -164,6 +164,12 @@ public class ClassroomService {
         }
     }
 
+    // ====================
+    // [SFR-301] 강의실 현황 관리 - 강의실 정보 수정 (수용 인원·시설·상태)
+    // [SFR-302] 강의실 현황 관리 - 학년도/학기별 강의실 정보 관리
+    // [SFR-303] 강의실 현황 관리 - 강의실별 상태 변경 (사용가능/불가)
+    // [SFR-304] 강의실 현황 관리 - 변경 사항 즉시 반영
+    // ====================
     public boolean updateClassroomInfo(String classroomName, int capacity, String features, int computerCount, String status) {
         Classroom classroom = masterData.getClassrooms().get(classroomName);
         if (classroom == null) return false;
@@ -178,6 +184,11 @@ public class ClassroomService {
         return true;
     }
 
+    // ====================
+    // [SFR-401] 예약 등록 공통 - 정규 수업·기존 예약과 시간 충돌 검증
+    // [SFR-402] 교수 예약 - 보강/세미나 목적으로 빈 강의 시간 예약
+    // [SFR-403] 교수 예약 - 사용 목적·참석 인원 등록
+    // ====================
     public boolean addReservation(String classroomName, String dateStr, String timeSlot, String purpose, String requesterName, String requesterType) {
         Classroom classroom = masterData.getClassrooms().get(classroomName);
         if (classroom == null) {
@@ -238,6 +249,10 @@ public class ClassroomService {
         }
     }
 
+    // ====================
+    // [SFR-201] 강의실 현황 조회 - 특정 날짜의 정규 수업 + 예약을 병합하여 반환
+    // [SFR-202] 강의실 현황 조회 - 일별 강의 현황 제공
+    // ====================
     public List<Reservation> getMergedSchedule(String classroomName, String dateStr) {
         Classroom classroom = masterData.getClassrooms().get(classroomName);
         if (classroom == null) {
@@ -285,6 +300,11 @@ public class ClassroomService {
         return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
     }
 
+    // ====================
+    // [SFR-201] 강의실 현황 조회 - 전체 강의실 스케줄 데이터 반환
+    // [SFR-203] 강의실 현황 조회 - 주별 현황 제공 (Template Method Pattern)
+    // [SFR-204] 강의실 현황 조회 - 월별 현황 제공 (Template Method Pattern)
+    // ====================
     public ScheduleData getScheduleData() {
         return this.masterData;
     }

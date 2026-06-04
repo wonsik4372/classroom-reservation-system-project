@@ -33,6 +33,9 @@ public class ReservationFileManager implements FileManager<ReservationDTO.Respon
                 .create();
     }
 
+    // ====================
+    // [SFR-701] 데이터 관리 - Reservation.json 파일에서 전체 예약 목록 로드
+    // ====================
     @Override
     public List<ReservationDTO.Response> loadAll() {
         File file = new File(FILE_PATH);
@@ -51,6 +54,9 @@ public class ReservationFileManager implements FileManager<ReservationDTO.Respon
         }
     }
 
+    // ====================
+    // [SFR-702] 데이터 관리 - 전체 예약 목록을 Reservation.json에 덮어쓰기
+    // ====================
     @Override
     public void saveAll(List<ReservationDTO.Response> reservationList) {
         File file = new File(FILE_PATH);
@@ -66,6 +72,9 @@ public class ReservationFileManager implements FileManager<ReservationDTO.Respon
         }
     }
 
+    // ====================
+    // [SFR-703] 데이터 관리 - 신규 예약 추가 후 파일에 반영
+    // ====================
     @Override
     public void add(ReservationDTO.Response reservation) {
         List<ReservationDTO.Response> reservationList = loadAll();
@@ -73,6 +82,9 @@ public class ReservationFileManager implements FileManager<ReservationDTO.Respon
         saveAll(reservationList);
     }
 
+    // ====================
+    // [SFR-704] 데이터 관리 - 예약 ID에 해당하는 예약을 파일에서 제거
+    // ====================
     @Override
     public void delete(String id) {
         List<ReservationDTO.Response> reservationList = loadAll();

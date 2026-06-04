@@ -11,7 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends BaseUserFileTest {
     
-    // User.json에서 읽고 일치 여부 검증 
+    // ====================
+    // [TC-10] 사용자관리-사용자삭제 - 사용자 목록 조회 정상 반환
+    // ====================
     @Test
     @SuppressWarnings("unchecked")
     public void getUserList_returnsUsersLoadedFromFile() {
@@ -30,7 +32,9 @@ public class UserServiceTest extends BaseUserFileTest {
         assertEquals("Admin User", users.get(0).getName());
     }
 
-    // 사용자 추가 시 비번은 아이디와 같게 
+    // ====================
+    // [TC-07] [TC-08] 사용자관리-사용자추가 - 초기 비밀번호는 ID와 동일하게 설정
+    // ====================
     @Test
     public void addUser_addsStudentWithInitialPasswordEqualToId() {
         UserService service = UserService.getInstance();
@@ -49,7 +53,9 @@ public class UserServiceTest extends BaseUserFileTest {
         assertTrue(savedUser.verifyPassword("20240001"));
     }
 
-    // 이미 존재하는 아이디에 대한 추가 시 실패 
+    // ====================
+    // [TC-09] 사용자관리-사용자추가 - 중복 ID로 추가 시 실패
+    // ====================
     @Test
     public void addUser_failsWhenIdAlreadyExists() {
         UserService service = UserService.getInstance();
@@ -63,6 +69,9 @@ public class UserServiceTest extends BaseUserFileTest {
     }
 
     
+    // ====================
+    // [TC-09] 사용자관리-사용자추가 - ID 형식이 권한과 불일치 시 실패
+    // ====================
     @Test
     public void addUser_failsWhenIdFormatDoesNotMatchRole() {
         UserService service = UserService.getInstance();
@@ -76,6 +85,9 @@ public class UserServiceTest extends BaseUserFileTest {
         assertNull(service.getUserById("1234"));
     }
 
+    // ====================
+    // [TC-10] [TC-11] 사용자관리-사용자삭제 - 일반 사용자 정상 삭제
+    // ====================
     @Test
     public void deleteUser_deletesExistingNonAdminUser() {
         UserService service = UserService.getInstance();
@@ -91,6 +103,9 @@ public class UserServiceTest extends BaseUserFileTest {
         assertNull(service.getUserById("23456"));
     }
 
+    // ====================
+    // [TC-11] 사용자관리-사용자삭제 - 존재하지 않는 사용자 삭제 시 실패
+    // ====================
     @Test
     public void deleteUser_failsWhenUserDoesNotExist() {
         UserService service = UserService.getInstance();
@@ -104,6 +119,9 @@ public class UserServiceTest extends BaseUserFileTest {
         assertEquals(3, getUserCount(service));
     }
 
+    // ====================
+    // [TC-11] 사용자관리-사용자삭제 - 관리자 계정 삭제 시도 시 실패
+    // ====================
     @Test
     public void deleteUser_failsWhenUserIsAdmin() {
         UserService service = UserService.getInstance();

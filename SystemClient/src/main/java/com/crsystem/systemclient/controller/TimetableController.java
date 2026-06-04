@@ -38,4 +38,12 @@ public class TimetableController {
                 onFailure
         );
     }
+
+    public void getAvailableYears(Consumer<ResponseDTO> onSuccess, Consumer<String> onFailure) {
+        CRSystemClient.getInstance().sendRequest(
+                new RequestDTO("GET_YEAR_LIST", null),
+                onSuccess,
+                onFailure
+        );
+    }
 }

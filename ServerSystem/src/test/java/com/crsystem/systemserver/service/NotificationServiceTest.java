@@ -48,9 +48,8 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // notifyApproved (TC-35, TC-36)
+    // [TC-33] [TC-34] 예약상태관리-승인 - 승인 알림 생성 및 저장
     // ====================
-
     @Test
     public void notifyApproved_createsApprovedNotificationInStore() {
         ReservationDTO.Response reservation = makeReservation(
@@ -66,6 +65,9 @@ public class NotificationServiceTest {
         assertEquals("20240001", notifications.get(0).getUserId());
     }
 
+    // ====================
+    // [TC-33] 예약상태관리-승인 - 승인 알림 메시지에 강의실명과 날짜 포함
+    // ====================
     @Test
     public void notifyApproved_messageContainsRoomNameAndDate() {
         ReservationDTO.Response reservation = makeReservation(
@@ -79,6 +81,9 @@ public class NotificationServiceTest {
         assertTrue(notification.getMessage().contains("승인"));
     }
 
+    // ====================
+    // [TC-34] 예약상태관리-승인 - 생성된 알림은 기본적으로 미읽음 상태
+    // ====================
     @Test
     public void notifyApproved_notificationIsUnreadByDefault() {
         ReservationDTO.Response reservation = makeReservation(
@@ -92,9 +97,8 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // notifyRejected (TC-37, TC-38, TC-39, TC-40)
+    // [TC-37] [TC-38] 예약상태관리-거부 - 거부 알림 생성 및 거부 사유 저장
     // ====================
-
     @Test
     public void notifyRejected_createsRejectedNotificationWithReasonInStore() {
         ReservationDTO.Response reservation = makeReservation(
@@ -110,6 +114,9 @@ public class NotificationServiceTest {
         assertEquals(reason, notifications.get(0).getRejectReason());
     }
 
+    // ====================
+    // [TC-37] 예약상태관리-거부 - 거부 알림 메시지에 강의실 정보 포함
+    // ====================
     @Test
     public void notifyRejected_messageContainsRoomInfo() {
         ReservationDTO.Response reservation = makeReservation(
@@ -123,6 +130,9 @@ public class NotificationServiceTest {
         assertTrue(notification.getMessage().contains("거부"));
     }
 
+    // ====================
+    // [TC-39] 예약상태관리-거부 - 거부 사유가 알림에 정확히 저장
+    // ====================
     @Test
     public void notifyRejected_rejectReasonIsStoredInNotification() {
         ReservationDTO.Response reservation = makeReservation(
@@ -138,9 +148,8 @@ public class NotificationServiceTest {
     }
 
     // ====================
-    // getAndMarkNotifications (TC-36, TC-40)
+    // [TC-35] [TC-36] [TC-40] 예약상태관리 - 미읽음 알림 조회 후 읽음 처리
     // ====================
-
     @Test
     public void getAndMarkNotifications_returnsUnreadNotificationsAndMarksThem() {
         NotificationService service = NotificationService.getInstance();
@@ -162,6 +171,9 @@ public class NotificationServiceTest {
         assertTrue(afterRead.isEmpty());
     }
 
+    // ====================
+    // [TC-40] 예약상태관리-거부 - 미읽음 알림 없을 때 빈 목록 반환
+    // ====================
     @Test
     public void getAndMarkNotifications_returnsEmptyListWhenNoUnreadNotifications() {
         ResponseDTO response = NotificationService.getInstance()
@@ -174,6 +186,9 @@ public class NotificationServiceTest {
         assertTrue(returned.isEmpty());
     }
 
+    // ====================
+    // [TC-40] 예약상태관리-거부 - 이미 읽은 알림은 재조회 시 반환하지 않음
+    // ====================
     @Test
     public void getAndMarkNotifications_doesNotReturnAlreadyReadNotifications() {
         NotificationService service = NotificationService.getInstance();

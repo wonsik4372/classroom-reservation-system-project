@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NotificationStoreTest {
+public class NotificationCatalogTest {
 
     @BeforeEach
     void clearStore() throws Exception {
@@ -119,7 +119,7 @@ public class NotificationStoreTest {
     }
 
     // ====================
-    // [TC-41] SFR-602 알림처리-거부 - 지정 ID 읽음 처리 / 지정 ID만 읽음 처리
+    // [TC-41] SFR-601 알림처리 - 지정 ID만 읽음 처리, 나머지 유지
     // ====================
 
     @Test

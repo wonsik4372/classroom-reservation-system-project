@@ -6,12 +6,8 @@ package com.crsystem.systemclient.controller;
 
 import com.crsystem.common.dto.UserDTO;
 
-/**
+/*
  * 로그인된 사용자의 세션 상태를 관리하는 클래스
- *
- * 클라이언트 인스턴스 = 사용자 1명이므로 싱글톤으로 관리한다.
- * GUI 생성자 간 userInfo 전달을 없애고, 어디서든 세션을 꺼낼 수 있다.
- *
  * @author wonsik
  */
 public class SessionManager {

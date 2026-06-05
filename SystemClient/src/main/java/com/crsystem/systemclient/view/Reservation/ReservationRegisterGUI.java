@@ -38,6 +38,8 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
 
     private void customInit() {
         lblInfo.setText("[" + roomName + "] " + selectedDate + " (" + day + "요일) / " + periodInfo);
+        // 동반 인원 수: 0 이상만 입력 가능하도록 SpinnerNumberModel 적용
+        partnerSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 999, 1));
         updateCapacityLabel();
     }
 
@@ -189,6 +191,21 @@ public class ReservationRegisterGUI extends javax.swing.JPanel {
 
         if (user == null) {
             JOptionPane.showMessageDialog(this, "로그인 정보가 없습니다. 다시 로그인해주세요.");
+            return;
+        }
+
+        // 사용 목적 미입력 차단
+        if (purposeField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "사용 목적을 입력해주세요.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+            purposeField.requestFocusInWindow();
+            return;
+        }
+
+        // 예약 인원 음수 차단
+        int partnerCount = (int) partnerSpinner.getValue();
+        if (partnerCount < 0) {
+            JOptionPane.showMessageDialog(this, "동반 인원 수는 0명 이상이어야 합니다.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+            partnerSpinner.setValue(0);
             return;
         }
 

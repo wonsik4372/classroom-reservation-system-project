@@ -11,7 +11,7 @@
 
     <modules>
         <module>CommonModule</module>
-        <module>ServerSystem</module>
+        <module>SystemServer</module>
         <module>SystemClient</module>
     </modules>
 

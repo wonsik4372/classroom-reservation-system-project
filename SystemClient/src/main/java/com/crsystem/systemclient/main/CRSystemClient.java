@@ -4,6 +4,7 @@
  */
 package com.crsystem.systemclient.main;
 
+import com.crsystem.common.dto.RequestDTO;
 import com.crsystem.common.dto.ResponseDTO;
 import com.crsystem.systemclient.view.LoginGUI;
 import javax.swing.JOptionPane;
@@ -15,6 +16,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 
@@ -27,11 +32,17 @@ public class CRSystemClient {
     // 싱글톤 인스턴스
     private static CRSystemClient instance;
 
+    private static final int HEARTBEAT_INTERVAL_SEC = 8;
+
     private String serverIp;
     private int serverPort;
     private Socket socket;
     private ObjectOutputStream writer;
     private ObjectInputStream reader;
+
+    // [SFR-802] 하트비트 전송 스케줄러
+    private final ScheduledExecutorService heartbeatScheduler = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledFuture<?> heartbeatTask;
 
     // 외부에서 객체 생성 차단
     private CRSystemClient() {}
@@ -90,6 +101,26 @@ public class CRSystemClient {
         this.reader = new ObjectInputStream(socket.getInputStream());
 
         System.out.println("네트워크 연결 및 스트림 설정 완료.");
+        startHeartbeat();
+    }
+
+    // [SFR-802] 서버로 주기적 HEARTBEAT 전송
+    private void startHeartbeat() {
+        heartbeatTask = heartbeatScheduler.scheduleAtFixedRate(() -> {
+            if (socket == null || socket.isClosed()) return;
+            try {
+                RequestDTO heartbeat = new RequestDTO("HEARTBEAT", null);
+                synchronized (this) {
+                    writer.writeObject(heartbeat);
+                    writer.flush();
+                    writer.reset();
+                    // PONG 응답 소비 (블로킹 최소화)
+                    reader.readObject();
+                }
+            } catch (Exception e) {
+                System.out.println("[Heartbeat] 서버 응답 없음: " + e.getMessage());
+            }
+        }, HEARTBEAT_INTERVAL_SEC, HEARTBEAT_INTERVAL_SEC, TimeUnit.SECONDS);
     }
 
     // ====================
@@ -139,6 +170,8 @@ public class CRSystemClient {
 
     // 자원 해제
     public void close() {
+        if (heartbeatTask != null) heartbeatTask.cancel(true);
+        heartbeatScheduler.shutdownNow();
         try {
             if (writer != null) writer.close();
             if (reader != null) reader.close();

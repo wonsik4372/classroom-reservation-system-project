@@ -112,7 +112,7 @@ public class SessionRegistryTest {
     }
 
     // ====================
-    // [TC-56] SFR-801 - 싱글톤 인스턴스 동일성 보장
+    // [TC-56] SFR-801 - 인스턴스 동일성 보장
     // ====================
     @Test
     public void getInstance_returnsSameInstance() {

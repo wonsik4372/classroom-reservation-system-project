@@ -302,8 +302,8 @@ public class ClassroomHandler {
 
     // ====================
     // [SFR-201] 강의실 현황 조회 - 전체 강의실 스케줄 데이터 반환
-    // [SFR-203] 강의실 현황 조회 - 주별 현황 제공 (Template Method Pattern)
-    // [SFR-204] 강의실 현황 조회 - 월별 현황 제공 (Template Method Pattern)
+    // [SFR-203] 강의실 현황 조회 - 주별 현황 제공
+    // [SFR-204] 강의실 현황 조회 - 월별 현황 제공
     // ====================
     public ScheduleData getScheduleData() {
         return this.masterData;

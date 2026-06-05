@@ -30,14 +30,14 @@ public class MainController {
     // 정적 초기화 블록 (서버 구동 시 최초 1회만 메모리에 적재)
     static {
         // ==========================================
-        // [LoginService 위임]
+        // 1. [LoginHandler 위임]
         // ==========================================
         commandMap.put("LOGIN", req ->
             LoginHandler.getInstance().processLogin((UserDTO.Request) req.getPayload())
         );
 
         // ==========================================
-        // 2. [UserService 위임]
+        // 2. [UserHandler 위임]
         // ==========================================
         commandMap.put("GET_USER_LIST", req ->
             UserHandler.getInstance().getUserList()
@@ -50,7 +50,7 @@ public class MainController {
         );
 
         // ==========================================
-        // 3. [NotificationService 위임]
+        // 3. [NotificationHandler 위임]
         // ==========================================
         commandMap.put("GET_NOTIFICATIONS", req -> {
             String userId = (String) req.getPayload();
@@ -58,7 +58,7 @@ public class MainController {
         });
 
         // ==========================================
-        // 4. [ReservationService 위임]
+        // 4. [ReservationHandler 위임]
         // ==========================================
         commandMap.put("ADD_RESERVATION", req ->
             ReservationHandler.getInstance().addReservation(
@@ -91,7 +91,7 @@ public class MainController {
         );
 
         // ==========================================
-        // 5. [TimetableService 위임]
+        // 5. [TimetableHandler 위임]
         // ==========================================
         commandMap.put("GET_TIMETABLE", req ->
             TimetableHandler.getInstance().getTimetable((String) req.getPayload())

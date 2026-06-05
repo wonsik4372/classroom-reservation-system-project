@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
  */
 public class NotificationCatalog {
 
-    // Initialization-on-demand holder 패턴: 지연 초기화 + 스레드 안전
     private static class Holder {
         private static final NotificationCatalog INSTANCE = new NotificationCatalog();
     }
@@ -48,7 +47,7 @@ public class NotificationCatalog {
     }
 
     // ====================
-    // [SFR-601] 알림 처리 - 로그인/폴링 시 미읽음 알림 목록 조회 (Observer Pattern)
+    // [SFR-601] 알림 처리 - 로그인/폴링 시 미읽음 알림 목록 조회
     // [TC-35] getUnreadNotifications - 미읽음 알림 반환
     // [TC-41] getUnreadNotifications - 이미 읽은 알림은 제외
     // ====================

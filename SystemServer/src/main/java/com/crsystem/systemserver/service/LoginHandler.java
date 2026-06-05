@@ -11,7 +11,6 @@ import com.crsystem.systemserver.model.User;
  */
 public class LoginHandler {
 
-    // Initialization-on-demand holder: JVM 클래스 로딩 메커니즘으로 동기화 없이 스레드 안전
     private static class Holder {
         private static final LoginHandler INSTANCE = new LoginHandler();
     }

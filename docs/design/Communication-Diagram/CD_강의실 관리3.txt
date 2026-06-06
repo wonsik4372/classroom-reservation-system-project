@@ -1,0 +1,15 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 10
+skinparam dpi 200
+!theme plain
+hide empty members
+
+object "<u>:Assistant</u>" as A <<actor>>
+object "<u>:ClassroomHandler</u>" as H
+object "<u>:ClassroomCatalog</u>" as Repo
+object "<u>:Classroom</u>" as R
+
+A -right- H : ▶ 3: selectClassroom(id)
+H -down- Repo : ▼ 3.1: targetRoom := findClassroom(id)
+@enduml

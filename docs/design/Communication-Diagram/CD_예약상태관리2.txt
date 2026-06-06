@@ -1,0 +1,28 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:Assistant</u>" as A <<actor>>
+object "<u>:ReservationHandler</u>" as Handler
+object "<u>:ReservationCatalog</u>" as Catalog
+object "<u>reservation:Reservation</u>" as R
+object "<u>:ReservationFileManager</u>" as FM
+
+A - Handler : ▶ 1: operationSuccess := \n approveReservation(id)
+
+Handler -down- Catalog : ▼ 1.1: reservation := findReservation(id)
+Handler -right- R : ▶︎ 1.2: approve()
+Handler -up- FM : ▲ 1.3: updateFile(reservation)
+
+@enduml

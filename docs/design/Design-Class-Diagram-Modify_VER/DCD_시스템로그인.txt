@@ -1,0 +1,51 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 80
+skinparam dpi 200
+
+class MainController <<Controller>> {
+    - commandMap: Map<String, Command>
+    + handleRequest(req: RequestDTO): ResponseDTO
+}
+
+interface Command <<Functional Interface>> {
+    + execute(req: RequestDTO): ResponseDTO
+}
+
+class LoginHandler {
+    - catalog: UserCatalog
+    + requestLogin(role: Role, id: String, password: String): boolean
+}
+
+class UserCatalog {
+    - userList: List<User>
+    + findUser(id: String): User
+}
+
+enum Role {
+    ADMIN
+    ASSISTANT
+    PROFESSOR
+    STUDENT
+}
+
+class User {
+    - role: Role
+    - id: String
+    - password: String
+    - name: String
+    + verifyPassword(password: String): boolean
+}
+
+MainController --> Command       : 등록/실행
+MainController --> LoginHandler  : 위임 (Command를 통해)
+
+LoginHandler --> UserCatalog     : 사용 (회원 검색 위임)
+LoginHandler ..> User            : 의존성 (비밀번호 검증 지시)
+UserCatalog o-- User             : 명단 관리 (In-Memory)
+User --> Role                    : 사용
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 80
+skinparam dpi 200
+
+class MainController <<Controller>> {
+    - commandMap: Map<String, Command>
+    + handleRequest(req: RequestDTO): ResponseDTO
+}
+
+interface Command <<Functional Interface>> {
+    + execute(req: RequestDTO): ResponseDTO
+}
+
+class ReservationHandler  {
+    - catalog: ReservationCatalog
+    - fileManager: ReservationFileManager
+    + getReservationList(): List<Reservation>
+    + approveReservation(id: String): boolean
+    + rejectReservation(id: String, reason: String): boolean
+}
+
+class ReservationCatalog {
+    - reservationList: List<Reservation>
+    + getPendingReservations(): List<Reservation>
+    + findReservation(id: String): Reservation
+    + addReservation(reservation: Reservation): void
+    + removeReservation(id: String): void
+}
+
+class ReservationFileManager {
+    + updateFile(reservation: Reservation): void
+    + loadFile(): List<Reservation>
+}
+
+class Reservation  {
+    - id: String
+    - status: String
+    - rejectReason: String
+    + approve(): void
+    + reject(reason: String): void
+}
+
+MainController --> Command                    : 등록/실행
+MainController --> ReservationHandler         : 위임 (Command를 통해)
+
+ReservationHandler --> ReservationCatalog     : 사용 (검색 위임)
+ReservationHandler --> ReservationFileManager : 사용 (저장 위임)
+ReservationHandler ..> Reservation            : 위임 (상태 변경 지시)
+ReservationCatalog --> Reservation            : 관리 (In-Memory)
+
+@enduml

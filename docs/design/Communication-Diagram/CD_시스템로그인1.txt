@@ -1,0 +1,27 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+
+object "<u>:Assistant</u>" as A <<actor>>
+object "<u>:LoginHandler</u>" as Handler
+object "<u>:UserCatalog</u>" as Catalog
+object "<u>user:User</u>" as U
+
+
+A -right- Handler : ▶ 1: isValid := \n requestLogin(role, id, password)
+Handler -down- Catalog : ▼ 1.1: user := findUser(id)
+Handler -right- U : ▶ 1.2: isValid := \n verifyPassword(password)
+
+@enduml

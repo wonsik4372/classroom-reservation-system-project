@@ -1,0 +1,23 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:Student</u>" as S <<actor>>
+object "<u>:NotificationHandler</u>" as NH
+object "<u>:NotificationCatalog</u>" as NC
+
+S -right- NH : ▶ 1: getNotifications(userId)
+NH -down- NC : ▼ 1.1: notifications := getUnread(userId)\n▼ 1.2: markAsRead(userId, ids)
+
+@enduml

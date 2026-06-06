@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest extends BaseUserFileTest {
+public class UserHandlerTest extends BaseUserFileTest {
     
     // ====================
     // [SRS 미등재] 사용자관리-사용자목록조회 - 사용자 목록 조회 정상 반환 (SFR-104 보완)

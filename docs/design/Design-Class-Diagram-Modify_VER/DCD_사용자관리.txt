@@ -1,0 +1,62 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 80
+skinparam dpi 200
+
+class MainController <<Controller>> {
+    - commandMap: Map<String, Command>
+    + handleRequest(req: RequestDTO): ResponseDTO
+}
+
+interface Command <<Functional Interface>> {
+    + execute(req: RequestDTO): ResponseDTO
+}
+
+class UserHandler {
+    - catalog: UserCatalog
+    - fileManager: UserFileManager
+    + getUserList(): List<User>
+    + addUser(role: Role, id: String, name: String): boolean
+    + deleteUser(id: String): boolean
+}
+
+class UserCatalog {
+    - userList: List<User>
+    + getAllUsers(): List<User>
+    + addUser(user: User): void
+    + removeUser(id: String): void
+}
+
+class UserFileManager {
+    + saveUser(user: User): void
+    + deleteUser(id: String): void
+    + loadFile(): List<User>
+}
+
+enum Role {
+    ADMIN
+    ASSISTANT
+    PROFESSOR
+    STUDENT
+}
+
+class User {
+    - role: Role
+    - id: String
+    - name: String
+    + «create» User(role: Role, id: String, name: String)
+}
+
+MainController --> Command      : 등록/실행
+MainController --> UserHandler  : 위임 (Command를 통해)
+
+UserHandler --> UserCatalog     : 사용 (검색 및 관리 위임)
+UserHandler --> UserFileManager : 사용 (물리적 저장/삭제 위임)
+UserHandler ..> User            : 생성 의존성 (점선)
+UserCatalog o-- User            : 명단 관리 (집합 연관)
+User --> Role                   : 사용
+
+@enduml

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NotificationCatalogTest {
 
     @BeforeEach
-    void clearStore() throws Exception {
+    void clearCatalog() throws Exception {
         Field storeField = NotificationCatalog.class.getDeclaredField("store");
         storeField.setAccessible(true);
         Map<?, ?> store = (Map<?, ?>) storeField.get(NotificationCatalog.getInstance());
@@ -43,13 +43,13 @@ public class NotificationCatalogTest {
 
     @Test
     public void addNotification_storesNotificationForUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
         NotificationDTO notification = makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null);
 
-        store.addNotification(notification);
+        catalog.addNotification(notification);
 
-        List<NotificationDTO> result = store.getUnreadNotifications("20240001");
+        List<NotificationDTO> result = catalog.getUnreadNotifications("20240001");
         assertEquals(1, result.size());
         assertEquals("N-001", result.get(0).getNotificationId());
     }
@@ -68,14 +68,14 @@ public class NotificationCatalogTest {
 
     @Test
     public void addNotification_isolatesNotificationsByUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
-        store.addNotification(makeNotification("N-002", "20240002", "R-002",
+        catalog.addNotification(makeNotification("N-002", "20240002", "R-002",
                 NotificationDTO.Type.REJECTED, "강의실 사용 불가"));
 
-        assertEquals(1, store.getUnreadNotifications("20240001").size());
-        assertEquals(1, store.getUnreadNotifications("20240002").size());
+        assertEquals(1, catalog.getUnreadNotifications("20240001").size());
+        assertEquals(1, catalog.getUnreadNotifications("20240002").size());
     }
 
     // ====================
@@ -93,14 +93,14 @@ public class NotificationCatalogTest {
 
     @Test
     public void getUnreadNotifications_excludesAlreadyReadNotifications() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
-        store.addNotification(makeNotification("N-002", "20240001", "R-002",
+        catalog.addNotification(makeNotification("N-002", "20240001", "R-002",
                 NotificationDTO.Type.REJECTED, "사유"));
-        store.markAsRead("20240001", List.of("N-001"));
+        catalog.markAsRead("20240001", List.of("N-001"));
 
-        List<NotificationDTO> unread = store.getUnreadNotifications("20240001");
+        List<NotificationDTO> unread = catalog.getUnreadNotifications("20240001");
 
         assertEquals(1, unread.size());
         assertEquals("N-002", unread.get(0).getNotificationId());
@@ -108,12 +108,12 @@ public class NotificationCatalogTest {
 
     @Test
     public void getUnreadNotifications_returnsEmptyListAfterAllMarkedAsRead() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
-        store.markAsRead("20240001", List.of("N-001"));
+        catalog.markAsRead("20240001", List.of("N-001"));
 
-        List<NotificationDTO> unread = store.getUnreadNotifications("20240001");
+        List<NotificationDTO> unread = catalog.getUnreadNotifications("20240001");
 
         assertTrue(unread.isEmpty());
     }
@@ -124,37 +124,37 @@ public class NotificationCatalogTest {
 
     @Test
     public void markAsRead_setsReadFlagToTrue() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
 
-        store.markAsRead("20240001", List.of("N-001"));
+        catalog.markAsRead("20240001", List.of("N-001"));
 
-        List<NotificationDTO> unread = store.getUnreadNotifications("20240001");
+        List<NotificationDTO> unread = catalog.getUnreadNotifications("20240001");
         assertTrue(unread.isEmpty());
     }
 
     @Test
     public void markAsRead_doesNothingForUnknownUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
 
-        assertDoesNotThrow(() -> store.markAsRead("99999", List.of("N-001")));
-        assertEquals(1, store.getUnreadNotifications("20240001").size());
+        assertDoesNotThrow(() -> catalog.markAsRead("99999", List.of("N-001")));
+        assertEquals(1, catalog.getUnreadNotifications("20240001").size());
     }
 
     @Test
     public void markAsRead_onlyMarksSpecifiedIds() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
-        store.addNotification(makeNotification("N-001", "20240001", "R-001",
+        NotificationCatalog catalog = NotificationCatalog.getInstance();
+        catalog.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
-        store.addNotification(makeNotification("N-002", "20240001", "R-002",
+        catalog.addNotification(makeNotification("N-002", "20240001", "R-002",
                 NotificationDTO.Type.REJECTED, "사유"));
 
-        store.markAsRead("20240001", List.of("N-001"));
+        catalog.markAsRead("20240001", List.of("N-001"));
 
-        List<NotificationDTO> unread = store.getUnreadNotifications("20240001");
+        List<NotificationDTO> unread = catalog.getUnreadNotifications("20240001");
         assertEquals(1, unread.size());
         assertEquals("N-002", unread.get(0).getNotificationId());
         assertFalse(unread.get(0).isRead());

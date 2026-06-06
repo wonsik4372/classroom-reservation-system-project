@@ -1,0 +1,34 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:CRSystemClient</u>" as Client <<actor>>
+object "<u>:CRSystemServer</u>" as Server
+object "<u>:ClientHandler</u>" as Handler
+object "<u>:SessionRegistry</u>" as Registry
+
+Client -right- Server : ▶ 1: connectToServer()
+Server -down- Handler : ▼ 1.1: new ClientHandler(socket)
+Handler -right- Registry : ▶ 1.2: sessionId := register(handler)
+
+note bottom of Client
+  1.4: startHeartbeat()
+end note
+
+note bottom of Handler
+  1.3: startHeartbeatWatchdog()
+end note
+
+@enduml

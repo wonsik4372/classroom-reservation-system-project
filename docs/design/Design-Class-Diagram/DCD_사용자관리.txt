@@ -1,0 +1,44 @@
+@startuml
+skinparam DefaultFontSize 14
+skinparam classAttributeIconSize 0
+skinparam dpi 200
+
+
+class UserHandler {
+  - catalog: UserCatalog
+  - fileManager: UserFileManager
+  + getUserList(): List<User>
+  + addUser(role: String, id: String, name: String): boolean
+  + deleteUser(id: String): boolean
+}
+
+class UserCatalog {
+  - userList: List<User>
+  + getAllUsers(): List<User>
+  + addUser(user: User): void
+  + removeUser(id: String): void
+}
+
+
+class User {
+  - role: String
+  - id: String
+  - name: String
+  + <<create>> User(role: String, id: String, name: String)
+}
+
+
+class UserFileManager {
+  + saveUser(user: User): void
+  + deleteUser(id: String): void
+  + loadFile(): List<User>
+}
+
+
+' 관계 정의
+UserHandler --> UserCatalog : "사용 (검색 및 관리 위임)"
+UserHandler --> UserFileManager : "사용 (물리적 저장/삭제 위임)"
+UserHandler ..> User : "생성 의존성 (점선)"
+UserCatalog o--> User : "명단 관리 (집합 연관)"
+
+@enduml

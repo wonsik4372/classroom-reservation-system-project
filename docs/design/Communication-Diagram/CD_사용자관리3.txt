@@ -1,0 +1,28 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+
+object "<u>:Administrator</u>" as A <<actor>>
+object "<u>:UserHandler</u>" as Handler
+object "<u>:UserCatalog</u>" as Catalog
+object "<u>:UserFileManager</u>" as FM
+
+
+A -right- Handler : ▶ 1: operationSuccess := \n deleteUser(id)
+Handler -down- Catalog : ▼ 1.1: findUser(id) \n ▼ 1.3: deleteUser(id)
+Handler -up- FM : ▲ 1.2: delete(id) 
+
+
+@enduml

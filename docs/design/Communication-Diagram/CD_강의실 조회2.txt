@@ -1,0 +1,24 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 10
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+' 사용자
+object "<u>:User</u>" as A <<actor>>
+
+' 시스템 내부 객체 정의
+object "<u>:floorHandler</u>" as H
+object "<u>:floorCatalog</u>" as Repo
+
+' 메시지 연결
+A -right- H : ▶ 1: selectfloor := getfloorList()
+H -down- Repo : ▼ 1.1: floorList := getAllfloor()
+@enduml

@@ -16,21 +16,21 @@ class User {}
 
 class Building {}
 
-class LectureRoom {}
+class ClassRoom {}
 
-class LectureRoomSpec {}
+class ClassRoomSpec {}
 
 class TimeTable
 
 class Reservation {}
 
 
-LectureRoom "1" -right- "0..*" Reservation : Has
-LectureRoom "1" -up- "*" Building : Located In
-LectureRoom "*"-- "1" LectureRoomSpec : Described By
-TimeTable "1" -right- "1" LectureRoom : Restrict
+ClassRoom "1" -right- "0..*" Reservation : Has
+ClassRoom "1" -up- "*" Building : Located In
+ClassRoom "1"-- "1" ClassRoomSpec : Described By
+TimeTable "1" -right- "1" ClassRoom : Restrict
 Reservation "0..*" -up- "1" User : < Reserve
-LectureRoom "*" -- "1" Assistant : < Manage
+ClassRoom "*" -- "1" Assistant : < Manage
 Reservation "0..*" -- "1" Assistant : < Approve
 
 

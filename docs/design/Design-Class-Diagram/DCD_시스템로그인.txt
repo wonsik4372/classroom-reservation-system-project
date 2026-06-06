@@ -1,0 +1,32 @@
+@startuml
+skinparam DefaultFontSize 14
+skinparam classAttributeIconSize 0
+skinparam dpi 200
+
+class LoginHandler {
+  - catalog: UserCatalog
+  + requestLogin(role: String, id: String, password: String): boolean
+}
+
+
+class UserCatalog {
+  - userList: List<User>
+  + findUser(id: String): User
+}
+
+
+class User {
+  - role: String
+  - id: String
+  - password: String
+  - name: String
+  + verifyPassword(password: String): boolean
+}
+
+
+' 관계 정의
+LoginHandler --> UserCatalog : "사용 (회원 검색 위임)"
+LoginHandler ..> User : "의존성 (비밀번호 검증 지시)"
+UserCatalog o--> User : "명단 관리 (In-Memory)"
+
+@enduml

@@ -292,4 +292,76 @@ public class ReservationHandlerTest {
     // [TC-32] 예약생성-교수 - 14일 초과 예약 제한
     // ====================
     // GUI 기반 수동 테스트 수행 - 15일 이후 날짜가 콤보박스에 표시되지 않음.
+
+    // ====================
+    // [TC-39] 예약상태관리-승인 - 예약 취소
+    // ====================
+    @Test
+    public void cancelReservation_succeedsWhenRequesterIsOwner() {
+        // Given: 학생이 예약 등록
+        ReservationHandler service = ReservationHandler.getInstance();
+        ReservationDTO.Response reservation = new ReservationDTO.Response();
+        reservation.setReservationId("R-001");
+        reservation.setUserId("20240001");
+        reservation.setRoleType(Role.STUDENT);
+        reservation.setRoomName("23 정보공학관 9층 911호");
+        reservation.setDate(LocalDate.now().plusDays(2));
+        reservation.setPeriodInfo("1");
+        reservation.setPartnerCount(1);
+        reservation.setStatus(ReservationDTO.Status.PENDING);
+        service.addReservation(reservation);
+
+        // When: 본인이 취소
+        ResponseDTO response = service.cancelReservation("R-001", "20240001");
+
+        // Then
+        assertTrue(response.isSuccess());
+        assertEquals("예약이 취소되었습니다.", response.getMessage());
+    }
+
+    @Test
+    public void cancelReservation_failsWhenRequesterIsNotOwner() {
+        // Given: 학생 20240001이 예약 등록
+        ReservationHandler service = ReservationHandler.getInstance();
+        ReservationDTO.Response reservation = new ReservationDTO.Response();
+        reservation.setReservationId("R-002");
+        reservation.setUserId("20240001");
+        reservation.setRoleType(Role.STUDENT);
+        reservation.setRoomName("23 정보공학관 9층 911호");
+        reservation.setDate(LocalDate.now().plusDays(2));
+        reservation.setPeriodInfo("2");
+        reservation.setPartnerCount(1);
+        reservation.setStatus(ReservationDTO.Status.PENDING);
+        service.addReservation(reservation);
+
+        // When: 다른 사용자(20240002)가 취소 시도
+        ResponseDTO response = service.cancelReservation("R-002", "20240002");
+
+        // Then
+        assertFalse(response.isSuccess());
+        assertEquals("본인의 예약만 취소할 수 있습니다.", response.getMessage());
+    }
+
+    @Test
+    public void cancelReservation_failsWhenReservationIsAlreadyRejected() {
+        // Given: REJECTED 상태의 예약 직접 삽입
+        ReservationHandler service = ReservationHandler.getInstance();
+        ReservationDTO.Response reservation = new ReservationDTO.Response();
+        reservation.setReservationId("R-003");
+        reservation.setUserId("20240001");
+        reservation.setRoleType(Role.STUDENT);
+        reservation.setRoomName("23 정보공학관 9층 911호");
+        reservation.setDate(LocalDate.now().plusDays(2));
+        reservation.setPeriodInfo("3");
+        reservation.setPartnerCount(1);
+        reservation.setStatus(ReservationDTO.Status.REJECTED);
+        service.addReservation(reservation);
+
+        // When: REJECTED 예약 취소 시도
+        ResponseDTO response = service.cancelReservation("R-003", "20240001");
+
+        // Then
+        assertFalse(response.isSuccess());
+        assertEquals("이미 거부된 예약입니다.", response.getMessage());
+    }
 }

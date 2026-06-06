@@ -1,0 +1,52 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 80
+skinparam dpi 200
+
+class MainController <<Controller>> {
+    - commandMap: Map<String, Command>
+    + handleRequest(req: RequestDTO): ResponseDTO
+}
+
+interface Command <<Functional Interface>> {
+    + execute(req: RequestDTO): ResponseDTO
+}
+
+class NotificationService {
+    + notifyApproved(reservation: ReservationDTO): void
+    + notifyRejected(reservation: ReservationDTO, reason: String): void
+    + getNotifications(userId: String): List<Notification>
+}
+
+class NotificationCatalog {
+    - notifications: Map<String, List<Notification>>
+    + add(notification: Notification): void
+    + getUnread(userId: String): List<Notification>
+    + markAsRead(userId: String, ids: List<String>): void
+}
+
+class Notification {
+    - id: String
+    - userId: String
+    - reservationId: String
+    - type: APPROVED | REJECTED
+    - message: String
+    - isRead: boolean
+}
+
+class ReservationHandler {
+    + approveReservation(id: String): boolean
+    + rejectReservation(id: String, reason: String): boolean
+}
+
+MainController --> Command              : 등록/실행
+MainController --> NotificationService  : 위임 (Command를 통해)
+
+ReservationHandler --> NotificationService  : 사용 (알림 위임)
+NotificationService --> NotificationCatalog : 사용 (저장 위임)
+NotificationCatalog --> Notification        : 관리 (In-Memory)
+
+@enduml

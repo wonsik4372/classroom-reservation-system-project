@@ -1,0 +1,33 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class ClassroomHandler {
+  -masterData: ScheduleData
+  -classroomToFile: Map<String, File>
+  +ClassroomHandler(masterDirPath: String)
+  +loadMasterData(): ScheduleData
+}
+
+class ClassroomCatalog {
+  -ClassroomList: List<Classroom>
+  +findClassroom(name: String): Classroom
+}
+
+class ScheduleData {
+  -classrooms: Map<String, Classroom>
+  +getClassrooms(): Map<String, Classroom>
+  +setClassrooms(classrooms: Map<String, Classroom>): void
+}
+
+class Classroom {
+  -info: ClassroomInfo
+  -schedule: Map<String, List<Reservation>>
+  +getInfo(): ClassroomInfo
+  +getSchedule(): Map<String, List<Reservation>>
+}
+
+' 관계 정의
+ClassroomHandler --> ClassroomCatalog : 관리
+ClassroomHandler --> ScheduleData : 데이터 로드/참조
+ClassroomCatalog o-- Classroom : 포함
+@enduml

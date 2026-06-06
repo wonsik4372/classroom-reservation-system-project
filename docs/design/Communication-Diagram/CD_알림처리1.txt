@@ -1,0 +1,25 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:ReservationHandler</u>" as RH
+object "<u>:NotificationHandler</u>" as NH
+object "<u>:NotificationCatalog</u>" as NC
+object "<u>notification:Notification</u>" as N
+
+RH -right- NH : ▶ 1: saveApproveNotification(userId)\n[approveReservation()에 의해 호출]
+NH -down- NC : ▼ 1.1: add(notification)
+NC -right- N : ▶ 1.1.1: new Notification(userId, reservationId, \n \t \t \t \t \t APPROVED)
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:ClientHandler</u>" as Handler <<actor>>
+object "<u>:SessionRegistry</u>" as Registry
+
+Handler -right- Registry : ▶ 1.2: unregister(sessionId)
+
+note bottom of Handler
+  1: startHeartbeatWatchdog()
+       [타이머 만료 시 missedHeartbeats++]
+  1.1: forceClose()
+       [3회 초과 시 소켓 강제 close]
+end note
+
+note bottom of Registry
+  1.2.1: printStatus("해제", sessionId)
+       [접속 수 갱신]
+end note
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+object "<u>:CRSystemClient</u>" as Client <<actor>>
+object "<u>:ClientHandler</u>" as Handler
+
+Client -right- Handler : ▶ 1: sendHeartbeat()\n[HEARTBEAT 패킷 전송] \n ◀ 1.2: pong()\n[PONG 응답 반환]
+
+note bottom of Handler
+  1.1: onHeartbeatReceived()
+        [무응답 카운터 리셋]
+end note
+
+@enduml

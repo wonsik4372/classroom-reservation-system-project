@@ -36,13 +36,13 @@ abstract class BaseUserFileTest {
     @BeforeEach
     void setUpFile() throws IOException {
         writeTestUsers();
-        UserService.getInstance().reloadForTesting();
+        UserHandler.getInstance().reloadForTesting();
     }
 
     @AfterEach
     void tearDownFile() throws IOException {
         restoreUserFile();
-        UserService.getInstance().reloadForTesting();
+        UserHandler.getInstance().reloadForTesting();
     }
 
     static void writeTestUsers() throws IOException {

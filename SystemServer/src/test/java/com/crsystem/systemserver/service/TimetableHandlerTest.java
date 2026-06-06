@@ -16,13 +16,13 @@ import java.util.Map;
 
 public class TimetableHandlerTest {
 
-    private ClassroomService classroomHandler;
+    private ClassroomHandler classroomHandler;
     private final String ROOM_NAME = "411호";
 
     @BeforeEach
     public void setUp() throws Exception {
         // [테스트 격리] 테스트 전용 폴더 사용
-        classroomHandler = new ClassroomService("data/test_masterfile");
+        classroomHandler = new ClassroomHandler("data/test_masterfile");
 
         // 더미 데이터 강제 주입
         Classroom dummy = new Classroom();
@@ -95,5 +95,22 @@ public class TimetableHandlerTest {
         
         assertTrue(exists, "추출된 시간표 데이터가 강의실 스케줄에 정상적으로 연동되어야 합니다.");
     }
-   
+
+    // ====================
+    // [TC-19] SFR-304: 강의실 사용 불가 상태 설정 및 즉시 반영 검증
+    // ====================
+    @Test
+    public void testSFR304_SetRoomStatusToUnavailableAndReflectImmediately() {
+        // Given: 현재 강의실 상태가 "사용 가능"인지 확인
+        Classroom before = classroomHandler.getScheduleData().getClassrooms().get(ROOM_NAME);
+        assertEquals("사용 가능", before.getInfo().getStatus());
+
+        // When: 강의실 상태를 "사용 불가"로 변경
+        boolean isUpdated = classroomHandler.updateClassroomInfo(ROOM_NAME, 60, "", 0, "사용 불가");
+
+        // Then: 변경이 즉시 메모리에 반영되는지 검증
+        assertTrue(isUpdated, "강의실 상태 변경이 성공해야 합니다.");
+        Classroom after = classroomHandler.getScheduleData().getClassrooms().get(ROOM_NAME);
+        assertEquals("사용 불가", after.getInfo().getStatus(), "상태가 '사용 불가'로 즉시 반영되어야 합니다.");
+    }
 }

@@ -1,0 +1,33 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+BackgroundColor White
+BorderColor Black
+}
+
+object "<u>:Professor</u>" as Prof <<actor>>
+object "<u>:ReservationController</u>" as Controller
+object "<u>:ReservationService</u>" as Service
+object "<u>reservation:ReservationDTO</u>" as R
+object "<u>:ReservationCatalog</u>" as Catalog
+object "<u>:ReservationFileManager</u>" as FM
+
+Prof -right- Controller : ▶ 1: operationSuccess := \n addReservation(reservation)
+
+Controller -right- Service : ▶ 1.1: addReservation(reservation)
+
+Service -right- R : ▶ 1.2: reservation := \n create(reservation)
+
+Service -down- Catalog : ▼ 1.3: processPriorityReservation(reservation)
+
+Service -up- FM : ▲ 1.4: saveAll(reservationList)
+
+@enduml

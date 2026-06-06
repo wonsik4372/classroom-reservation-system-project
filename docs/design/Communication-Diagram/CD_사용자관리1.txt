@@ -1,0 +1,37 @@
+@startuml
+skinparam DefaultFontSize 16
+skinparam BoxPadding 20
+skinparam nodesep 120
+skinparam ranksep 80
+skinparam dpi 200
+
+!theme plain
+hide empty members
+
+skinparam object {
+    BackgroundColor White
+    BorderColor Black
+}
+
+' 객체 정의
+object "<u>:Administrator</u>" as A <<actor>>
+object "<u>:UserHandler</u>" as Handler
+object "<u>:UserCatalog</u>" as Catalog
+
+
+' 메시지 흐름
+A -right- Handler : ▶ 1: userList := getUserList()
+Handler -down- Catalog : ▼ 1.1: userList := getAllUsers()
+
+@enduml
+
+
+----- 설명 -----
+사용자 목록 조회를 도메인 계층에서 먼저 받아줄 곳이 필요
+-> Controller 패턴에 따라 사용자 도메인의 흐름 제어를 대변하는 UserController에게 이벤트 수신 및 위임에 대한 책임을 할당
+
+사용자 목록 전체를 반한하기 위해 사용자 명단 데이터를 알아야 함. 
+-> Information Expert 패턴에 따라 UserCatalog 인스턴스에게 사용자 목록 검색 및 반환에 대한 책임을 할당
+
+UserController가 직접 사용자 데이터를 뒤지거나 구조를 파악하지 않게 해야 함.
+-> 실제 데이터 처리를 UserCatalog에게 위임하여 결합도를 낮추고, 각 객체가 자신에게 집중하도록 응집도를 높게 유지함.

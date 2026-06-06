@@ -1,0 +1,79 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class ReservationRegisterGUI
+class TimeTableGUI
+class UserGUI
+
+class ReservationController {
++addReservation()
++getReservationList()
++approveReservation()
++rejectReservation()
++cancelReservation()
+}
+
+class ReservationService {
++addReservation()
++getReservationList()
++approveReservation()
++rejectReservation()
++cancelReservation()
+}
+
+class ReservationCatalog {
++getAllReservations()
++addReservation()
++findReservation()
++removeReservation()
+}
+
+class ReservationFileManager {
++loadAll()
++saveAll()
+}
+
+class ReservationDTO
+
+class Request {
+-reservationId : String
+-userId : String
+-roomName : String
+-date : LocalDate
+-periodInfo : String
+-purpose : String
+-partnerCount : int
+-rejectReason : String
+}
+
+class Response {
+-reservationId : String
+-roomName : String
+-date : LocalDate
+-day : String
+-periodInfo : String
+-purpose : String
+-partnerCount : int
+-status : Status
+-rejectReason : String
+
+-userId : String
+-userName : String
+-roleType : Role
+
+}
+
+ReservationRegisterGUI ..> ReservationController : 예약 요청
+TimeTableGUI ..> ReservationController : 시간표 조회
+UserGUI ..> ReservationController : 예약 조회/취소
+
+ReservationController --> ReservationService : 예약 처리 위임
+
+ReservationService --> ReservationCatalog : 예약 등록/조회/수정
+ReservationService --> ReservationFileManager : 예약 데이터 저장
+
+ReservationDTO *-- Request : 요청 데이터
+ReservationDTO *-- Response : 응답 데이터
+
+ReservationCatalog "1" o-- "*" Response : 예약 정보 관리
+@enduml

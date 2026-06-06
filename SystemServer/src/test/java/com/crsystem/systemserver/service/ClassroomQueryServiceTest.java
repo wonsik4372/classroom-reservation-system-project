@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassroomQueryServiceTest extends BaseUserFileTest {
 
-    private ClassroomService classroomHandler;
+    private ClassroomHandler classroomHandler;
     private final String MASTERFILE_DIR = "data/masterfile/";
 
     @BeforeEach
@@ -57,7 +57,7 @@ public class ClassroomQueryServiceTest extends BaseUserFileTest {
             """);
 
         // 소스 코드에 명시된 public ClassroomHandler(String masterDirPath) 생성자 호출
-        classroomHandler = new ClassroomService(MASTERFILE_DIR);
+        classroomHandler = new ClassroomHandler(MASTERFILE_DIR);
     }
 
     // ====================
@@ -108,7 +108,7 @@ public class ClassroomQueryServiceTest extends BaseUserFileTest {
         java.time.LocalDate baseDate = java.time.LocalDate.of(2026, 6, 8);
 
         // [When] 서버로부터 전체 예약 데이터 원본 로드
-        ResponseDTO response = ReservationService.getInstance().getReservationList();
+        ResponseDTO response = ReservationHandler.getInstance().getReservationList();
 
         assertNotNull(response);
         assertTrue(response.isSuccess());
@@ -175,7 +175,7 @@ public class ClassroomQueryServiceTest extends BaseUserFileTest {
         String loggedInUserId = "20260001";
         java.time.LocalDate baseDate = java.time.LocalDate.of(2026, 6, 8);
 
-        ResponseDTO response = ReservationService.getInstance().getReservationList();
+        ResponseDTO response = ReservationHandler.getInstance().getReservationList();
 
         assertNotNull(response);
         assertTrue(response.isSuccess());

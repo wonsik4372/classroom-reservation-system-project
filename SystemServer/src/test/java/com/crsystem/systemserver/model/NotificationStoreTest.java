@@ -13,9 +13,9 @@ public class NotificationStoreTest {
 
     @BeforeEach
     void clearStore() throws Exception {
-        Field storeField = NotificationCatalog.class.getDeclaredField("store");
+        Field storeField = NotificationStore.class.getDeclaredField("store");
         storeField.setAccessible(true);
-        Map<?, ?> store = (Map<?, ?>) storeField.get(NotificationCatalog.getInstance());
+        Map<?, ?> store = (Map<?, ?>) storeField.get(NotificationStore.getInstance());
         store.clear();
     }
 
@@ -31,8 +31,8 @@ public class NotificationStoreTest {
 
     @Test
     public void getInstance_returnsSameInstance() {
-        NotificationCatalog a = NotificationCatalog.getInstance();
-        NotificationCatalog b = NotificationCatalog.getInstance();
+        NotificationStore a = NotificationStore.getInstance();
+        NotificationStore b = NotificationStore.getInstance();
 
         assertSame(a, b);
     }
@@ -43,7 +43,7 @@ public class NotificationStoreTest {
 
     @Test
     public void addNotification_storesNotificationForUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         NotificationDTO notification = makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null);
 
@@ -56,7 +56,7 @@ public class NotificationStoreTest {
 
     @Test
     public void addNotification_storesMultipleNotificationsForSameUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
         store.addNotification(makeNotification("N-002", "20240001", "R-002",
@@ -68,7 +68,7 @@ public class NotificationStoreTest {
 
     @Test
     public void addNotification_isolatesNotificationsByUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
         store.addNotification(makeNotification("N-002", "20240002", "R-002",
@@ -84,7 +84,7 @@ public class NotificationStoreTest {
 
     @Test
     public void getUnreadNotifications_returnsEmptyListWhenNoNotificationsExist() {
-        List<NotificationDTO> result = NotificationCatalog.getInstance()
+        List<NotificationDTO> result = NotificationStore.getInstance()
                 .getUnreadNotifications("20240001");
 
         assertNotNull(result);
@@ -93,7 +93,7 @@ public class NotificationStoreTest {
 
     @Test
     public void getUnreadNotifications_excludesAlreadyReadNotifications() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
         store.addNotification(makeNotification("N-002", "20240001", "R-002",
@@ -108,7 +108,7 @@ public class NotificationStoreTest {
 
     @Test
     public void getUnreadNotifications_returnsEmptyListAfterAllMarkedAsRead() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
         store.markAsRead("20240001", List.of("N-001"));
@@ -119,12 +119,12 @@ public class NotificationStoreTest {
     }
 
     // ====================
-    // [TC-41] SFR-602 알림처리-거부 - 지정 ID 읽음 처리 / 지정 ID만 읽음 처리
+    // markAsRead
     // ====================
 
     @Test
     public void markAsRead_setsReadFlagToTrue() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
 
@@ -136,7 +136,7 @@ public class NotificationStoreTest {
 
     @Test
     public void markAsRead_doesNothingForUnknownUser() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
 
@@ -146,7 +146,7 @@ public class NotificationStoreTest {
 
     @Test
     public void markAsRead_onlyMarksSpecifiedIds() {
-        NotificationCatalog store = NotificationCatalog.getInstance();
+        NotificationStore store = NotificationStore.getInstance();
         store.addNotification(makeNotification("N-001", "20240001", "R-001",
                 NotificationDTO.Type.APPROVED, null));
         store.addNotification(makeNotification("N-002", "20240001", "R-002",

@@ -50,9 +50,6 @@ public class UserFileManagerTest {
         restoreUserFile();
     }
 
-    // ====================
-    // [TC-42] 데이터관리 - 복구 시 JSON 파일로부터 사용자 목록 정상 로드
-    // ====================
     @Test
     public void loadAll_returnsUsersFromJsonFile() {
         // User.json에 저장된 사용자 목록을 User 객체 목록으로 읽어오는지 검증
@@ -69,9 +66,6 @@ public class UserFileManagerTest {
         assertEquals("Assistant User", users.get(1).getName());
     }
 
-    // ====================
-    // [TC-42] 데이터관리 - 파일 없을 때 예외 없이 빈 목록 반환
-    // ====================
     @Test
     public void loadAll_returnsEmptyListWhenFileDoesNotExist() throws IOException {
         // User.json 파일이 없을 때 예외 없이 빈 목록을 반환하는지 검증
@@ -84,9 +78,6 @@ public class UserFileManagerTest {
         assertTrue(users.isEmpty());
     }
 
-    // ====================
-    // [TC-43] 데이터관리 - 데이터 복구 요청 시 경고 후 파일 덮어쓰기
-    // ====================
     @Test
     public void saveAll_overwritesJsonFileWithGivenUsers() {
         // saveAll 호출 시 기존 파일 내용이 전달한 사용자 목록으로 덮어써지는지 검증
@@ -108,9 +99,6 @@ public class UserFileManagerTest {
         assertEquals("Professor User", savedUsers.get(1).getName());
     }
 
-    // ====================
-    // [TC-44] 데이터관리 - 저장 시 백업 파일 생성 (신규 사용자 추가 후 반영)
-    // ====================
     @Test
     public void add_appendsUserToJsonFile() {
         // add 호출 시 기존 사용자 목록 뒤에 신규 사용자가 추가 저장되는지 검증
@@ -124,9 +112,6 @@ public class UserFileManagerTest {
         assertTrue(containsUserId(users, "20240001"));
     }
 
-    // ====================
-    // [TC-45] 데이터관리 - 프로그램 종료 후 재시작 시 데이터 유지
-    // ====================
     @Test
     public void delete_removesUserWithMatchingIdFromJsonFile() {
         // delete 호출 시 전달한 ID와 일치하는 사용자가 파일에서 제거되는지 검증
@@ -140,9 +125,6 @@ public class UserFileManagerTest {
         assertTrue(containsUserId(users, "admin"));
     }
 
-    // ====================
-    // [TC-46] 데이터관리 - 초기 실행 시 기본 데이터 생성 (존재하지 않는 ID 삭제 시 목록 유지)
-    // ====================
     @Test
     public void delete_keepsListUnchangedWhenIdDoesNotExist() {
         // 존재하지 않는 ID를 삭제하려고 하면 기존 사용자 목록이 유지되는지 검증

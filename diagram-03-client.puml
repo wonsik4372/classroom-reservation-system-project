@@ -1,0 +1,192 @@
+@startuml 03-Client-Layer
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "client.main" #LightBlue {
+    class CRSystemClient <<Singleton>> {
+        - {static} instance : CRSystemClient
+        - {static} HEARTBEAT_INTERVAL_SEC : int
+        - serverIp : String
+        - serverPort : int
+        - socket : Socket
+        - heartbeatScheduler : ScheduledExecutorService
+        - CRSystemClient()
+        + {static} getInstance() : CRSystemClient
+        + {static} main(args: String[]) : void
+        + connectToServer() : void
+        + sendRequest(request: Object, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + close() : void
+    }
+}
+
+package "client.controller" #PowderBlue {
+    class SessionManager <<Singleton>> {
+        - {static} instance : SessionManager
+        - currentUser : UserDTO.Response
+        - SessionManager()
+        + {static} getInstance() : SessionManager
+        + login(user: UserDTO.Response) : void
+        + logout() : void
+        + getCurrentUser() : UserDTO.Response
+        + isLoggedIn() : boolean
+    }
+
+    class UserController <<Singleton>> {
+        - {static} instance : UserController
+        + {static} getInstance() : UserController
+        + login(id: String, pw: String, role: Role, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + getUserList(onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + addUser(id: String, name: String, role: Role, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + deleteUser(id: String, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+    }
+
+    class ReservationController <<Singleton>> {
+        - {static} INSTANCE : ReservationController
+        - reservationCache : List<ReservationDTO.Response>
+        + {static} getInstance() : ReservationController
+        + addReservation(r: ReservationDTO.Response, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + getReservationList(status: String, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + approveReservations(ids: List<String>, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + cancelReservation(id: String, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + rejectReservation(id: String, reason: String, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+    }
+
+    class TimetableController <<Singleton>> {
+        - {static} INSTANCE : TimetableController
+        + {static} getInstance() : TimetableController
+        + getTimetable(year: String, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + updateRoomInfo(payload: Map<String, Object>, onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+        + getAvailableYears(onSuccess: Consumer<ResponseDTO>, onFailure: Consumer<String>) : void
+    }
+
+    class NotificationController <<Singleton>> {
+        - {static} instance : NotificationController
+        - {static} POLLING_INTERVAL_MS : int
+        - pollingTimer : Timer
+        + {static} getInstance() : NotificationController
+        + showImmediateNotifications(notifications: List<NotificationDTO>, parent: Component) : void
+        + startPolling(parent: Component) : void
+        + stopPolling() : void
+    }
+}
+
+package "client.view" #Honeydew {
+    class LoginGUI <<JFrame>> {
+        - jTextFieldID : JTextField
+        - jPasswordField1 : JPasswordField
+        - jButtonLogin : JButton
+        - jRadioButtonAss : JRadioButton
+        - jRadioButtonPro : JRadioButton
+        - jRadioButtonStu : JRadioButton
+        - jRadioButtonAdm : JRadioButton
+        + LoginGUI()
+        + resetFieldsForFailure() : void
+        + getEnteredId() : String
+        + getEnteredPassword() : String
+    }
+
+    class AdminGUI <<JFrame>> {
+        - jTableUserList : JTable
+        - jButtonAddUser : JButton
+        - jButtonDeleteUser : JButton
+        - jButtonRefresh : JButton
+        + AdminGUI()
+        + updateTableData(userList: List<UserDTO.Response>) : void
+    }
+
+    class AddUserGUI <<JPanel>> {
+        - jTextFieldName : JTextField
+        - jTextFieldId : JTextField
+        + AddUserGUI()
+        - performAddUser() : void
+        - performCancel() : void
+    }
+
+    class AssistantGUI <<JFrame>> {
+        - currentPendingList : List<ReservationDTO.Response>
+        - currentAllList : List<ReservationDTO.Response>
+        - timetableData : Map<String, Object>
+        - jTabbedPaneMain : JTabbedPane
+        - jTablePendingReservations : JTable
+        - jTableReservationList : JTable
+        + AssistantGUI()
+        - loadPendingReservations() : void
+        - loadAllReservations() : void
+        - loadTimetableData() : void
+        - openRoomModifyDialog() : void
+    }
+
+    class RoomModifyGUI <<JPanel>> {
+        - roomName : String
+        - onSaved : Runnable
+        - jSpinnerMaxCap : JSpinner
+        - jSpinnerComputerCnt : JSpinner
+        - jTextFieldFeature : JTextField
+        + RoomModifyGUI(roomName: String, roomInfo: Map<String, Object>, onSaved: Runnable)
+        - populateFields(info: Map<String, Object>) : void
+        - handleSave() : void
+    }
+
+    class UserGUI <<JFrame>> {
+        - myReservationList : List<ReservationDTO.Response>
+        - timetableData : Map<String, Object>
+        + UserGUI()
+        - loadReservationsFromServer() : void
+        - loadTimetableFromServer() : void
+        - handleCancelReservation() : void
+        - handleLogout() : void
+    }
+
+    class ReservationRegisterGUI <<JPanel>> {
+        - selectedDate : LocalDate
+        - periodInfo : String
+        - roomName : String
+        + ReservationRegisterGUI(roomName: String, selectedDate: LocalDate, periodInfo: String, duration: int)
+        - updateCapacityLabel() : void
+    }
+
+    class TimeTableGUI <<JPanel>> {
+        - roomName : String
+        - selectedCells : List<Point>
+        - regularClassSlots : Map<String, Map<Integer, String>>
+        - selectedDate : LocalDate
+        + TimeTableGUI(roomName: String)
+    }
+}
+
+' Controller → Client
+UserController --> CRSystemClient
+ReservationController --> CRSystemClient
+TimetableController --> CRSystemClient
+NotificationController --> CRSystemClient
+
+' Controller → SessionManager
+UserController --> SessionManager
+
+' View → Controller
+LoginGUI --> UserController
+LoginGUI --> SessionManager
+AdminGUI --> UserController
+AdminGUI --> SessionManager
+AddUserGUI --> UserController
+AssistantGUI --> ReservationController
+AssistantGUI --> TimetableController
+AssistantGUI --> NotificationController
+AssistantGUI --> SessionManager
+RoomModifyGUI --> TimetableController
+UserGUI --> ReservationController
+UserGUI --> TimetableController
+UserGUI --> NotificationController
+UserGUI --> SessionManager
+ReservationRegisterGUI --> ReservationController
+TimeTableGUI --> ReservationController
+
+' View composition
+AdminGUI --> AddUserGUI
+AssistantGUI --> RoomModifyGUI
+UserGUI --> ReservationRegisterGUI
+UserGUI --> TimeTableGUI
+
+@enduml

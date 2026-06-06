@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * [SFR-801] sessionId, connectTime으로 접속 식별 및 연결 유지 시간 추적
  * [SFR-802] 하트비트 무응답 3회 감지 시 비정상 종료 판단
  * [SFR-803] 비정상 종료 감지 시 소켓/스레드 자원 강제 회수
+ * @author wonsik
  */
 public class ClientHandler implements Runnable {
 

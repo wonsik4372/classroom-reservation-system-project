@@ -43,4 +43,8 @@ public class ReservationCatalog {
     public void removeReservation(String reservationId) {
         reservationList.removeIf(r -> reservationId.equals(r.getReservationId()));
     }
+
+    public void clear() {
+        reservationList.clear();
+    }
 }

@@ -1,0 +1,211 @@
+@startuml 02-Server-Layer
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "server.controller" #LightGreen {
+    interface "FileManager<T>" as FileManager {
+        + loadAll() : List<T>
+        + saveAll(list: List<T>) : void
+        + add(item: T) : void
+        + delete(id: String) : void
+    }
+
+    class MainController {
+        - {static} commandMap : Map<String, Command>
+        + {static} handleRequest(req: RequestDTO) : ResponseDTO
+    }
+
+    interface "MainController.Command" as Command <<FunctionalInterface>> {
+        + execute(req: RequestDTO) : ResponseDTO
+    }
+}
+
+package "server.dao" #PaleGreen {
+    class ServerPaths {
+        + {static} USER_JSON : String
+        + {static} RESERVATION_JSON : String
+        - ServerPaths()
+    }
+
+    class UserFileManager {
+        - FILE_PATH : String
+        - gson : Gson
+        + loadAll() : List<User>
+        + saveAll(list: List<User>) : void
+        + add(user: User) : void
+        + delete(id: String) : void
+    }
+
+    class ReservationFileManager {
+        - FILE_PATH : String
+        - gson : Gson
+        + loadAll() : List<ReservationDTO.Response>
+        + saveAll(list: List<ReservationDTO.Response>) : void
+        + add(reservation: ReservationDTO.Response) : void
+        + delete(id: String) : void
+    }
+}
+
+package "server.model" #Wheat {
+    class User {
+        - role : Role
+        - id : String
+        - pw : String
+        - name : String
+        + verifyPassword(pw: String) : boolean
+        + isAdmin() : boolean
+        - validateIdFormat(role: Role, id: String) : void
+    }
+
+    class UserCatalog {
+        - userList : CopyOnWriteArrayList<User>
+        + findUser(id: String) : User
+        + addUser(user: User) : synchronized boolean
+        + deleteUser(user: User) : boolean
+        + replaceAll(newUsers: List<User>) : synchronized void
+    }
+
+    class ReservationCatalog {
+        - reservationList : CopyOnWriteArrayList<ReservationDTO.Response>
+        + addReservation(r: ReservationDTO.Response) : void
+        + findReservation(id: String) : ReservationDTO.Response
+        + removeReservation(id: String) : void
+    }
+
+    class NotificationCatalog <<Singleton>> {
+        - {static} INSTANCE : NotificationCatalog
+        - store : Map<String, CopyOnWriteArrayList<NotificationDTO>>
+        - NotificationCatalog()
+        + {static} getInstance() : NotificationCatalog
+        + addNotification(n: NotificationDTO) : void
+        + getUnreadNotifications(userId: String) : List<NotificationDTO>
+        + markAsRead(userId: String, ids: List<String>) : void
+    }
+}
+
+package "server.service" #MistyRose {
+    class LoginHandler <<Singleton>> {
+        - {static} INSTANCE : LoginHandler
+        + {static} getInstance() : LoginHandler
+        + processLogin(req: UserDTO.Request) : ResponseDTO
+    }
+
+    class UserHandler <<Singleton>> {
+        - {static} INSTANCE : UserHandler
+        - catalog : UserCatalog
+        - fileManager : UserFileManager
+        + {static} getInstance() : UserHandler
+        + getUserList() : ResponseDTO
+        + addUser(req: UserDTO.Request) : ResponseDTO
+        + deleteUser(req: UserDTO.Request) : ResponseDTO
+        + getUserById(id: String) : User
+    }
+
+    class ReservationHandler <<Singleton>> {
+        - {static} INSTANCE : ReservationHandler
+        - catalog : ReservationCatalog
+        - fileManager : ReservationFileManager
+        + {static} getInstance() : ReservationHandler
+        + addReservation(r: ReservationDTO.Response) : ResponseDTO
+        + getReservationList() : ResponseDTO
+        + getPendingReservationList() : ResponseDTO
+        + approveReservation(reservationId: String) : ResponseDTO
+        + cancelReservation(reservationId: String, requesterId: String) : ResponseDTO
+        + rejectReservation(reservationId: String, reason: String) : ResponseDTO
+    }
+
+    class TimetableHandler <<Singleton>> {
+        - {static} INSTANCE : TimetableHandler
+        - {static} MASTERFILE_DIR : String
+        - mapper : ObjectMapper
+        + {static} getInstance() : TimetableHandler
+        + getTimetable(year: String) : ResponseDTO
+        + updateRoomInfo(payload: Map<String, Object>) : ResponseDTO
+        + getAvailableYears() : ResponseDTO
+    }
+
+    class NotificationHandler <<Singleton>> {
+        - {static} INSTANCE : NotificationHandler
+        + {static} getInstance() : NotificationHandler
+        + notifyApproved(r: ReservationDTO.Response) : void
+        + notifyRejected(r: ReservationDTO.Response, reason: String) : void
+        + getAndMarkNotifications(userId: String) : ResponseDTO
+    }
+
+    class ClassroomHandler {
+        - masterDirPath : String
+        - mapper : ObjectMapper
+        - masterData : ScheduleData
+        - classroomToFile : Map<String, File>
+        + ClassroomHandler(masterDirPath: String)
+        + updateClassroomInfo(name: String, capacity: int, features: String, computerCount: int, status: String) : boolean
+        + addReservation(name: String, dateStr: String, timeSlot: String, purpose: String, requesterName: String, requesterType: String) : boolean
+        + getMergedSchedule(name: String, dateStr: String) : List<Reservation>
+        + getScheduleData() : ScheduleData
+    }
+
+    class ScheduleInitializer {
+        - {static} STANDARD_TIME_SLOTS : Map<String, String>
+        - {static} DAYS_HEADER : String[]
+        + convertAllTimetableToJsons(rootFolderPath: String, outputDirPath: String) : void
+    }
+}
+
+package "server.main" #Lavender {
+    class CRSystemServer {
+        - serverPort : int
+        + {static} main(args: String[]) : void
+        + startServer() : void
+    }
+
+    class ClientHandler <<Runnable>> {
+        - {static} HEARTBEAT_INTERVAL_SEC : int
+        - {static} MAX_MISSED_HEARTBEATS : int
+        - clientSocket : Socket
+        - sessionId : int
+        - missedHeartbeats : AtomicInteger
+        + onHeartbeatReceived() : void
+        + run() : void
+    }
+
+    class SessionRegistry <<Singleton>> {
+        - {static} INSTANCE : SessionRegistry
+        - sessions : ConcurrentHashMap<Integer, ClientHandler>
+        - idSequence : AtomicInteger
+        + {static} getInstance() : SessionRegistry
+        + register(handler: ClientHandler) : int
+        + unregister(sessionId: int) : void
+        + getCount() : int
+    }
+}
+
+' 관계
+UserFileManager ..|> FileManager
+ReservationFileManager ..|> FileManager
+MainController +-- Command
+
+UserFileManager --> ServerPaths
+ReservationFileManager --> ServerPaths
+UserFileManager --> User
+
+UserHandler --> UserCatalog
+UserHandler --> UserFileManager
+ReservationHandler --> ReservationCatalog
+ReservationHandler --> ReservationFileManager
+NotificationHandler --> NotificationCatalog
+LoginHandler --> UserHandler
+
+MainController --> LoginHandler
+MainController --> UserHandler
+MainController --> ReservationHandler
+MainController --> TimetableHandler
+MainController --> NotificationHandler
+
+CRSystemServer --> ClientHandler
+CRSystemServer --> SessionRegistry
+ClientHandler --> SessionRegistry
+ClientHandler --> MainController
+
+@enduml

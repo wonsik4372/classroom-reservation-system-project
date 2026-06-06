@@ -313,4 +313,13 @@ public class ReservationHandler {
         }
         return false;
     }
+
+    /**
+     * 테스트 전용 - 카탈로그 초기화
+     * 각 테스트 케이스가 독립적인 빈 상태에서 시작할 수 있도록 인메모리 예약 목록을 비운다.
+     */
+    public void clearForTesting() {
+        catalog.clear();
+        fileManager.saveAll(new java.util.ArrayList<>());
+    }
 }

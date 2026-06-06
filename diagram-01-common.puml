@@ -1,0 +1,151 @@
+@startuml 01-Common-DTO
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "common.enums" #LightYellow {
+    enum Role {
+        ADMIN
+        ASSISTANT
+        PROFESSOR
+        STUDENT
+    }
+}
+
+package "common.dto" #LightCyan {
+
+    class RequestDTO {
+        - command : String
+        - payload : Object
+        + getCommand() : String
+        + getPayload() : Object
+    }
+
+    class ResponseDTO {
+        - message : String
+        - result : String
+        - payload : Object
+        - isSuccess : boolean
+        + isSuccess() : boolean
+        + getMessage() : String
+        + getPayload() : Object
+    }
+
+    class ClassroomInfo {
+        - status : String
+        - capacity : int
+        - features : String
+        - computerCount : int
+    }
+
+    class Classroom {
+        - info : ClassroomInfo
+        - schedule : Map<String, List<Reservation>>
+    }
+
+    class Reservation {
+        - time : String
+        - subject : String
+        - professor : String
+        - status : int
+    }
+
+    class ScheduleData {
+        - classrooms : Map<String, Classroom>
+    }
+
+    class DayReservation {
+        - date : String
+        - bookings : List<SingleBooking>
+    }
+
+    class "DayReservation.SingleBooking" as SingleBooking <<static>> {
+        - classroomName : String
+        - time : String
+        - subject : String
+        - professor : String
+        - status : int
+    }
+
+    class NotificationDTO {
+        - notificationId : String
+        - userId : String
+        - reservationId : String
+        - type : Type
+        - message : String
+        - rejectReason : String
+        - createdAt : LocalDateTime
+        - read : boolean
+    }
+
+    enum "NotificationDTO.Type" as NotiType {
+        APPROVED
+        REJECTED
+    }
+
+    class "ReservationDTO.Request" as ResRequest <<static>> {
+        - reservationId : String
+        - userId : String
+        - roomName : String
+        - date : LocalDate
+        - periodInfo : String
+        - purpose : String
+        - partnerCount : int
+        - rejectReason : String
+    }
+
+    class "ReservationDTO.Response" as ResResponse <<static>> {
+        - reservationId : String
+        - roomName : String
+        - date : LocalDate
+        - day : String
+        - periodInfo : String
+        - purpose : String
+        - partnerCount : int
+        - status : Status
+        - rejectReason : String
+        - userId : String
+        - userName : String
+        - roleType : Role
+    }
+
+    enum "ReservationDTO.Status" as ResStatus {
+        PENDING
+        APPROVED
+        REJECTED
+    }
+
+    class "UserDTO.Request" as UserReq <<static>> {
+        - actionType : String
+        - id : String
+        - pw : String
+        - role : Role
+        - name : String
+    }
+
+    class "UserDTO.Response" as UserRes <<static>> {
+        - role : Role
+        - id : String
+        - name : String
+        - pendingNotifications : List<NotificationDTO>
+    }
+}
+
+' 관계
+DayReservation +-- SingleBooking
+NotificationDTO +-- NotiType
+ResResponse +-- ResStatus
+
+Classroom *-- ClassroomInfo
+Classroom *-- Reservation
+ScheduleData *-- Classroom
+DayReservation *-- SingleBooking
+UserRes *-- NotificationDTO
+NotificationDTO --> NotiType
+ResResponse --> ResStatus
+ResResponse --> Role
+UserReq --> Role
+UserRes --> Role
+
+@enduml

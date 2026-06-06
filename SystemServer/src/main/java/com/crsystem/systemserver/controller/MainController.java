@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 단일 컨트롤러
  * @author wonsik
  */
 public class MainController {
